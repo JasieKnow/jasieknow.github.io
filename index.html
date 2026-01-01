@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>JasieKnow compilations</title>
+  <title>Jan Nowacki strona internetowa</title>
   <style>
     body {
       margin: 0;
@@ -15,6 +15,12 @@
       background-color: #4f5c2b;
       padding: 20px;
       text-align: center;
+      cursor: pointer; /* DODANE: pokazuje że można kliknąć */
+      transition: background-color 0.3s; /* DODANE: płynna zmiana koloru */
+    }
+
+    header:hover {
+      background-color: #586635; /* DODANE: efekt hover */
     }
 
     header h1 {
@@ -192,8 +198,8 @@
 
 <body>
 
-<header>
-  <h1>JasieKnow compilations</h1>
+<header onclick="showSection('welcome')"> <!-- DODANE: onclick -->
+  <h1>Jan Nowacki strona internetowa</h1> <!-- ZMIENIONE: nazwa -->
 </header>
 
 <nav>
@@ -204,8 +210,9 @@
 
 <div id="welcome" class="section active">
   <div class="welcome-message">
-    <h2>👋 Witaj na stronie!</h2>
-    <p>Kliknij w jedną z zakładek powyżej, aby zobaczyć treść.</p>
+    <h2>👋 Witaj na mojej stronie!</h2>
+    <p>Nazywam się Jan Nowacki i to jest moja osobista strona internetowa.</p>
+    <p>Kliknij w jedną z zakładek powyżej, aby zobaczyć moje ulubione filmy, gry i więcej!</p>
   </div>
 </div>
 
@@ -214,7 +221,7 @@
 
   <div class="columns">
     <div class="column">
-      <h3>🎬 Top filmów</h3>
+      <h3>🎬 Moje ulubione filmy</h3>
       <div class="movie-grid">
         <div class="movie-card" onclick="showMovieDetails('dobry-zly-brzydki')">
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0hThvye8txVEob0uSLdvO2UOWcvNW-iKOSg&s" alt="Dobry, zły i brzydki" class="movie-img">
@@ -267,7 +274,7 @@
     </div>
 
     <div class="column">
-      <h3>📺 Top seriali</h3>
+      <h3>📺 Moje ulubione seriale</h3>
       <div class="series-grid">
         <div class="series-card" onclick="showSeriesDetails('breaking-bad')">
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd8UKB61gmfCnm2dxSshVYPbpePGGdMfXBYQ&s" alt="Breaking Bad" class="series-img">
@@ -302,7 +309,7 @@
 </div>
 
 <div id="gry" class="section">
-  <h2>Gry</h2>
+  <h2>Moje ulubione gry</h2>
   <ul class="game-list">
     <li onclick="showGameDetails('lol')">
       <span class="game-icon">⚔️</span>
@@ -331,11 +338,12 @@
 
 <div id="studia" class="section">
   <h2>Studia</h2>
-  <p>... jeszcze nic nie ma :)</p>
+  <p>Tu wkrótce pojawią się informacje o mojej edukacji i studiach.</p>
+  <p>... sekcja w budowie :)</p>
 </div>
 
 <footer>
-  © 2026 JasieKnow
+  © 2026 Jan Nowacki - Moja osobista strona internetowa
 </footer>
 
 <script>
