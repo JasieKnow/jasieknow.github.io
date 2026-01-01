@@ -19,7 +19,6 @@
       --imdb: #f5c518;
       --rotten: #fa3200;
       --letterboxd: #00a54c;
-      --metacritic: #000000;
     }
 
     [data-theme="light"] {
@@ -34,7 +33,6 @@
       --imdb: #f5c518;
       --rotten: #fa3200;
       --letterboxd: #00a54c;
-      --metacritic: #000000;
     }
 
     body {
@@ -260,7 +258,6 @@
     .rating-item.imdb { background-color: rgba(245, 197, 24, 0.2); color: var(--imdb); }
     .rating-item.rotten { background-color: rgba(250, 50, 0, 0.2); color: var(--rotten); }
     .rating-item.letterboxd { background-color: rgba(0, 165, 76, 0.2); color: var(--letterboxd); }
-    .rating-item.metacritic { background-color: rgba(0, 0, 0, 0.2); color: var(--metacritic); }
 
     .rating-icon {
       font-size: 16px;
@@ -358,6 +355,31 @@
       margin-bottom: 30px;
     }
 
+    /* Przycisk Filmweb na stronie głównej */
+    .filmweb-profile-button {
+      background: var(--accent-color);
+      color: #000000 !important;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 30px 0;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      transition: all 0.3s;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    
+    .filmweb-profile-button:hover {
+      opacity: 0.9;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -380,7 +402,7 @@
     }
 
     /* Styl dla przycisków */
-    .filmweb-button, .trailer-button, .imdb-button, .rotten-button, .letterboxd-button {
+    .trailer-button {
       background: var(--accent-color);
       color: #000000 !important;
       border: none;
@@ -398,7 +420,7 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     
-    .filmweb-button:hover, .trailer-button:hover, .imdb-button:hover, .rotten-button:hover, .letterboxd-button:hover {
+    .trailer-button:hover {
       opacity: 0.9;
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(0,0,0,0.3);
@@ -484,7 +506,6 @@
     .rating-card.imdb { border-top: 4px solid var(--imdb); }
     .rating-card.rotten { border-top: 4px solid var(--rotten); }
     .rating-card.letterboxd { border-top: 4px solid var(--letterboxd); }
-    .rating-card.metacritic { border-top: 4px solid var(--metacritic); }
 
     .rating-source {
       font-size: 14px;
@@ -500,17 +521,33 @@
       margin: 10px 0;
     }
 
-    .rating-link {
-      display: inline-block;
-      margin-top: 10px;
-      color: var(--accent-color);
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
+    /* Sekcja projektów */
+    .projects-section {
+      margin-top: 40px;
     }
 
-    .rating-link:hover {
-      text-decoration: underline;
+    .project-folder {
+      background: var(--card-color);
+      padding: 25px;
+      border-radius: 12px;
+      margin-top: 20px;
+      border-left: 5px solid var(--accent-color);
+      box-shadow: 0 6px 16px var(--shadow);
+    }
+
+    .project-folder h4 {
+      margin: 0 0 15px 0;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 40px 20px;
+      opacity: 0.7;
+      font-style: italic;
     }
 
     /* Mobile styles */
@@ -571,7 +608,7 @@
         grid-template-columns: 1fr;
       }
       
-      .filmweb-button, .trailer-button, .imdb-button, .rotten-button, .letterboxd-button {
+      .trailer-button {
         width: 100%;
         margin: 10px 0;
         justify-content: center;
@@ -588,6 +625,12 @@
       
       .welcome-message h2 {
         font-size: 32px;
+      }
+      
+      .filmweb-profile-button {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
       }
     }
 
@@ -633,6 +676,10 @@
     <p>Nazywam się Jan Nowacki i jestem pasjonatem kina, seriali oraz gier komputerowych.</p>
     <p>Na tej stronie znajdziesz moje ulubione produkcje wraz z rzeczywistymi ocenami z serwisów takich jak Filmweb, IMDb, Rotten Tomatoes i innych.</p>
     <p>Zapraszam do odkrywania moich rekomendacji!</p>
+    
+    <a href="https://www.filmweb.pl/user/JasieKnow" target="_blank" class="filmweb-profile-button">
+      📖 Mój profil Filmweb
+    </a>
   </div>
 </div>
 
@@ -696,29 +743,31 @@
 <div id="studia" class="section">
   <h2>📚 Studia i edukacja</h2>
   <div class="welcome-message" style="text-align: left; padding: 0;">
-    <p><strong>🎓 Uniwersytet Warszawski</strong></p>
-    <p>Kierunek: Informatyka</p>
-    <p>Specjalizacja: Frontend Development</p>
-    <p>Rok: III rok studiów licencjackich</p>
+    <p><strong>🎓 Akademia Górniczo-Hutnicza w Krakowie</strong></p>
+    <p><strong>Wydział:</strong> Inżynierii Mechanicznej i Robotyki (WIMIR)</p>
+    <p><strong>Kierunek:</strong> Automatyka Przemysłowa i Robotyka</p>
+    <p><strong>Rozpoczęcie studiów:</strong> 2024 rok</p>
     
     <div style="margin-top: 40px;">
-      <h3>🛠️ Moje umiejętności techniczne:</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
-        <div style="background: var(--card-color); padding: 15px; border-radius: 10px; text-align: center;">
-          <div style="font-size: 24px;">💻</div>
-          <div>HTML/CSS/JS</div>
-        </div>
-        <div style="background: var(--card-color); padding: 15px; border-radius: 10px; text-align: center;">
-          <div style="font-size: 24px;">⚛️</div>
-          <div>React.js</div>
-        </div>
-        <div style="background: var(--card-color); padding: 15px; border-radius: 10px; text-align: center;">
-          <div style="font-size: 24px;">📱</div>
-          <div>Responsive Design</div>
-        </div>
-        <div style="background: var(--card-color); padding: 15px; border-radius: 10px; text-align: center;">
-          <div style="font-size: 24px;">🎨</div>
-          <div>UI/UX Design</div>
+      <h3>🛠️ Umiejętność rozwiązywania problemów</h3>
+      <div style="background: var(--card-color); padding: 20px; border-radius: 12px; margin-top: 20px; box-shadow: 0 6px 16px var(--shadow);">
+        <p>Posiadam rozwiniętą umiejętność rozwiązywania złożonych problemów technicznych poprzez:</p>
+        <ul style="line-height: 1.8;">
+          <li>Analizę problemu i identyfikację kluczowych czynników</li>
+          <li>Tworzenie algorytmów i schematów rozwiązań</li>
+          <li>Implementację rozwiązań z wykorzystaniem dostępnych narzędzi</li>
+          <li>Testowanie i optymalizację opracowanych rozwiązań</li>
+          <li>Dokumentowanie procesu i wyników</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="projects-section">
+      <h3>📁 Projekty</h3>
+      <div class="project-folder">
+        <h4>📂 Moje projekty</h4>
+        <div class="empty-message">
+          Tu narazie nic nie ma
         </div>
       </div>
     </div>
@@ -743,10 +792,10 @@
       duration: '2h 58m',
       trailer: 'https://www.youtube.com/watch?v=WCN5JJY_wiA',
       ratings: {
-        filmweb: { rating: '8.3/10', link: 'https://www.filmweb.pl/film/Dobry%2C+z%C5%82y+i+brzydki-1966-1045' },
-        imdb: { rating: '8.8/10', link: 'https://www.imdb.com/title/tt0060196/' },
-        rotten: { rating: '97%', link: 'https://www.rottentomatoes.com/m/the_good_the_bad_and_the_ugly' },
-        letterboxd: { rating: '4.3/5', link: 'https://letterboxd.com/film/the-good-the-bad-and-the-ugly/' }
+        filmweb: '8.3/10',
+        imdb: '8.8/10',
+        rotten: '97%',
+        letterboxd: '4.3/5'
       }
     },
     {
@@ -760,10 +809,10 @@
       duration: '1h 36m',
       trailer: 'https://www.youtube.com/watch?v=_13J_9B5jEk',
       ratings: {
-        filmweb: { rating: '8.7/10', link: 'https://www.filmweb.pl/film/Dwunastu+gniewnych+ludzi-1957-2253' },
-        imdb: { rating: '9.0/10', link: 'https://www.imdb.com/title/tt0050083/' },
-        rotten: { rating: '100%', link: 'https://www.rottentomatoes.com/m/12_angry_men' },
-        metacritic: { rating: '96/100', link: 'https://www.metacritic.com/movie/12-angry-men/' }
+        filmweb: '8.7/10',
+        imdb: '9.0/10',
+        rotten: '100%',
+        letterboxd: '4.4/5'
       }
     },
     {
@@ -777,10 +826,10 @@
       duration: '1h 54m',
       trailer: 'https://www.youtube.com/watch?v=UUxD4-dEzn0',
       ratings: {
-        filmweb: { rating: '7.9/10', link: 'https://www.filmweb.pl/film/Taxi+Driver-1976-1061' },
-        imdb: { rating: '8.2/10', link: 'https://www.imdb.com/title/tt0075314/' },
-        rotten: { rating: '96%', link: 'https://www.rottentomatoes.com/m/taxi_driver' },
-        letterboxd: { rating: '4.2/5', link: 'https://letterboxd.com/film/taxi-driver/' }
+        filmweb: '7.9/10',
+        imdb: '8.2/10',
+        rotten: '96%',
+        letterboxd: '4.2/5'
       }
     },
     {
@@ -794,10 +843,10 @@
       duration: '2h 26m',
       trailer: 'https://www.youtube.com/watch?v=S014oGZiSdI',
       ratings: {
-        filmweb: { rating: '8.0/10', link: 'https://www.filmweb.pl/film/L%C5%9Bnienie-1980-1058' },
-        imdb: { rating: '8.4/10', link: 'https://www.imdb.com/title/tt0081505/' },
-        rotten: { rating: '85%', link: 'https://www.rottentomatoes.com/m/the_shining' },
-        metacritic: { rating: '66/100', link: 'https://www.metacritic.com/movie/the-shining/' }
+        filmweb: '8.0/10',
+        imdb: '8.4/10',
+        rotten: '85%',
+        letterboxd: '4.1/5'
       }
     },
     {
@@ -811,10 +860,10 @@
       duration: '2h 13m',
       trailer: 'https://www.youtube.com/watch?v=OXrcDonY-B8',
       ratings: {
-        filmweb: { rating: '8.4/10', link: 'https://www.filmweb.pl/film/Lot+nad+kuku%C5%82czym+gniazdem-1975-1063' },
-        imdb: { rating: '8.7/10', link: 'https://www.imdb.com/title/tt0073486/' },
-        rotten: { rating: '94%', link: 'https://www.rottentomatoes.com/m/one_flew_over_the_cuckoos_nest' },
-        letterboxd: { rating: '4.3/5', link: 'https://letterboxd.com/film/one-flew-over-the-cuckoos-nest/' }
+        filmweb: '8.4/10',
+        imdb: '8.7/10',
+        rotten: '94%',
+        letterboxd: '4.3/5'
       }
     },
     {
@@ -828,10 +877,10 @@
       duration: '2h 23m',
       trailer: 'https://www.youtube.com/watch?v=naQr0uTrH_s',
       ratings: {
-        filmweb: { rating: '7.7/10', link: 'https://www.filmweb.pl/film/Piraci+z+Karaib%C3%B3w%3A+Kl%C4%85twa+Czarnej+Per%C5%82y-2003-27087' },
-        imdb: { rating: '8.1/10', link: 'https://www.imdb.com/title/tt0325980/' },
-        rotten: { rating: '80%', link: 'https://www.rottentomatoes.com/m/pirates_of_the_caribbean_the_curse_of_the_black_pearl' },
-        metacritic: { rating: '63/100', link: 'https://www.metacritic.com/movie/pirates-of-the-caribbean-the-curse-of-the-black-pearl/' }
+        filmweb: '7.7/10',
+        imdb: '8.1/10',
+        rotten: '80%',
+        letterboxd: '3.7/5'
       }
     }
   ];
@@ -849,10 +898,10 @@
       episodes: '62 odcinki',
       trailer: 'https://www.youtube.com/watch?v=HhesaQXLuRY',
       ratings: {
-        filmweb: { rating: '9.2/10', link: 'https://www.filmweb.pl/serial/Breaking+Bad-2008-430668' },
-        imdb: { rating: '9.5/10', link: 'https://www.imdb.com/title/tt0903747/' },
-        rotten: { rating: '96%', link: 'https://www.rottentomatoes.com/tv/breaking_bad' },
-        metacritic: { rating: '96/100', link: 'https://www.metacritic.com/tv/breaking-bad/' }
+        filmweb: '9.2/10',
+        imdb: '9.5/10',
+        rotten: '96%',
+        letterboxd: '4.7/5'
       }
     },
     {
@@ -866,16 +915,16 @@
       episodes: '34 odcinki',
       trailer: 'https://www.youtube.com/watch?v=b9EkMc79ZSU',
       ratings: {
-        filmweb: { rating: '8.5/10', link: 'https://www.filmweb.pl/serial/Stranger+Things-2016-728495' },
-        imdb: { rating: '8.7/10', link: 'https://www.imdb.com/title/tt4574334/' },
-        rotten: { rating: '92%', link: 'https://www.rottentomatoes.com/tv/stranger_things' },
-        metacritic: { rating: '76/100', link: 'https://www.metacritic.com/tv/stranger-things/' }
+        filmweb: '8.5/10',
+        imdb: '8.7/10',
+        rotten: '92%',
+        letterboxd: '4.1/5'
       }
     },
     {
       id: 'czarnobyl',
       title: '☢️ Czarnobyl',
-      image: 'https://m.media-amazon.com/images/M/MV5BZGQ2YmMxZmEtYjI5OS00NzlkLTlkNTEtYWMyMzkyMzc2MDU5XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_FMjpg_UX1000_.jpg',
+      image: 'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_FMjpg_UX1000_.jpg',
       desc: 'Miniserial dramatyczny opowiadający o katastrofie w elektrowni jądrowej w Czarnobylu w 1986 roku i bezprecedensowych wysiłkach mających na celu powstrzymanie jej skutków.',
       type: 'serial',
       seasons: '1 sezon',
@@ -883,10 +932,10 @@
       episodes: '5 odcinków',
       trailer: 'https://www.youtube.com/watch?v=s9APLXM9Ei8',
       ratings: {
-        filmweb: { rating: '9.4/10', link: 'https://www.filmweb.pl/serial/Czarnobyl-2019-819760' },
-        imdb: { rating: '9.4/10', link: 'https://www.imdb.com/title/tt7366338/' },
-        rotten: { rating: '95%', link: 'https://www.rottentomatoes.com/tv/chernobyl' },
-        metacritic: { rating: '83/100', link: 'https://www.metacritic.com/tv/chernobyl/' }
+        filmweb: '9.4/10',
+        imdb: '9.4/10',
+        rotten: '95%',
+        letterboxd: '4.6/5'
       }
     },
     {
@@ -900,10 +949,10 @@
       episodes: '73 odcinki',
       trailer: 'https://www.youtube.com/watch?v=rlR4PJn8b8I',
       ratings: {
-        filmweb: { rating: '8.9/10', link: 'https://www.filmweb.pl/serial/Gra+o+tron-2011-476852' },
-        imdb: { rating: '9.2/10', link: 'https://www.imdb.com/title/tt0944947/' },
-        rotten: { rating: '89%', link: 'https://www.rottentomatoes.com/tv/game_of_thrones' },
-        metacritic: { rating: '88/100', link: 'https://www.metacritic.com/tv/game-of-thrones/' }
+        filmweb: '8.9/10',
+        imdb: '9.2/10',
+        rotten: '89%',
+        letterboxd: '4.2/5'
       }
     }
   ];
@@ -921,8 +970,7 @@
       developer: 'Riot Games',
       trailer: 'https://www.youtube.com/watch?v=BGtROJeMPeE',
       ratings: {
-        metacritic: { rating: '78/100', link: 'https://www.metacritic.com/game/pc/league-of-legends' },
-        steam: { rating: '4/5', link: 'https://store.steampowered.com/app/123456/League_of_Legends/' }
+        metacritic: '78/100'
       }
     },
     {
@@ -936,9 +984,8 @@
       developer: 'Rockstar Games',
       trailer: 'https://www.youtube.com/watch?v=QkkoHAzjnUs',
       ratings: {
-        metacritic: { rating: '97/100', link: 'https://www.metacritic.com/game/playstation-4/grand-theft-auto-v' },
-        steam: { rating: '9/10', link: 'https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/' },
-        ign: { rating: '10/10', link: 'https://www.ign.com/games/grand-theft-auto-5' }
+        metacritic: '97/100',
+        ign: '10/10'
       }
     },
     {
@@ -952,8 +999,8 @@
       developer: 'Epic Games',
       trailer: 'https://www.youtube.com/watch?v=2gUtfBmw86Y',
       ratings: {
-        metacritic: { rating: '81/100', link: 'https://www.metacritic.com/game/pc/fortnite' },
-        ign: { rating: '9.6/10', link: 'https://www.ign.com/games/fortnite' }
+        metacritic: '81/100',
+        ign: '9.6/10'
       }
     },
     {
@@ -967,9 +1014,8 @@
       developer: 'Rockstar Games',
       trailer: 'https://www.youtube.com/watch?v=eaW0tYpxyp0',
       ratings: {
-        metacritic: { rating: '97/100', link: 'https://www.metacritic.com/game/playstation-4/red-dead-redemption-2' },
-        steam: { rating: '9/10', link: 'https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/' },
-        ign: { rating: '10/10', link: 'https://www.ign.com/games/red-dead-redemption-2' }
+        metacritic: '97/100',
+        ign: '10/10'
       }
     },
     {
@@ -983,9 +1029,8 @@
       developer: 'CD Projekt Red',
       trailer: 'https://www.youtube.com/watch?v=c0i88t0Kacs',
       ratings: {
-        metacritic: { rating: '93/100', link: 'https://www.metacritic.com/game/playstation-4/the-witcher-3-wild-hunt' },
-        steam: { rating: '10/10', link: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/' },
-        ign: { rating: '9.3/10', link: 'https://www.ign.com/games/the-witcher-3-wild-hunt' }
+        metacritic: '93/100',
+        ign: '9.3/10'
       }
     }
   ];
@@ -1087,17 +1132,17 @@
             <div class="external-ratings">
               ${movie.ratings.filmweb ? `<div class="rating-item filmweb">
                 <span class="rating-icon">FW</span>
-                <span class="rating-value">${movie.ratings.filmweb.rating}</span>
+                <span class="rating-value">${movie.ratings.filmweb}</span>
               </div>` : ''}
               
               ${movie.ratings.imdb ? `<div class="rating-item imdb">
                 <span class="rating-icon">IMDb</span>
-                <span class="rating-value">${movie.ratings.imdb.rating}</span>
+                <span class="rating-value">${movie.ratings.imdb}</span>
               </div>` : ''}
               
               ${movie.ratings.rotten ? `<div class="rating-item rotten">
                 <span class="rating-icon">🍅</span>
-                <span class="rating-value">${movie.ratings.rotten.rating}</span>
+                <span class="rating-value">${movie.ratings.rotten}</span>
               </div>` : ''}
             </div>
             
@@ -1127,17 +1172,17 @@
             <div class="external-ratings">
               ${series.ratings.filmweb ? `<div class="rating-item filmweb">
                 <span class="rating-icon">FW</span>
-                <span class="rating-value">${series.ratings.filmweb.rating}</span>
+                <span class="rating-value">${series.ratings.filmweb}</span>
               </div>` : ''}
               
               ${series.ratings.imdb ? `<div class="rating-item imdb">
                 <span class="rating-icon">IMDb</span>
-                <span class="rating-value">${series.ratings.imdb.rating}</span>
+                <span class="rating-value">${series.ratings.imdb}</span>
               </div>` : ''}
               
               ${series.ratings.rotten ? `<div class="rating-item rotten">
                 <span class="rating-icon">🍅</span>
-                <span class="rating-value">${series.ratings.rotten.rating}</span>
+                <span class="rating-value">${series.ratings.rotten}</span>
               </div>` : ''}
             </div>
             
@@ -1167,17 +1212,12 @@
             <div class="external-ratings">
               ${game.ratings.metacritic ? `<div class="rating-item metacritic">
                 <span class="rating-icon">MC</span>
-                <span class="rating-value">${game.ratings.metacritic.rating}</span>
-              </div>` : ''}
-              
-              ${game.ratings.steam ? `<div class="rating-item" style="background-color: rgba(27, 40, 56, 0.2); color: #66c0f4;">
-                <span class="rating-icon">🎮</span>
-                <span class="rating-value">${game.ratings.steam.rating}</span>
+                <span class="rating-value">${game.ratings.metacritic}</span>
               </div>` : ''}
               
               ${game.ratings.ign ? `<div class="rating-item" style="background-color: rgba(0, 0, 0, 0.2); color: #ff6500;">
                 <span class="rating-icon">IGN</span>
-                <span class="rating-value">${game.ratings.ign.rating}</span>
+                <span class="rating-value">${game.ratings.ign}</span>
               </div>` : ''}
             </div>
             
@@ -1204,40 +1244,28 @@
           ${movie.ratings.filmweb ? `
             <div class="rating-card filmweb">
               <div class="rating-source">Filmweb</div>
-              <div class="rating-main">${movie.ratings.filmweb.rating}</div>
-              <a href="${movie.ratings.filmweb.link}" target="_blank" class="rating-link">Zobacz na Filmweb →</a>
+              <div class="rating-main">${movie.ratings.filmweb}</div>
             </div>
           ` : ''}
           
           ${movie.ratings.imdb ? `
             <div class="rating-card imdb">
               <div class="rating-source">IMDb</div>
-              <div class="rating-main">${movie.ratings.imdb.rating}</div>
-              <a href="${movie.ratings.imdb.link}" target="_blank" class="rating-link">Zobacz na IMDb →</a>
+              <div class="rating-main">${movie.ratings.imdb}</div>
             </div>
           ` : ''}
           
           ${movie.ratings.rotten ? `
             <div class="rating-card rotten">
               <div class="rating-source">Rotten Tomatoes</div>
-              <div class="rating-main">${movie.ratings.rotten.rating}</div>
-              <a href="${movie.ratings.rotten.link}" target="_blank" class="rating-link">Zobacz na RT →</a>
+              <div class="rating-main">${movie.ratings.rotten}</div>
             </div>
           ` : ''}
           
           ${movie.ratings.letterboxd ? `
             <div class="rating-card letterboxd">
               <div class="rating-source">Letterboxd</div>
-              <div class="rating-main">${movie.ratings.letterboxd.rating}</div>
-              <a href="${movie.ratings.letterboxd.link}" target="_blank" class="rating-link">Zobacz na Letterboxd →</a>
-            </div>
-          ` : ''}
-          
-          ${movie.ratings.metacritic ? `
-            <div class="rating-card metacritic">
-              <div class="rating-source">Metacritic</div>
-              <div class="rating-main">${movie.ratings.metacritic.rating}</div>
-              <a href="${movie.ratings.metacritic.link}" target="_blank" class="rating-link">Zobacz na Metacritic →</a>
+              <div class="rating-main">${movie.ratings.letterboxd}</div>
             </div>
           ` : ''}
         </div>
@@ -1266,7 +1294,7 @@
             </div>
             <div class="meta-item">
               <div class="meta-label">Gatunek</div>
-              <div class="meta-value">${movie.type === 'film' ? 'Film' : 'Serial'}</div>
+              <div class="meta-value">Film</div>
             </div>
           </div>
           
@@ -1277,21 +1305,6 @@
             <a href="${movie.trailer}" target="_blank" class="trailer-button">
               🎬 Obejrzyj zwiastun
             </a>
-            ${movie.ratings.filmweb ? `
-              <a href="${movie.ratings.filmweb.link}" target="_blank" class="filmweb-button">
-                📖 Filmweb
-              </a>
-            ` : ''}
-            ${movie.ratings.imdb ? `
-              <a href="${movie.ratings.imdb.link}" target="_blank" class="imdb-button">
-                ⭐ IMDb
-              </a>
-            ` : ''}
-            ${movie.ratings.rotten ? `
-              <a href="${movie.ratings.rotten.link}" target="_blank" class="rotten-button">
-                🍅 Rotten Tomatoes
-              </a>
-            ` : ''}
           </div>
         </div>
       </div>
@@ -1313,32 +1326,28 @@
           ${series.ratings.filmweb ? `
             <div class="rating-card filmweb">
               <div class="rating-source">Filmweb</div>
-              <div class="rating-main">${series.ratings.filmweb.rating}</div>
-              <a href="${series.ratings.filmweb.link}" target="_blank" class="rating-link">Zobacz na Filmweb →</a>
+              <div class="rating-main">${series.ratings.filmweb}</div>
             </div>
           ` : ''}
           
           ${series.ratings.imdb ? `
             <div class="rating-card imdb">
               <div class="rating-source">IMDb</div>
-              <div class="rating-main">${series.ratings.imdb.rating}</div>
-              <a href="${series.ratings.imdb.link}" target="_blank" class="rating-link">Zobacz na IMDb →</a>
+              <div class="rating-main">${series.ratings.imdb}</div>
             </div>
           ` : ''}
           
           ${series.ratings.rotten ? `
             <div class="rating-card rotten">
               <div class="rating-source">Rotten Tomatoes</div>
-              <div class="rating-main">${series.ratings.rotten.rating}</div>
-              <a href="${series.ratings.rotten.link}" target="_blank" class="rating-link">Zobacz na RT →</a>
+              <div class="rating-main">${series.ratings.rotten}</div>
             </div>
           ` : ''}
           
-          ${series.ratings.metacritic ? `
-            <div class="rating-card metacritic">
-              <div class="rating-source">Metacritic</div>
-              <div class="rating-main">${series.ratings.metacritic.rating}</div>
-              <a href="${series.ratings.metacritic.link}" target="_blank" class="rating-link">Zobacz na Metacritic →</a>
+          ${series.ratings.letterboxd ? `
+            <div class="rating-card letterboxd">
+              <div class="rating-source">Letterboxd</div>
+              <div class="rating-main">${series.ratings.letterboxd}</div>
             </div>
           ` : ''}
         </div>
@@ -1378,21 +1387,6 @@
             <a href="${series.trailer}" target="_blank" class="trailer-button">
               📺 Obejrzyj zwiastun
             </a>
-            ${series.ratings.filmweb ? `
-              <a href="${series.ratings.filmweb.link}" target="_blank" class="filmweb-button">
-                📖 Filmweb
-              </a>
-            ` : ''}
-            ${series.ratings.imdb ? `
-              <a href="${series.ratings.imdb.link}" target="_blank" class="imdb-button">
-                ⭐ IMDb
-              </a>
-            ` : ''}
-            ${series.ratings.rotten ? `
-              <a href="${series.ratings.rotten.link}" target="_blank" class="rotten-button">
-                🍅 Rotten Tomatoes
-              </a>
-            ` : ''}
           </div>
         </div>
       </div>
@@ -1414,24 +1408,14 @@
           ${game.ratings.metacritic ? `
             <div class="rating-card metacritic">
               <div class="rating-source">Metacritic</div>
-              <div class="rating-main">${game.ratings.metacritic.rating}</div>
-              <a href="${game.ratings.metacritic.link}" target="_blank" class="rating-link">Zobacz na Metacritic →</a>
-            </div>
-          ` : ''}
-          
-          ${game.ratings.steam ? `
-            <div class="rating-card" style="border-top: 4px solid #66c0f4;">
-              <div class="rating-source">Steam</div>
-              <div class="rating-main">${game.ratings.steam.rating}</div>
-              <a href="${game.ratings.steam.link}" target="_blank" class="rating-link">Zobacz na Steam →</a>
+              <div class="rating-main">${game.ratings.metacritic}</div>
             </div>
           ` : ''}
           
           ${game.ratings.ign ? `
             <div class="rating-card" style="border-top: 4px solid #ff6500;">
               <div class="rating-source">IGN</div>
-              <div class="rating-main">${game.ratings.ign.rating}</div>
-              <a href="${game.ratings.ign.link}" target="_blank" class="rating-link">Zobacz na IGN →</a>
+              <div class="rating-main">${game.ratings.ign}</div>
             </div>
           ` : ''}
         </div>
@@ -1471,16 +1455,6 @@
             <a href="${game.trailer}" target="_blank" class="trailer-button">
               🎮 Obejrzyj zwiastun
             </a>
-            ${game.ratings.metacritic ? `
-              <a href="${game.ratings.metacritic.link}" target="_blank" class="filmweb-button">
-                📊 Metacritic
-              </a>
-            ` : ''}
-            ${game.ratings.steam ? `
-              <a href="${game.ratings.steam.link}" target="_blank" class="imdb-button">
-                🎮 Steam
-              </a>
-            ` : ''}
           </div>
         </div>
       </div>
