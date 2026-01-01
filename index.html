@@ -33,6 +33,7 @@
       background-color: var(--primary-color);
       color: var(--text-color);
       transition: background-color 0.3s, color 0.3s;
+      -webkit-tap-highlight-color: transparent; /* Usuwa niebieskie podświetlenie na mobile */
     }
 
     header {
@@ -70,6 +71,7 @@
       align-items: center;
       justify-content: center;
       z-index: 1000;
+      color: #000; /* Czarny tekst na żółtym tle */
     }
 
     /* Wyszukiwarka */
@@ -283,10 +285,10 @@
       text-decoration: underline;
     }
 
-    /* Styl dla przycisków */
-    .filmweb-button, .trailer-button {
+    /* Styl dla przycisków - ZMIANA: czarny tekst na żółtym tle */
+    .filmweb-button, .trailer-button, .submit-rating {
       background: var(--accent-color);
-      color: var(--text-color);
+      color: #000000 !important; /* CZARNY TEKST */
       border: none;
       padding: 12px 24px;
       border-radius: 5px;
@@ -299,7 +301,7 @@
       transition: opacity 0.3s;
     }
     
-    .filmweb-button:hover, .trailer-button:hover {
+    .filmweb-button:hover, .trailer-button:hover, .submit-rating:hover {
       opacity: 0.9;
     }
 
@@ -316,6 +318,7 @@
       align-items: center;
       gap: 15px;
       margin-bottom: 10px;
+      flex-wrap: wrap;
     }
 
     .user-rating {
@@ -328,9 +331,11 @@
       font-size: 24px;
       color: #ccc;
       transition: color 0.2s;
+      padding: 5px; /* Większy obszar dotykowy na mobile */
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .star.active {
+    .star:hover, .star.active {
       color: var(--accent-color);
     }
 
@@ -352,45 +357,69 @@
       margin-right: 10px;
     }
 
-    .submit-rating {
-      background: var(--accent-color);
-      color: var(--text-color);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* Lista ocen użytkowników */
+    /* Lista ocen użytkowników - POPRAWIONE: równo ułożone */
     .ratings-list {
       margin-top: 20px;
-      max-height: 200px;
+      max-height: 300px;
       overflow-y: auto;
+    }
+
+    .ratings-list h4 {
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--text-color);
+      padding-bottom: 5px;
     }
 
     .rating-item {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       padding: 8px 12px;
       margin: 5px 0;
       background: rgba(0, 0, 0, 0.1);
       border-radius: 5px;
+      gap: 15px;
+      flex-wrap: wrap;
     }
 
     .rating-item-user {
       font-weight: bold;
       color: var(--accent-color);
+      min-width: 120px; /* STAŁA SZEROKOŚĆ DLA NICKU */
+      word-break: break-word;
     }
 
     .rating-item-stars {
       color: var(--accent-color);
+      font-size: 18px;
+      min-width: 100px; /* STAŁA SZEROKOŚĆ DLA GWIAZDEK */
+      text-align: center;
     }
 
     .rating-item-time {
       font-size: 12px;
       opacity: 0.7;
+      min-width: 150px; /* STAŁA SZEROKOŚĆ DLA CZASU */
+      text-align: right;
+    }
+
+    /* Komunikat o zablokowaniu głosowania */
+    .vote-blocked {
+      color: #ff6b6b;
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(255, 107, 107, 0.1);
+      border-radius: 5px;
+      border-left: 4px solid #ff6b6b;
+    }
+
+    /* Poprawki dla mobile - gwiazdki */
+    .star-touch {
+      min-width: 40px;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Mobile styles */
@@ -405,6 +434,7 @@
         right: 15px;
         width: 35px;
         height: 35px;
+        color: #000; /* Czarny tekst */
       }
       
       nav {
@@ -443,6 +473,44 @@
         margin-bottom: 10px;
         margin-right: 0;
       }
+      
+      /* Większe gwiazdki na mobile */
+      .star {
+        font-size: 32px;
+        padding: 8px;
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      /* Dostosowanie listy ocen na mobile */
+      .rating-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+      
+      .rating-item-user, .rating-item-stars, .rating-item-time {
+        min-width: auto;
+        width: 100%;
+        text-align: left;
+      }
+      
+      .rating-item-stars {
+        font-size: 20px;
+      }
+      
+      /* Przyciski na mobile */
+      .filmweb-button, .trailer-button, .submit-rating {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        text-align: center;
+        padding: 15px;
+        font-size: 18px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -454,7 +522,7 @@
         grid-template-columns: 1fr;
       }
       
-      .filmweb-button, .trailer-button {
+      .filmweb-button, .trailer-button, .submit-rating {
         display: block;
         width: 100%;
         margin: 10px 0;
@@ -463,6 +531,11 @@
       
       .rating-container {
         flex-wrap: wrap;
+      }
+      
+      .star {
+        font-size: 36px;
+        padding: 10px;
       }
     }
   </style>
@@ -486,7 +559,7 @@
     <h2>👋 Witaj na mojej stronie!</h2>
     <p>Nazywam się Jan Nowacki i to jest moja osobista strona internetowa.</p>
     <p>Kliknij w jedną z zakładek powyżej, aby zobaczyć moje ulubione filmy, gry i więcej!</p>
-    <p><small>✨ Nowość: Możesz oceniać filmy i gry! Wystarczy podać nick i dać gwiazdki.</small></p>
+    <p><small>✨ Nowość: Możesz oceniać filmy i gry! System zapamiętuje Twoje oceny.</small></p>
   </div>
 </div>
 
@@ -556,6 +629,10 @@
 
 <script>
   // ========== DANE ==========
+  // SIMULATED DATABASE - w prawdziwej aplikacji byłby to backend
+  // Teraz używamy LocalStorage z symulacją globalnych danych
+  const SIMULATED_GLOBAL_DB = 'jan_nowacki_ratings_db';
+  
   const moviesData = [
     {
       id: 'dobry-zly-brzydki',
@@ -565,7 +642,6 @@
       type: 'film',
       year: '1966',
       director: 'Sergio Leone',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=WCN5JJY_wiA'
     },
     {
@@ -576,7 +652,6 @@
       type: 'film',
       year: '1957',
       director: 'Sidney Lumet',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=_13J_9B5jEk'
     },
     {
@@ -587,7 +662,6 @@
       type: 'film',
       year: '1976',
       director: 'Martin Scorsese',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=UUxD4-dEzn0'
     },
     {
@@ -598,7 +672,6 @@
       type: 'film',
       year: '1980',
       director: 'Stanley Kubrick',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=S014oGZiSdI'
     },
     {
@@ -609,7 +682,6 @@
       type: 'film',
       year: '1975',
       director: 'Miloš Forman',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=OXrcDonY-B8'
     },
     {
@@ -620,7 +692,6 @@
       type: 'film',
       year: '2003',
       director: 'Gore Verbinski',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=naQr0uTrH_s'
     }
   ];
@@ -634,7 +705,6 @@
       type: 'serial',
       seasons: '5 sezonów',
       years: '2008-2013',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=HhesaQXLuRY'
     },
     {
@@ -645,7 +715,6 @@
       type: 'serial',
       seasons: '4 sezony',
       years: '2016-obecnie',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=b9EkMc79ZSU'
     }
   ];
@@ -659,7 +728,6 @@
       type: 'gra',
       genre: 'MOBA, Strategia',
       year: '2009',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=BGtROJeMPeE'
     },
     {
@@ -670,7 +738,6 @@
       type: 'gra',
       genre: 'Akcja, Przygodowa',
       year: '2013',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=QkkoHAzjnUs'
     },
     {
@@ -681,7 +748,6 @@
       type: 'gra',
       genre: 'Battle Royale, Survival',
       year: '2017',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=2gUtfBmw86Y'
     },
     {
@@ -692,13 +758,102 @@
       type: 'gra',
       genre: 'Akcja, Przygodowa',
       year: '2018',
-      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=eaW0tYpxyp0'
     }
   ];
 
+  // ========== SYSTEM OCEN (GLOBALNY SYMULOWANY) ==========
+  // Generuje unikalny ID urządzenia (do kontroli jednej oceny na urządzenie)
+  function getDeviceId() {
+    let deviceId = localStorage.getItem('device_id');
+    if (!deviceId) {
+      deviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('device_id', deviceId);
+    }
+    return deviceId;
+  }
+
+  // Ładuje wszystkie oceny z "globalnej bazy" (LocalStorage)
+  function loadAllRatings() {
+    const allRatings = JSON.parse(localStorage.getItem(SIMULATED_GLOBAL_DB)) || {};
+    return allRatings;
+  }
+
+  // Zapisuje ocenę do "globalnej bazy"
+  function saveRating(itemId, ratingData) {
+    const allRatings = loadAllRatings();
+    
+    if (!allRatings[itemId]) {
+      allRatings[itemId] = [];
+    }
+    
+    // Sprawdź czy to urządzenie już oceniało ten film
+    const deviceId = getDeviceId();
+    const existingIndex = allRatings[itemId].findIndex(r => r.deviceId === deviceId);
+    
+    if (existingIndex !== -1) {
+      return { success: false, message: 'Już oceniłeś ten film z tego urządzenia!' };
+    }
+    
+    // Dodaj nową ocenę
+    allRatings[itemId].push({
+      ...ratingData,
+      deviceId: deviceId,
+      timestamp: new Date().toISOString()
+    });
+    
+    // Zapisz z powrotem
+    localStorage.setItem(SIMULATED_GLOBAL_DB, JSON.stringify(allRatings));
+    return { success: true, message: 'Dziękuję za ocenę!' };
+  }
+
+  // Pobiera oceny dla konkretnego elementu
+  function getRatingsForItem(itemId) {
+    const allRatings = loadAllRatings();
+    return allRatings[itemId] || [];
+  }
+
+  // Sprawdza czy urządzenie już oceniło dany element
+  function hasDeviceRated(itemId) {
+    const deviceId = getDeviceId();
+    const ratings = getRatingsForItem(itemId);
+    return ratings.some(r => r.deviceId === deviceId);
+  }
+
+  // Oblicza średnią ocen
+  function calculateAverageRating(ratings) {
+    if (ratings.length === 0) return 0;
+    const sum = ratings.reduce((total, r) => total + r.rating, 0);
+    return sum / ratings.length;
+  }
+
+  // Formatuje gwiazdki
+  function getStarsHTML(rating) {
+    let stars = '';
+    const roundedRating = Math.round(rating);
+    for (let i = 1; i <= 5; i++) {
+      stars += i <= roundedRating ? '★' : '☆';
+    }
+    return stars;
+  }
+
+  // Formatuje datę
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleString('pl-PL', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
   // ========== FUNKCJE GŁÓWNE ==========
   let currentSection = 'welcome';
+  let currentSelectedRating = 0;
+  let currentRatingItemId = '';
+  let currentRatingType = '';
   
   function showSection(id) {
     const sections = document.querySelectorAll('.section');
@@ -710,7 +865,6 @@
     document.getElementById(id).classList.add('active');
     currentSection = id;
     
-    // Załaduj dane gdy sekcja jest aktywna
     if (id === 'filmy') {
       loadMovies();
       loadSeries();
@@ -721,31 +875,29 @@
 
   // ========== MOTYW ==========
   function toggleTheme(event) {
-    event.stopPropagation(); // Zatrzymuje propagację do header
+    event.stopPropagation();
     const currentTheme = document.body.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.body.setAttribute('data-theme', newTheme);
     
     const button = document.querySelector('.theme-toggle');
     button.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+    button.style.color = '#000'; // Zawsze czarny tekst
     
-    // Zapisz w LocalStorage
     localStorage.setItem('theme', newTheme);
     
-    // NIE zmieniamy sekcji - zostajemy gdzie jesteśmy
-    // Ale musimy przeładować dane, bo zmienił się CSS
     if (currentSection === 'filmy') {
       loadMovies();
       loadSeries();
     } else if (currentSection === 'gry') {
       loadGames();
-    } else if (currentSection.startsWith('movie-details')) {
+    } else if (currentSection.startsWith('movie-details-')) {
       const id = currentSection.replace('movie-details-', '');
       showMovieDetails(id);
-    } else if (currentSection.startsWith('series-details')) {
+    } else if (currentSection.startsWith('series-details-')) {
       const id = currentSection.replace('series-details-', '');
       showSeriesDetails(id);
-    } else if (currentSection.startsWith('game-details')) {
+    } else if (currentSection.startsWith('game-details-')) {
       const id = currentSection.replace('game-details-', '');
       showGameDetails(id);
     }
@@ -754,18 +906,12 @@
   // ========== WYSZUKIWARKA ==========
   function searchMovies() {
     const searchTerm = document.getElementById('movieSearch').value.toLowerCase();
-    const allItems = [...moviesData, ...seriesData];
-    
     const movieCards = document.querySelectorAll('.movie-card, .series-card');
+    
     movieCards.forEach(card => {
       const title = card.querySelector('.movie-title, .series-title').textContent.toLowerCase();
       const desc = card.querySelector('.movie-desc, .series-desc').textContent.toLowerCase();
-      
-      if (title.includes(searchTerm) || desc.includes(searchTerm)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
+      card.style.display = (title.includes(searchTerm) || desc.includes(searchTerm)) ? 'block' : 'none';
     });
   }
 
@@ -776,53 +922,21 @@
     gameCards.forEach(card => {
       const title = card.querySelector('.game-title').textContent.toLowerCase();
       const desc = card.querySelector('.game-desc').textContent.toLowerCase();
-      
-      if (title.includes(searchTerm) || desc.includes(searchTerm)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
+      card.style.display = (title.includes(searchTerm) || desc.includes(searchTerm)) ? 'block' : 'none';
     });
-  }
-
-  // ========== SYSTEM OCEN ==========
-  function loadRatings() {
-    // Ładuj oceny z LocalStorage dla każdego elementu
-    [...moviesData, ...seriesData, ...gamesData].forEach(item => {
-      const saved = localStorage.getItem(`ratings_${item.id}`);
-      if (saved) {
-        item.ratings = JSON.parse(saved);
-      }
-    });
-  }
-
-  function calculateAverageRating(ratings) {
-    if (ratings.length === 0) return 0;
-    const sum = ratings.reduce((total, r) => total + r.rating, 0);
-    return sum / ratings.length;
-  }
-
-  function getStarsHTML(rating) {
-    let stars = '';
-    const roundedRating = Math.round(rating);
-    for (let i = 1; i <= 5; i++) {
-      if (i <= roundedRating) {
-        stars += '★';
-      } else {
-        stars += '☆';
-      }
-    }
-    return stars;
   }
 
   // ========== ŁADOWANIE DANYCH ==========
   function loadMovies() {
     const grid = document.getElementById('movies-grid');
+    if (!grid) return;
+    
     grid.innerHTML = '';
     
     moviesData.forEach(movie => {
-      const avgRating = calculateAverageRating(movie.ratings);
-      const ratingCount = movie.ratings.length;
+      const ratings = getRatingsForItem(movie.id);
+      const avgRating = calculateAverageRating(ratings);
+      const ratingCount = ratings.length;
       
       grid.innerHTML += `
         <div class="movie-card" onclick="showMovieDetails('${movie.id}')" data-id="${movie.id}">
@@ -843,11 +957,14 @@
 
   function loadSeries() {
     const grid = document.getElementById('series-grid');
+    if (!grid) return;
+    
     grid.innerHTML = '';
     
     seriesData.forEach(series => {
-      const avgRating = calculateAverageRating(series.ratings);
-      const ratingCount = series.ratings.length;
+      const ratings = getRatingsForItem(series.id);
+      const avgRating = calculateAverageRating(ratings);
+      const ratingCount = ratings.length;
       
       grid.innerHTML += `
         <div class="series-card" onclick="showSeriesDetails('${series.id}')" data-id="${series.id}">
@@ -868,11 +985,14 @@
 
   function loadGames() {
     const grid = document.getElementById('games-grid');
+    if (!grid) return;
+    
     grid.innerHTML = '';
     
     gamesData.forEach(game => {
-      const avgRating = calculateAverageRating(game.ratings);
-      const ratingCount = game.ratings.length;
+      const ratings = getRatingsForItem(game.id);
+      const avgRating = calculateAverageRating(ratings);
+      const ratingCount = ratings.length;
       
       grid.innerHTML += `
         <div class="game-card" onclick="showGameDetails('${game.id}')" data-id="${game.id}">
@@ -892,10 +1012,6 @@
   }
 
   // ========== SZCZEGÓŁY Z NOWYM SYSTEMEM OCEN ==========
-  let currentSelectedRating = 0;
-  let currentRatingItemId = '';
-  let currentRatingType = '';
-
   function showMovieDetails(id) {
     const movie = moviesData.find(m => m.id === id);
     if (!movie) return;
@@ -904,7 +1020,9 @@
     currentRatingType = 'film';
     currentSection = `movie-details-${id}`;
     
-    const avgRating = calculateAverageRating(movie.ratings);
+    const ratings = getRatingsForItem(id);
+    const avgRating = calculateAverageRating(ratings);
+    const hasRated = hasDeviceRated(id);
     
     document.getElementById('details-content').innerHTML = `
       <div style="display: flex; flex-wrap: wrap; gap: 30px;">
@@ -921,32 +1039,37 @@
               <div class="user-rating" id="rating-stars-${movie.id}">
                 ${[1,2,3,4,5].map(star => `
                   <span class="star" data-value="${star}" 
-                        onclick="selectRating(${star}, '${movie.id}', 'film')"
+                        onclick="selectRating(${star}, '${movie.id}')"
                         onmouseover="highlightStars(${star}, '${movie.id}')"
                         onmouseout="resetStars('${movie.id}')">★</span>
                 `).join('')}
               </div>
-              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${movie.ratings.length} głosów)</div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
             </div>
             
-            <div class="rating-form">
-              <input type="text" id="nickname-${movie.id}" class="nickname-input" placeholder="Twój nick" maxlength="20">
-              <button class="submit-rating" onclick="submitRating('${movie.id}', 'film')">Dodaj ocenę</button>
-              <p><small>Musisz podać nick i wybrać ocenę (1-5 gwiazdek).</small></p>
-            </div>
+            ${hasRated ? 
+              `<div class="vote-blocked">⚠️ Już oceniłeś ten film z tego urządzenia. Możesz ocenić tylko raz.</div>` :
+              `
+              <div class="rating-form">
+                <input type="text" id="nickname-${movie.id}" class="nickname-input" placeholder="Twój nick" maxlength="20">
+                <button class="submit-rating" onclick="submitRating('${movie.id}', 'film')">Dodaj ocenę</button>
+                <p><small>Każde urządzenie może ocenić tylko raz. Podaj nick i wybierz ocenę.</small></p>
+              </div>
+              `
+            }
             
-            ${movie.ratings.length > 0 ? `
+            ${ratings.length > 0 ? `
             <div class="ratings-list">
-              <h4>Oceny użytkowników:</h4>
-              ${movie.ratings.map(rating => `
+              <h4>Oceny użytkowników (${ratings.length}):</h4>
+              ${ratings.map(rating => `
                 <div class="rating-item">
                   <span class="rating-item-user">${rating.nickname}</span>
-                  <span class="rating-item-stars">${getStarsHTML(rating.rating)}</span>
-                  <span class="rating-item-time">${new Date(rating.timestamp).toLocaleString('pl-PL')}</span>
+                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
+                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
                 </div>
               `).reverse().join('')}
             </div>
-            ` : ''}
+            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
           </div>
           
           <div>
@@ -972,7 +1095,9 @@
     currentRatingType = 'serial';
     currentSection = `series-details-${id}`;
     
-    const avgRating = calculateAverageRating(serie.ratings);
+    const ratings = getRatingsForItem(id);
+    const avgRating = calculateAverageRating(ratings);
+    const hasRated = hasDeviceRated(id);
     
     document.getElementById('series-content').innerHTML = `
       <div style="display: flex; flex-wrap: wrap; gap: 30px;">
@@ -989,32 +1114,37 @@
               <div class="user-rating" id="rating-stars-${serie.id}">
                 ${[1,2,3,4,5].map(star => `
                   <span class="star" data-value="${star}" 
-                        onclick="selectRating(${star}, '${serie.id}', 'serial')"
+                        onclick="selectRating(${star}, '${serie.id}')"
                         onmouseover="highlightStars(${star}, '${serie.id}')"
                         onmouseout="resetStars('${serie.id}')">★</span>
                 `).join('')}
               </div>
-              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${serie.ratings.length} głosów)</div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
             </div>
             
-            <div class="rating-form">
-              <input type="text" id="nickname-${serie.id}" class="nickname-input" placeholder="Twój nick" maxlength="20">
-              <button class="submit-rating" onclick="submitRating('${serie.id}', 'serial')">Dodaj ocenę</button>
-              <p><small>Musisz podać nick i wybrać ocenę (1-5 gwiazdek).</small></p>
-            </div>
+            ${hasRated ? 
+              `<div class="vote-blocked">⚠️ Już oceniłeś ten serial z tego urządzenia. Możesz ocenić tylko raz.</div>` :
+              `
+              <div class="rating-form">
+                <input type="text" id="nickname-${serie.id}" class="nickname-input" placeholder="Twój nick" maxlength="20">
+                <button class="submit-rating" onclick="submitRating('${serie.id}', 'serial')">Dodaj ocenę</button>
+                <p><small>Każde urządzenie może ocenić tylko raz. Podaj nick i wybierz ocenę.</small></p>
+              </div>
+              `
+            }
             
-            ${serie.ratings.length > 0 ? `
+            ${ratings.length > 0 ? `
             <div class="ratings-list">
-              <h4>Oceny użytkowników:</h4>
-              ${serie.ratings.map(rating => `
+              <h4>Oceny użytkowników (${ratings.length}):</h4>
+              ${ratings.map(rating => `
                 <div class="rating-item">
                   <span class="rating-item-user">${rating.nickname}</span>
-                  <span class="rating-item-stars">${getStarsHTML(rating.rating)}</span>
-                  <span class="rating-item-time">${new Date(rating.timestamp).toLocaleString('pl-PL')}</span>
+                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
+                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
                 </div>
               `).reverse().join('')}
             </div>
-            ` : ''}
+            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
           </div>
           
           <div>
@@ -1040,7 +1170,9 @@
     currentRatingType = 'gra';
     currentSection = `game-details-${id}`;
     
-    const avgRating = calculateAverageRating(game.ratings);
+    const ratings = getRatingsForItem(id);
+    const avgRating = calculateAverageRating(ratings);
+    const hasRated = hasDeviceRated(id);
     
     document.getElementById('game-content').innerHTML = `
       <div style="display: flex; flex-wrap: wrap; gap: 30px;">
@@ -1057,32 +1189,37 @@
               <div class="user-rating" id="rating-stars-${game.id}">
                 ${[1,2,3,4,5].map(star => `
                   <span class="star" data-value="${star}" 
-                        onclick="selectRating(${star}, '${game.id}', 'gra')"
+                        onclick="selectRating(${star}, '${game.id}')"
                         onmouseover="highlightStars(${star}, '${game.id}')"
                         onmouseout="resetStars('${game.id}')">★</span>
                 `).join('')}
               </div>
-              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${game.ratings.length} głosów)</div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
             </div>
             
-            <div class="rating-form">
-              <input type="text" id="nickname-${game.id}" class="nickname-input" placeholder="Twój nick" maxlength="20">
-              <button class="submit-rating" onclick="submitRating('${game.id}', 'gra')">Dodaj ocenę</button>
-              <p><small>Musisz podać nick i wybrać ocenę (1-5 gwiazdek).</small></p>
-            </div>
+            ${hasRated ? 
+              `<div class="vote-blocked">⚠️ Już oceniłeś tę grę z tego urządzenia. Możesz ocenić tylko raz.</div>` :
+              `
+              <div class="rating-form">
+                <input type="text" id="nickname-${game.id}" class="nickname-input" placeholder="Twój nick" maxlength="20">
+                <button class="submit-rating" onclick="submitRating('${game.id}', 'gra')">Dodaj ocenę</button>
+                <p><small>Każde urządzenie może ocenić tylko raz. Podaj nick i wybierz ocenę.</small></p>
+              </div>
+              `
+            }
             
-            ${game.ratings.length > 0 ? `
+            ${ratings.length > 0 ? `
             <div class="ratings-list">
-              <h4>Oceny użytkowników:</h4>
-              ${game.ratings.map(rating => `
+              <h4>Oceny użytkowników (${ratings.length}):</h4>
+              ${ratings.map(rating => `
                 <div class="rating-item">
                   <span class="rating-item-user">${rating.nickname}</span>
-                  <span class="rating-item-stars">${getStarsHTML(rating.rating)}</span>
-                  <span class="rating-item-time">${new Date(rating.timestamp).toLocaleString('pl-PL')}</span>
+                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
+                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
                 </div>
               `).reverse().join('')}
             </div>
-            ` : ''}
+            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
           </div>
           
           <div>
@@ -1101,10 +1238,9 @@
   }
 
   // ========== FUNKCJE NOWEGO SYSTEMU OCEN ==========
-  function selectRating(rating, id, type) {
+  function selectRating(rating, id) {
     currentSelectedRating = rating;
     currentRatingItemId = id;
-    currentRatingType = type;
     
     // Podświetl gwiazdki
     const stars = document.querySelectorAll(`#rating-stars-${id} .star`);
@@ -1152,47 +1288,38 @@
       return;
     }
     
-    let item;
-    if (type === 'film') item = moviesData.find(m => m.id === id);
-    else if (type === 'serial') item = seriesData.find(s => s.id === id);
-    else item = gamesData.find(g => g.id === id);
-    
-    if (!item) return;
-    
-    // Sprawdź czy użytkownik już oceniał (po nicku)
-    const existingIndex = item.ratings.findIndex(r => r.nickname === nickname);
-    
-    if (existingIndex !== -1) {
-      // Aktualizuj istniejącą ocenę
-      item.ratings[existingIndex].rating = currentSelectedRating;
-      item.ratings[existingIndex].timestamp = new Date().toISOString();
-    } else {
-      // Dodaj nową ocenę
-      item.ratings.push({
-        nickname: nickname,
-        rating: currentSelectedRating,
-        timestamp: new Date().toISOString()
-      });
+    if (hasDeviceRated(id)) {
+      alert('Już oceniłeś ten element z tego urządzenia!');
+      return;
     }
     
-    // Zapisz w LocalStorage
-    localStorage.setItem(`ratings_${id}`, JSON.stringify(item.ratings));
+    const result = saveRating(id, {
+      nickname: nickname,
+      rating: currentSelectedRating,
+      type: type
+    });
     
-    // Odśwież wyświetlanie
-    if (type === 'film') {
-      showMovieDetails(id);
-      loadMovies(); // Odśwież karty filmów
-    } else if (type === 'serial') {
-      showSeriesDetails(id);
-      loadSeries(); // Odśwież karty seriali
+    if (result.success) {
+      alert(result.message);
+      
+      // Odśwież wyświetlanie
+      if (type === 'film') {
+        showMovieDetails(id);
+        loadMovies();
+      } else if (type === 'serial') {
+        showSeriesDetails(id);
+        loadSeries();
+      } else {
+        showGameDetails(id);
+        loadGames();
+      }
+      
+      // Resetuj formularz
+      currentSelectedRating = 0;
+      nicknameInput.value = '';
     } else {
-      showGameDetails(id);
-      loadGames(); // Odśwież karty gier
+      alert(result.message);
     }
-    
-    // Resetuj formularz
-    currentSelectedRating = 0;
-    nicknameInput.value = '';
   }
 
   // ========== INICJALIZACJA ==========
@@ -1200,14 +1327,24 @@
     // Załaduj zapisany motyw
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.body.setAttribute('data-theme', savedTheme);
-    document.querySelector('.theme-toggle').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
-    
-    // Załaduj oceny
-    loadRatings();
+    const themeButton = document.querySelector('.theme-toggle');
+    themeButton.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+    themeButton.style.color = '#000'; // Czarny tekst
     
     // Pokazuj stronę startową
     showSection('welcome');
+    
+    // Inicjalizuj dane jeśli nie ma
+    if (!localStorage.getItem(SIMULATED_GLOBAL_DB)) {
+      localStorage.setItem(SIMULATED_GLOBAL_DB, JSON.stringify({}));
+    }
+    
+    // Generuj ID urządzenia jeśli nie ma
+    getDeviceId();
   });
+
+  // Poprawka dla touch na mobile
+  document.addEventListener('touchstart', function() {}, {passive: true});
 </script>
 
 </body>
