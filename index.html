@@ -90,9 +90,10 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
 
+    /* POPRAWKA: zwiększono wysokość zdjęć */
     .movie-img, .series-img {
       width: 100%;
-      height: 180px;
+      height: 250px; /* ZMIENIONE: z 180px na 250px */
       object-fit: cover;
     }
 
@@ -167,6 +168,25 @@
     .back-link:hover {
       text-decoration: underline;
     }
+
+    /* Styl dla przycisków Filmweb */
+    .filmweb-button {
+      background: #ff6b00;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+    
+    .filmweb-button:hover {
+      background: #ff8533;
+    }
   </style>
 </head>
 
@@ -197,7 +217,7 @@
       <h3>🎬 Top filmów</h3>
       <div class="movie-grid">
         <div class="movie-card" onclick="showMovieDetails('dobry-zly-brzydki')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0hThvye8txVEob0uSLdvO2UOWcvNW-iKOSg&s">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0hThvye8txVEob0uSLdvO2UOWcvNW-iKOSg&s" alt="Dobry, zły i brzydki" class="movie-img">
           <div class="movie-info">
             <div class="movie-title">🤠 Dobry, zły i brzydki</div>
             <div class="movie-desc">Klasyczny spaghetti western</div>
@@ -205,7 +225,7 @@
         </div>
 
         <div class="movie-card" onclick="showMovieDetails('12-gniewnych')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTToJ5elfoyvyhPJN-9aVj_Y7EssFG3Mp2O3A&s">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTToJ5elfoyvyhPJN-9aVj_Y7EssFG3Mp2O3A&s" alt="Dwunastu gniewnych ludzi" class="movie-img">
           <div class="movie-info">
             <div class="movie-title">⚖️ Dwunastu gniewnych ludzi</div>
             <div class="movie-desc">Dramat sądowy</div>
@@ -213,7 +233,7 @@
         </div>
 
         <div class="movie-card" onclick="showMovieDetails('taxi-driver')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHE1r1K79e6WHRmpKe3ViUl0Vwlb4ac_uyMg&s">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHE1r1K79e6WHRmpKe3ViUl0Vwlb4ac_uyMg&s" alt="Taxi Driver" class="movie-img">
           <div class="movie-info">
             <div class="movie-title">🚕 Taxi Driver</div>
             <div class="movie-desc">Dramat psychologiczny</div>
@@ -221,7 +241,7 @@
         </div>
 
         <div class="movie-card" onclick="showMovieDetails('lsnienie')">
-          <img src="https://img.goodfon.com/original/1920x1080/0/24/dzhek-nikolson-jack-nicholson.jpg">
+          <img src="https://img.goodfon.com/original/1920x1080/0/24/dzhek-nikolson-jack-nicholson.jpg" alt="Lśnienie" class="movie-img">
           <div class="movie-info">
             <div class="movie-title">🔪 Lśnienie</div>
             <div class="movie-desc">Horror psychologiczny</div>
@@ -229,7 +249,7 @@
         </div>
 
         <div class="movie-card" onclick="showMovieDetails('lot-nad-kukulczym-gniazdem')">
-          <img src="https://upload.wikimedia.org/wikipedia/id/f/f6/One_flew_over_the_cuckoo%27s_nest_poster.jpeg">
+          <img src="https://upload.wikimedia.org/wikipedia/id/f/f6/One_flew_over_the_cuckoo%27s_nest_poster.jpeg" alt="Lot nad kukułczym gniazdem" class="movie-img">
           <div class="movie-info">
             <div class="movie-title">🏥 Lot nad kukułczym gniazdem</div>
             <div class="movie-desc">Dramat psychiatryczny</div>
@@ -237,7 +257,7 @@
         </div>
 
         <div class="movie-card" onclick="showMovieDetails('piraci-karaiby')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs8SMTnEZ2TQdoSIrW14559B2HIRvucIKacw&s">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs8SMTnEZ2TQdoSIrW14559B2HIRvucIKacw&s" alt="Piraci z Karaibów" class="movie-img">
           <div class="movie-info">
             <div class="movie-title">🏴‍☠️ Piraci z Karaibów</div>
             <div class="movie-desc">Przygodowy film akcji</div>
@@ -250,7 +270,7 @@
       <h3>📺 Top seriali</h3>
       <div class="series-grid">
         <div class="series-card" onclick="showSeriesDetails('breaking-bad')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd8UKB61gmfCnm2dxSshVYPbpePGGdMfXBYQ&s">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd8UKB61gmfCnm2dxSshVYPbpePGGdMfXBYQ&s" alt="Breaking Bad" class="series-img">
           <div class="series-info">
             <div class="series-title">🧪 Breaking Bad</div>
             <div class="series-desc">Dramat kryminalny</div>
@@ -258,7 +278,7 @@
         </div>
 
         <div class="series-card" onclick="showSeriesDetails('stranger-things')">
-          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/d96bb958-4e6c-4ce0-9447-fbe226fbbecf/df9nfag-55688aea-a979-4ba3-9473-38810d2f17e5.jpg">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/d96bb958-4e6c-4ce0-9447-fbe226fbbecf/df9nfag-55688aea-a979-4ba3-9473-38810d2f17e5.jpg" alt="Stranger Things" class="series-img">
           <div class="series-info">
             <div class="series-title">👾 Stranger Things</div>
             <div class="series-desc">Horror science fiction</div>
@@ -329,47 +349,124 @@
     document.getElementById(id).classList.add('active');
   }
 
-  // Dane filmów
+  // DANE FILMÓW - UŻYWAMY TYCH SAMYCH ZDJĘĆ CO NA KARTACH!
   const movies = {
     'dobry-zly-brzydki': {
       title: '🤠 Dobry, zły i brzydki',
-      image: 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0hThvye8txVEob0uSLdvO2UOWcvNW-iKOSg&s', // TO SAMO ZDJĘCIE
       description: 'Klasyczny spaghetti western Sergio Leone z 1966 roku.',
       details: 'Trzej poszukiwacze skarbu podczas wojny secesyjnej. Clint Eastwood, Lee Van Cleef i Eli Wallach w głównych rolach.',
-      rating: '⭐ 8.8/10'
+      rating: '⭐ 8.8/10',
+      year: '1966',
+      director: 'Sergio Leone'
     },
     '12-gniewnych': {
       title: '⚖️ Dwunastu gniewnych ludzi',
-      image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTToJ5elfoyvyhPJN-9aVj_Y7EssFG3Mp2O3A&s', // TO SAMO ZDJĘCIE
       description: 'Dramat sądowy z 1957 roku.',
       details: 'Dwunastu członków ławy przysięgłych debatuje nad losem nastolatka oskarżonego o zabójstwo ojca.',
-      rating: '⭐ 9.0/10'
+      rating: '⭐ 9.0/10',
+      year: '1957',
+      director: 'Sidney Lumet'
+    },
+    'taxi-driver': {
+      title: '🚕 Taxi Driver',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHE1r1K79e6WHRmpKe3ViUl0Vwlb4ac_uyMg&s', // TO SAMO ZDJĘCIE
+      description: 'Dramat psychologiczny z 1976 roku.',
+      details: 'Travis Bickle, weteran wojny wietnamskiej, pracuje jako taksówkarz nocą w Nowym Jorku.',
+      rating: '⭐ 8.2/10',
+      year: '1976',
+      director: 'Martin Scorsese'
+    },
+    'lsnienie': {
+      title: '🔪 Lśnienie',
+      image: 'https://img.goodfon.com/original/1920x1080/0/24/dzhek-nikolson-jack-nicholson.jpg', // TO SAMO ZDJĘCIE
+      description: 'Horror psychologiczny z 1980 roku.',
+      details: 'Jack Torrance podejmuje pracę jako stróż w odizolowanym hotelu Overlook. Izolacja wpływa na jego psychikę.',
+      rating: '⭐ 8.4/10',
+      year: '1980',
+      director: 'Stanley Kubrick'
+    },
+    'lot-nad-kukulczym-gniazdem': {
+      title: '🏥 Lot nad kukułczym gniazdem',
+      image: 'https://upload.wikimedia.org/wikipedia/id/f/f6/One_flew_over_the_cuckoo%27s_nest_poster.jpeg', // TO SAMO ZDJĘCIE
+      description: 'Dramat psychiatryczny z 1975 roku.',
+      details: 'Randle McMurphy udaje chorego psychicznie, by uniknąć więzienia. Trafia do szpitala psychiatrycznego.',
+      rating: '⭐ 8.7/10',
+      year: '1975',
+      director: 'Miloš Forman'
+    },
+    'piraci-karaiby': {
+      title: '🏴‍☠️ Piraci z Karaibów: Klątwa Czarnej Perły',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs8SMTnEZ2TQdoSIrW14559B2HIRvucIKacw&s', // TO SAMO ZDJĘCIE
+      description: 'Przygodowy film akcji z 2003 roku.',
+      details: 'Kapitan Jack Sparrow i kowal Will Turner ruszają uratować porwaną Elizabeth Swann.',
+      rating: '⭐ 8.0/10',
+      year: '2003',
+      director: 'Gore Verbinski'
     }
   };
 
-  // Dane seriali
+  // DANE SERIALI - UŻYWAMY TYCH SAMYCH ZDJĘĆ CO NA KARTACH!
   const series = {
     'breaking-bad': {
       title: '🧪 Breaking Bad',
-      image: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-      description: 'Dramat kryminalny z 2008-2013.',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd8UKB61gmfCnm2dxSshVYPbpePGGdMfXBYQ&s', // TO SAMO ZDJĘCIE
+      description: 'Dramat kryminalny z lat 2008-2013.',
       details: 'Nauczyciel chemii chory na raka zaczyna produkować metamfetaminę, aby zabezpieczyć finansowo rodzinę.',
       seasons: '5 sezonów',
-      rating: '⭐ 9.5/10'
+      rating: '⭐ 9.5/10',
+      years: '2008-2013'
+    },
+    'stranger-things': {
+      title: '👾 Stranger Things',
+      image: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/d96bb958-4e6c-4ce0-9447-fbe226fbbecf/df9nfag-55688aea-a979-4ba3-9473-38810d2f17e5.jpg', // TO SAMO ZDJĘCIE
+      description: 'Horror science fiction od 2016 roku.',
+      details: 'Grupa dzieci w Hawkins w Indianie bada zaginięcie przyjaciela i odkrywa tajemnicze zjawiska.',
+      seasons: '4 sezony',
+      rating: '⭐ 8.7/10',
+      years: '2016-obecnie'
     }
   };
 
-  // Dane gier
+  // DANE GIER
   const games = {
     'lol': {
       title: '⚔️ League of Legends',
-      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/League_of_Legends_2019_vector.svg',
       description: 'MOBA (Multiplayer Online Battle Arena)',
       details: 'Popularna gra strategiczna 5v5, w której gracze kontrolują "czampionów" z unikalnymi umiejętnościami.',
       genre: 'MOBA, Strategia',
       year: '2009'
+    },
+    'gta': {
+      title: '🚗 GTA V',
+      image: 'https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png',
+      description: 'Gra akcji z otwartym światem',
+      details: 'Trzy różne postacie w fikcyjnym mieście Los Santos przeplatają swoje historie.',
+      genre: 'Akcja, Przygodowa',
+      year: '2013'
+    },
+    'fortnite': {
+      title: '🏰 Fortnite',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png',
+      description: 'Battle royale i gra survivalowa',
+      details: '100 graczy walczy na wyspie, aż zostanie tylko jeden.',
+      genre: 'Battle Royale, Survival',
+      year: '2017'
+    },
+    'rdr2': {
+      title: '🤠 Red Dead Redemption 2',
+      image: 'https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg',
+      description: 'Gra akcji z otwartym światem',
+      details: 'Przygody bandy Van der Linde na Dzikim Zachodzie w 1899 roku.',
+      genre: 'Akcja, Przygodowa',
+      year: '2018'
     }
   };
+
+  // LINK DO TWOJEGO PROFILU FILMWEB
+  const filmwebProfile = 'https://www.filmweb.pl/user/JasieKnow';
 
   function showMovieDetails(id) {
     const movie = movies[id] || {
@@ -377,20 +474,24 @@
       image: 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
       description: 'Opis filmu',
       details: 'Szczegóły wkrótce...',
-      rating: '⭐ Ocena'
+      rating: '⭐ Ocena',
+      year: 'Rok',
+      director: 'Reżyser'
     };
     
     document.getElementById('details-content').innerHTML = `
       <div style="display: flex; gap: 30px; align-items: flex-start;">
-        <img src="${movie.image}" alt="${movie.title}" style="width: 300px; border-radius: 10px;">
+        <img src="${movie.image}" alt="${movie.title}" style="width: 300px; height: 450px; object-fit: cover; border-radius: 10px;">
         <div>
           <h2 style="margin-top: 0;">${movie.title}</h2>
           <p style="font-size: 18px;">${movie.description}</p>
           <p>${movie.details}</p>
           <p><strong>Ocena:</strong> ${movie.rating}</p>
-          <button style="background: #ffd700; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 20px;" onclick="alert('Więcej informacji wkrótce!')">
-            🎬 Zobacz więcej
-          </button>
+          <p><strong>Rok produkcji:</strong> ${movie.year}</p>
+          <p><strong>Reżyser:</strong> ${movie.director}</p>
+          <a href="${filmwebProfile}" target="_blank" class="filmweb-button">
+            🎬 Zobacz mój profil na Filmweb
+          </a>
         </div>
       </div>
     `;
@@ -403,21 +504,24 @@
       image: 'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
       description: 'Opis serialu',
       details: 'Szczegóły wkrótce...',
-      rating: '⭐ Ocena'
+      rating: '⭐ Ocena',
+      seasons: 'Liczba sezonów',
+      years: 'Lata emisji'
     };
     
     document.getElementById('series-content').innerHTML = `
       <div style="display: flex; gap: 30px; align-items: flex-start;">
-        <img src="${serie.image}" alt="${serie.title}" style="width: 300px; border-radius: 10px;">
+        <img src="${serie.image}" alt="${serie.title}" style="width: 300px; height: 450px; object-fit: cover; border-radius: 10px;">
         <div>
           <h2 style="margin-top: 0;">${serie.title}</h2>
           <p style="font-size: 18px;">${serie.description}</p>
           <p>${serie.details}</p>
-          <p><strong>Liczba sezonów:</strong> ${serie.seasons || 'Brak danych'}</p>
           <p><strong>Ocena:</strong> ${serie.rating}</p>
-          <button style="background: #ffd700; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 20px;" onclick="alert('Więcej informacji wkrótce!')">
-            📺 Zobacz więcej
-          </button>
+          <p><strong>Liczba sezonów:</strong> ${serie.seasons}</p>
+          <p><strong>Lata emisji:</strong> ${serie.years}</p>
+          <a href="${filmwebProfile}" target="_blank" class="filmweb-button">
+            📺 Zobacz mój profil na Filmweb
+          </a>
         </div>
       </div>
     `;
@@ -436,16 +540,16 @@
     
     document.getElementById('game-content').innerHTML = `
       <div style="display: flex; gap: 30px; align-items: flex-start;">
-        <img src="${game.image}" alt="${game.title}" style="width: 300px; border-radius: 10px;">
+        <img src="${game.image}" alt="${game.title}" style="width: 300px; height: 300px; object-fit: contain; background: white; padding: 20px; border-radius: 10px;">
         <div>
           <h2 style="margin-top: 0;">${game.title}</h2>
           <p style="font-size: 18px;">${game.description}</p>
           <p>${game.details}</p>
           <p><strong>Gatunek:</strong> ${game.genre}</p>
           <p><strong>Rok wydania:</strong> ${game.year}</p>
-          <button style="background: #ffd700; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 20px;" onclick="alert('Więcej informacji wkrótce!')">
-            🎮 Zobacz więcej
-          </button>
+          <a href="${filmwebProfile}" target="_blank" class="filmweb-button">
+            🎮 Zobacz mój profil na Filmweb
+          </a>
         </div>
       </div>
     `;
