@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>JasieKnow compilations</title>
-
   <style>
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background-color: #6b7a3c; /* oliwkowe tło */
+      background-color: #6b7a3c;
       color: #f5f5f0;
     }
 
@@ -47,7 +46,7 @@
     .section {
       display: none;
       padding: 40px;
-      max-width: 1000px;
+      max-width: 1200px;
       margin: auto;
     }
 
@@ -58,6 +57,7 @@
     h2 {
       border-bottom: 2px solid #f5f5f0;
       padding-bottom: 10px;
+      margin-bottom: 30px;
     }
 
     .columns {
@@ -68,24 +68,77 @@
 
     .column {
       flex: 1;
-      background-color: #5a6933;
-      padding: 20px;
-      border-radius: 10px;
     }
 
-    ul {
-      list-style-type: square;
-      padding-left: 20px;
+    .movie-grid, .series-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .movie-card, .series-card {
+      background-color: #5a6933;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .movie-card:hover, .series-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .movie-img, .series-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .movie-info, .series-info {
+      padding: 15px;
+    }
+
+    .movie-title, .series-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .movie-desc, .series-desc {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .game-list {
+      list-style-type: none;
+      padding: 0;
     }
 
     .game-list li {
+      background-color: #5a6933;
       margin: 15px 0;
+      padding: 15px;
+      border-radius: 10px;
       font-size: 18px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .game-list li:hover {
+      transform: translateX(10px);
     }
 
     .game-icon {
-      font-size: 24px;
-      margin-right: 10px;
+      font-size: 30px;
+      margin-right: 15px;
+    }
+
+    .game-name {
+      flex-grow: 1;
     }
 
     footer {
@@ -102,6 +155,18 @@
       color: #f5f5f0;
       opacity: 0.8;
     }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -117,7 +182,6 @@
   <a href="#" onclick="showSection('studia')">Studia</a>
 </nav>
 
-<!-- Sekcja powitalna (widoczna na start) -->
 <div id="welcome" class="section active">
   <div class="welcome-message">
     <h2>👋 Witaj na stronie!</h2>
@@ -131,34 +195,118 @@
   <div class="columns">
     <div class="column">
       <h3>🎬 Top filmów</h3>
-      <ul>
-        <li>🤠 Dobry, zły i brzydki</li>
-        <li>⚖️ Dwunastu gniewnych ludzi</li>
-        <li>🚕 Taxi Driver</li>
-        <li>🔪 Lśnienie</li>
-        <li>🏥 Lot nad kukułczym gniazdem</li>
-        <li>🏴‍☠️ Piraci z Karaibów: Klątwa Czarnej Perły</li>
-      </ul>
+      <div class="movie-grid">
+        <div class="movie-card" onclick="showMovieDetails('dobry-zly-brzydki')">
+          <img src="https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Western" class="movie-img">
+          <div class="movie-info">
+            <div class="movie-title">🤠 Dobry, zły i brzydki</div>
+            <div class="movie-desc">Klasyczny spaghetti western</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="showMovieDetails('12-gniewnych')">
+          <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Sąd" class="movie-img">
+          <div class="movie-info">
+            <div class="movie-title">⚖️ Dwunastu gniewnych ludzi</div>
+            <div class="movie-desc">Dramat sądowy</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="showMovieDetails('taxi-driver')">
+          <img src="https://images.unsplash.com/photo-1503803548695-c2a7b4a5b875?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Taksówka" class="movie-img">
+          <div class="movie-info">
+            <div class="movie-title">🚕 Taxi Driver</div>
+            <div class="movie-desc">Dramat psychologiczny</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="showMovieDetails('lsnienie')">
+          <img src="https://images.unsplash.com/photo-1514539079130-25950c84af65?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Hotel" class="movie-img">
+          <div class="movie-info">
+            <div class="movie-title">🔪 Lśnienie</div>
+            <div class="movie-desc">Horror psychologiczny</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="showMovieDetails('lot-nad-kukulczym-gniazdem')">
+          <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Szpital" class="movie-img">
+          <div class="movie-info">
+            <div class="movie-title">🏥 Lot nad kukułczym gniazdem</div>
+            <div class="movie-desc">Dramat psychiatryczny</div>
+          </div>
+        </div>
+
+        <div class="movie-card" onclick="showMovieDetails('piraci-karaiby')">
+          <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Statek" class="movie-img">
+          <div class="movie-info">
+            <div class="movie-title">🏴‍☠️ Piraci z Karaibów</div>
+            <div class="movie-desc">Przygodowy film akcji</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="column">
       <h3>📺 Top seriali</h3>
-      <ul>
-        <li>🧪 Breaking Bad</li>
-        <li>👾 Stranger Things</li>
-      </ul>
+      <div class="series-grid">
+        <div class="series-card" onclick="showSeriesDetails('breaking-bad')">
+          <img src="https://images.unsplash.com/photo-1557672172-298e090bd0f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Chemia" class="series-img">
+          <div class="series-info">
+            <div class="series-title">🧪 Breaking Bad</div>
+            <div class="series-desc">Dramat kryminalny</div>
+          </div>
+        </div>
+
+        <div class="series-card" onclick="showSeriesDetails('stranger-things')">
+          <img src="https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Tajemnica" class="series-img">
+          <div class="series-info">
+            <div class="series-title">👾 Stranger Things</div>
+            <div class="series-desc">Horror science fiction</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
+<!-- Sekcja szczegółów filmu -->
+<div id="movie-details" class="section" style="display: none;">
+  <a href="#" class="back-link" onclick="showSection('filmy')">← Wróć do listy filmów</a>
+  <div id="details-content"></div>
+</div>
+
+<!-- Sekcja szczegółów serialu -->
+<div id="series-details" class="section" style="display: none;">
+  <a href="#" class="back-link" onclick="showSection('filmy')">← Wróć do listy seriali</a>
+  <div id="series-content"></div>
 </div>
 
 <div id="gry" class="section">
   <h2>Gry</h2>
   <ul class="game-list">
-    <li><span class="game-icon">⚔️</span> League of Legends</li>
-    <li><span class="game-icon">🚗</span> GTA V</li>
-    <li><span class="game-icon">🏰</span> Fortnite</li>
-    <li><span class="game-icon">🤠</span> Red Dead Redemption 2</li>
+    <li onclick="showGameDetails('lol')">
+      <span class="game-icon">⚔️</span>
+      <span class="game-name">League of Legends</span>
+    </li>
+    <li onclick="showGameDetails('gta')">
+      <span class="game-icon">🚗</span>
+      <span class="game-name">GTA V</span>
+    </li>
+    <li onclick="showGameDetails('fortnite')">
+      <span class="game-icon">🏰</span>
+      <span class="game-name">Fortnite</span>
+    </li>
+    <li onclick="showGameDetails('rdr2')">
+      <span class="game-icon">🤠</span>
+      <span class="game-name">Red Dead Redemption 2</span>
+    </li>
   </ul>
+</div>
+
+<!-- Sekcja szczegółów gry -->
+<div id="game-details" class="section" style="display: none;">
+  <a href="#" class="back-link" onclick="showSection('gry')">← Wróć do listy gier</a>
+  <div id="game-content"></div>
 </div>
 
 <div id="studia" class="section">
@@ -173,13 +321,140 @@
 <script>
   function showSection(id) {
     const sections = document.querySelectorAll('.section');
-    sections.forEach(section => section.classList.remove('active'));
+    sections.forEach(section => {
+      section.style.display = 'none';
+      section.classList.remove('active');
+    });
+    document.getElementById(id).style.display = 'block';
     document.getElementById(id).classList.add('active');
   }
-  
-  // Ukryj sekcję filmów na starcie (już jest ukryta przez CSS)
+
+  // Dane filmów
+  const movies = {
+    'dobry-zly-brzydki': {
+      title: '🤠 Dobry, zły i brzydki',
+      image: 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      description: 'Klasyczny spaghetti western Sergio Leone z 1966 roku.',
+      details: 'Trzej poszukiwacze skarbu podczas wojny secesyjnej. Clint Eastwood, Lee Van Cleef i Eli Wallach w głównych rolach.',
+      rating: '⭐ 8.8/10'
+    },
+    '12-gniewnych': {
+      title: '⚖️ Dwunastu gniewnych ludzi',
+      image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      description: 'Dramat sądowy z 1957 roku.',
+      details: 'Dwunastu członków ławy przysięgłych debatuje nad losem nastolatka oskarżonego o zabójstwo ojca.',
+      rating: '⭐ 9.0/10'
+    }
+  };
+
+  // Dane seriali
+  const series = {
+    'breaking-bad': {
+      title: '🧪 Breaking Bad',
+      image: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      description: 'Dramat kryminalny z 2008-2013.',
+      details: 'Nauczyciel chemii chory na raka zaczyna produkować metamfetaminę, aby zabezpieczyć finansowo rodzinę.',
+      seasons: '5 sezonów',
+      rating: '⭐ 9.5/10'
+    }
+  };
+
+  // Dane gier
+  const games = {
+    'lol': {
+      title: '⚔️ League of Legends',
+      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      description: 'MOBA (Multiplayer Online Battle Arena)',
+      details: 'Popularna gra strategiczna 5v5, w której gracze kontrolują "czampionów" z unikalnymi umiejętnościami.',
+      genre: 'MOBA, Strategia',
+      year: '2009'
+    }
+  };
+
+  function showMovieDetails(id) {
+    const movie = movies[id] || {
+      title: 'Film',
+      image: 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      description: 'Opis filmu',
+      details: 'Szczegóły wkrótce...',
+      rating: '⭐ Ocena'
+    };
+    
+    document.getElementById('details-content').innerHTML = `
+      <div style="display: flex; gap: 30px; align-items: flex-start;">
+        <img src="${movie.image}" alt="${movie.title}" style="width: 300px; border-radius: 10px;">
+        <div>
+          <h2 style="margin-top: 0;">${movie.title}</h2>
+          <p style="font-size: 18px;">${movie.description}</p>
+          <p>${movie.details}</p>
+          <p><strong>Ocena:</strong> ${movie.rating}</p>
+          <button style="background: #ffd700; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 20px;" onclick="alert('Więcej informacji wkrótce!')">
+            🎬 Zobacz więcej
+          </button>
+        </div>
+      </div>
+    `;
+    showSection('movie-details');
+  }
+
+  function showSeriesDetails(id) {
+    const serie = series[id] || {
+      title: 'Serial',
+      image: 'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      description: 'Opis serialu',
+      details: 'Szczegóły wkrótce...',
+      rating: '⭐ Ocena'
+    };
+    
+    document.getElementById('series-content').innerHTML = `
+      <div style="display: flex; gap: 30px; align-items: flex-start;">
+        <img src="${serie.image}" alt="${serie.title}" style="width: 300px; border-radius: 10px;">
+        <div>
+          <h2 style="margin-top: 0;">${serie.title}</h2>
+          <p style="font-size: 18px;">${serie.description}</p>
+          <p>${serie.details}</p>
+          <p><strong>Liczba sezonów:</strong> ${serie.seasons || 'Brak danych'}</p>
+          <p><strong>Ocena:</strong> ${serie.rating}</p>
+          <button style="background: #ffd700; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 20px;" onclick="alert('Więcej informacji wkrótce!')">
+            📺 Zobacz więcej
+          </button>
+        </div>
+      </div>
+    `;
+    showSection('series-details');
+  }
+
+  function showGameDetails(id) {
+    const game = games[id] || {
+      title: 'Gra',
+      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      description: 'Opis gry',
+      details: 'Szczegóły wkrótce...',
+      genre: 'Gatunek',
+      year: 'Rok wydania'
+    };
+    
+    document.getElementById('game-content').innerHTML = `
+      <div style="display: flex; gap: 30px; align-items: flex-start;">
+        <img src="${game.image}" alt="${game.title}" style="width: 300px; border-radius: 10px;">
+        <div>
+          <h2 style="margin-top: 0;">${game.title}</h2>
+          <p style="font-size: 18px;">${game.description}</p>
+          <p>${game.details}</p>
+          <p><strong>Gatunek:</strong> ${game.genre}</p>
+          <p><strong>Rok wydania:</strong> ${game.year}</p>
+          <button style="background: #ffd700; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 20px;" onclick="alert('Więcej informacji wkrótce!')">
+            🎮 Zobacz więcej
+          </button>
+        </div>
+      </div>
+    `;
+    showSection('game-details');
+  }
+
+  // Pokazuj sekcję welcome na start
   document.addEventListener('DOMContentLoaded', function() {
-    // Sekcja "welcome" jest już aktywna na start
+    showSection('welcome');
   });
 </script>
 
