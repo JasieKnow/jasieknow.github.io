@@ -1530,7 +1530,57 @@
   });
 
   // Poprawka dla touch
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
+
+  // Konfiguracja Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyDn9PUtoS_FCJ2suERmjlaaGTN_QyNQlnc",
+    authDomain: "jan-nowacki-strona.firebaseapp.com",
+    projectId: "jan-nowacki-strona",
+    storageBucket: "jan-nowacki-strona.firebasestorage.app",
+    messagingSenderId: "285278073942",
+    appId: "1:285278073942:web:c9581a6aed987d17b037f7"
+  };
+
+  // Inicjalizacja Firebase
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  // Funkcja dodawania oceny
+  function dodajOcene(wartosc) {
+    const ocenaRef = ref(database, 'oceny');
+    push(ocenaRef, {
+      wartosc: wartosc,
+      czas: Date.now()
+    });
+  }
+
+  // Wyświetlanie średniej ocen w czasie rzeczywistym
+  const ocenyRef = ref(database, 'oceny');
+  onValue(ocenyRef, (snapshot) => {
+    const dane = snapshot.val();
+    if (dane) {
+      const oceny = Object.values(dane).map(o => o.wartosc);
+      const suma = oceny.reduce((a,b) => a+b, 0);
+      const srednia = (suma / oceny.length).toFixed(2);
+      document.getElementById('srednia').innerText = srednia;
+    }
+  });
+
+  // Obsługa touch (jak było u Ciebie)
   document.addEventListener('touchstart', function() {}, {passive: true});
 </script>
+
+<!-- Tutaj dodajemy przyciski do ocen -->
+<h2>Średnia ocen: <span id="srednia">0</span></h2>
+<button onclick="dodajOcene(1)">1</button>
+<button onclick="dodajOcene(2)">2</button>
+<button onclick="dodajOcene(3)">3</button>
+<button onclick="dodajOcene(4)">4</button>
+<button onclick="dodajOcene(5)">5</button>
+
 </body>
 </html>
+
