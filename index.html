@@ -15,6 +15,11 @@
       --text-color: #f5f5f0;
       --accent-color: #ffd700;
       --shadow: rgba(0,0,0,0.3);
+      --filmweb: #ff6500;
+      --imdb: #f5c518;
+      --rotten: #fa3200;
+      --letterboxd: #00a54c;
+      --metacritic: #000000;
     }
 
     [data-theme="light"] {
@@ -25,24 +30,31 @@
       --text-color: #333333;
       --accent-color: #ff6b00;
       --shadow: rgba(0,0,0,0.1);
+      --filmweb: #ff6500;
+      --imdb: #f5c518;
+      --rotten: #fa3200;
+      --letterboxd: #00a54c;
+      --metacritic: #000000;
     }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: var(--primary-color);
       color: var(--text-color);
       transition: background-color 0.3s, color 0.3s;
       -webkit-tap-highlight-color: transparent;
+      line-height: 1.6;
     }
 
     header {
       background-color: var(--secondary-color);
-      padding: 20px;
+      padding: 25px 20px;
       text-align: center;
       cursor: pointer;
       transition: background-color 0.3s;
       position: relative;
+      box-shadow: 0 4px 12px var(--shadow);
     }
 
     header:hover {
@@ -53,6 +65,7 @@
       margin: 0;
       font-size: 36px;
       letter-spacing: 2px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     }
 
     /* Przycisk zmiany motywu */
@@ -63,33 +76,46 @@
       background: var(--accent-color);
       border: none;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1000;
       color: #000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
     }
 
     /* Wyszukiwarka */
     .search-container {
       max-width: 800px;
-      margin: 0 auto 30px;
+      margin: 0 auto 40px;
       position: relative;
     }
 
     .search-input {
       width: 100%;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 25px;
+      padding: 15px 25px;
+      border: 2px solid var(--accent-color);
+      border-radius: 30px;
       background: var(--card-color);
       color: var(--text-color);
       font-size: 16px;
-      box-shadow: 0 4px 6px var(--shadow);
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: all 0.3s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 6px 16px var(--shadow);
+      border-color: var(--text-color);
     }
 
     .search-input::placeholder {
@@ -102,8 +128,9 @@
       justify-content: center;
       gap: 40px;
       background-color: var(--nav-color);
-      padding: 15px 0;
+      padding: 18px 0;
       flex-wrap: wrap;
+      box-shadow: 0 4px 12px var(--shadow);
     }
 
     nav a {
@@ -112,36 +139,58 @@
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      padding: 5px 15px;
-      border-radius: 5px;
-      transition: background-color 0.3s;
+      padding: 8px 20px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     nav a:hover {
       background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .section {
       display: none;
-      padding: 40px 20px;
-      max-width: 1200px;
+      padding: 50px 20px;
+      max-width: 1400px;
       margin: auto;
     }
 
     .section.active {
       display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
-      border-bottom: 2px solid var(--text-color);
-      padding-bottom: 10px;
-      margin-bottom: 30px;
+      border-bottom: 3px solid var(--accent-color);
+      padding-bottom: 15px;
+      margin-bottom: 40px;
+      font-size: 32px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin: 30px 0 20px;
+      padding-left: 10px;
+      border-left: 4px solid var(--accent-color);
     }
 
     .columns {
       display: flex;
-      gap: 40px;
-      margin-top: 20px;
+      gap: 60px;
+      margin-top: 30px;
       flex-wrap: wrap;
     }
 
@@ -150,82 +199,103 @@
       min-width: 300px;
     }
 
+    /* Sekcje filmów i seriali obok siebie */
+    .media-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 1100px) {
+      .media-columns {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
     .movie-grid, .series-grid, .game-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
       margin-top: 20px;
     }
 
     .movie-card, .series-card, .game-card {
       background-color: var(--card-color);
-      border-radius: 10px;
+      border-radius: 15px;
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.3s, box-shadow 0.3s;
       position: relative;
+      box-shadow: 0 6px 16px var(--shadow);
     }
 
     .movie-card:hover, .series-card:hover, .game-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px var(--shadow);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px var(--shadow);
     }
 
-    /* Średnia ocena w lewym górnym rogu zdjęcia */
-    .card-rating-badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: rgba(0, 0, 0, 0.8);
-      color: #ffd700;
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 14px;
+    /* System ocen zewnętrznych */
+    .external-ratings {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 15px 0;
+      padding: 0 15px;
+    }
+
+    .rating-item {
       display: flex;
       align-items: center;
-      gap: 5px;
-      z-index: 10;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .rating-item.filmweb { background-color: rgba(255, 101, 0, 0.2); color: var(--filmweb); }
+    .rating-item.imdb { background-color: rgba(245, 197, 24, 0.2); color: var(--imdb); }
+    .rating-item.rotten { background-color: rgba(250, 50, 0, 0.2); color: var(--rotten); }
+    .rating-item.letterboxd { background-color: rgba(0, 165, 76, 0.2); color: var(--letterboxd); }
+    .rating-item.metacritic { background-color: rgba(0, 0, 0, 0.2); color: var(--metacritic); }
+
+    .rating-icon {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .rating-value {
+      font-weight: bold;
     }
 
     .movie-img, .series-img, .game-img {
       width: 100%;
-      height: 250px;
+      height: 350px;
       object-fit: cover;
+      border-bottom: 3px solid var(--accent-color);
     }
 
     .movie-info, .series-info, .game-info {
-      padding: 15px;
+      padding: 20px;
     }
 
     .movie-title, .series-title, .game-title {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
     }
 
     .movie-desc, .series-desc, .game-desc {
-      font-size: 14px;
+      font-size: 15px;
       opacity: 0.9;
-      margin-bottom: 10px;
-    }
-
-    /* System ocen na karcie */
-    .card-rating {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    .rating-stars {
-      color: var(--accent-color);
-    }
-
-    .rating-count {
-      opacity: 0.7;
-      font-size: 12px;
+      margin-bottom: 15px;
+      line-height: 1.5;
     }
 
     .game-list {
@@ -236,329 +306,288 @@
     .game-list li {
       background-color: var(--card-color);
       margin: 15px 0;
-      padding: 15px;
-      border-radius: 10px;
+      padding: 20px;
+      border-radius: 12px;
       font-size: 18px;
       display: flex;
       align-items: center;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 8px var(--shadow);
     }
 
     .game-list li:hover {
       transform: translateX(10px);
+      box-shadow: 0 8px 16px var(--shadow);
     }
 
     .game-icon {
-      font-size: 30px;
-      margin-right: 15px;
+      font-size: 32px;
+      margin-right: 20px;
+      min-width: 50px;
+      text-align: center;
     }
 
     .game-name {
       flex-grow: 1;
+      font-weight: bold;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
+      padding: 30px;
       font-size: 14px;
       opacity: 0.8;
+      margin-top: 50px;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
     
     .welcome-message {
       text-align: center;
-      padding: 60px 20px;
-      font-size: 20px;
+      padding: 80px 20px;
+      font-size: 22px;
       color: var(--text-color);
-      opacity: 0.8;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .welcome-message h2 {
+      border: none;
+      justify-content: center;
+      font-size: 42px;
+      margin-bottom: 30px;
     }
 
     .back-link {
-      display: inline-block;
-      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 30px;
       color: var(--accent-color);
       text-decoration: none;
       font-weight: bold;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      background: var(--card-color);
+      transition: all 0.3s;
     }
 
     .back-link:hover {
-      text-decoration: underline;
+      background: var(--secondary-color);
+      transform: translateX(-5px);
+      text-decoration: none;
     }
 
-    /* Styl dla przycisków - czarny tekst na żółtym tle */
-    .filmweb-button, .trailer-button, .submit-rating, .change-rating-button {
+    /* Styl dla przycisków */
+    .filmweb-button, .trailer-button, .imdb-button, .rotten-button, .letterboxd-button {
       background: var(--accent-color);
       color: #000000 !important;
       border: none;
       padding: 12px 24px;
-      border-radius: 5px;
+      border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
-      margin: 10px 10px 0 0;
+      margin: 10px 15px 10px 0;
       text-decoration: none;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       font-size: 16px;
-      transition: opacity 0.3s;
+      transition: all 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     
-    .filmweb-button:hover, .trailer-button:hover, .submit-rating:hover, .change-rating-button:hover {
+    .filmweb-button:hover, .trailer-button:hover, .imdb-button:hover, .rotten-button:hover, .letterboxd-button:hover {
       opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
     }
 
-    /* System ocen w szczegółach */
-    .details-rating {
-      margin: 20px 0;
-      padding: 15px;
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    /* Styl dla szczegółów */
+    .details-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 30px;
+    }
+
+    .details-poster {
+      width: 100%;
+      max-width: 350px;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .details-info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .details-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    .meta-item {
       background: var(--card-color);
-      border-radius: 10px;
-    }
-
-    .rating-container {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-
-    .user-rating {
-      display: flex;
-      gap: 5px;
-      cursor: pointer;
-    }
-
-    .star {
-      font-size: 24px;
-      color: #ccc;
-      transition: color 0.2s;
-      padding: 5px;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .star:hover, .star.active {
-      color: var(--accent-color);
-    }
-
-    /* Formularz oceny z nickiem */
-    .rating-form {
-      margin-top: 15px;
       padding: 15px;
-      background: rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
-
-    .nickname-input {
-      width: 200px;
-      padding: 8px 12px;
-      border: 1px solid var(--accent-color);
-      border-radius: 4px;
-      background: var(--primary-color);
-      color: var(--text-color);
-      margin-right: 10px;
-    }
-
-    /* Lista ocen użytkowników - równo ułożone */
-    .ratings-list {
-      margin-top: 20px;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .ratings-list h4 {
-      margin-bottom: 10px;
-      border-bottom: 1px solid var(--text-color);
-      padding-bottom: 5px;
-    }
-
-    .rating-item {
-      display: flex;
-      align-items: center;
-      padding: 8px 12px;
-      margin: 5px 0;
-      background: rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .rating-item-user {
-      font-weight: bold;
-      color: var(--accent-color);
-      min-width: 120px;
-      word-break: break-word;
-    }
-
-    .rating-item-stars {
-      color: var(--accent-color);
-      font-size: 18px;
-      min-width: 100px;
+      border-radius: 10px;
       text-align: center;
     }
 
-    .rating-item-time {
-      font-size: 12px;
-      opacity: 0.7;
-      min-width: 150px;
-      text-align: right;
+    .meta-label {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 5px;
     }
 
-    /* Modal do zmiany oceny */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      display: none;
-    }
-
-    .modal-content {
-      background: var(--card-color);
-      padding: 25px;
-      border-radius: 10px;
-      max-width: 400px;
-      width: 90%;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      background: #ff4444;
-      color: white;
-      border: none;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-close:hover {
-      background: #ff6666;
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      justify-content: flex-end;
-    }
-
-    .modal-cancel, .modal-confirm {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+    .meta-value {
+      font-size: 18px;
       font-weight: bold;
+      color: var(--accent-color);
     }
 
-    .modal-cancel {
-      background: #666;
-      color: white;
+    /* System ocen zewnętrznych w szczegółach */
+    .external-ratings-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
     }
 
-    .modal-confirm {
-      background: var(--accent-color);
-      color: #000;
+    .rating-card {
+      background: var(--card-color);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: transform 0.3s;
+    }
+
+    .rating-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .rating-card.filmweb { border-top: 4px solid var(--filmweb); }
+    .rating-card.imdb { border-top: 4px solid var(--imdb); }
+    .rating-card.rotten { border-top: 4px solid var(--rotten); }
+    .rating-card.letterboxd { border-top: 4px solid var(--letterboxd); }
+    .rating-card.metacritic { border-top: 4px solid var(--metacritic); }
+
+    .rating-source {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .rating-main {
+      font-size: 36px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .rating-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .rating-link:hover {
+      text-decoration: underline;
     }
 
     /* Mobile styles */
     @media (max-width: 768px) {
       header h1 {
         font-size: 28px;
-        padding-right: 50px;
+        padding-right: 60px;
       }
       
       .theme-toggle {
         top: 15px;
         right: 15px;
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
       }
       
       nav {
-        gap: 15px;
-        padding: 10px;
+        gap: 10px;
+        padding: 15px;
       }
       
       nav a {
         font-size: 16px;
-        padding: 8px 12px;
-      }
-      
-      .movie-grid, .series-grid, .game-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 15px;
-      }
-      
-      .movie-img, .series-img, .game-img {
-        height: 180px;
+        padding: 10px 15px;
       }
       
       .section {
-        padding: 20px 15px;
+        padding: 30px 15px;
       }
       
-      .columns {
+      h2 {
+        font-size: 28px;
+      }
+      
+      h3 {
+        font-size: 22px;
+      }
+      
+      .media-columns {
+        gap: 30px;
+      }
+      
+      .movie-grid, .series-grid, .game-grid {
+        grid-template-columns: 1fr;
         gap: 20px;
       }
       
-      .column {
-        min-width: 100%;
+      .movie-img, .series-img, .game-img {
+        height: 300px;
       }
       
-      .nickname-input {
-        width: 100%;
-        margin-bottom: 10px;
-        margin-right: 0;
+      .details-poster {
+        max-width: 100%;
+        height: 400px;
       }
       
-      .star {
-        font-size: 32px;
-        padding: 8px;
-        min-width: 44px;
-        min-height: 44px;
+      .external-ratings-details {
+        grid-template-columns: 1fr;
       }
       
-      .rating-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-      }
-      
-      .rating-item-user, .rating-item-stars, .rating-item-time {
-        min-width: auto;
-        width: 100%;
-        text-align: left;
-      }
-      
-      .rating-item-stars {
-        font-size: 20px;
-      }
-      
-      .filmweb-button, .trailer-button, .submit-rating, .change-rating-button {
-        display: block;
+      .filmweb-button, .trailer-button, .imdb-button, .rotten-button, .letterboxd-button {
         width: 100%;
         margin: 10px 0;
-        text-align: center;
-        padding: 15px;
+        justify-content: center;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .welcome-message {
+        padding: 40px 20px;
         font-size: 18px;
       }
       
-      .modal-content {
-        width: 95%;
-        padding: 20px;
+      .welcome-message h2 {
+        font-size: 32px;
       }
     }
 
@@ -567,13 +596,17 @@
         font-size: 24px;
       }
       
-      .movie-grid, .series-grid, .game-grid {
-        grid-template-columns: 1fr;
+      nav a {
+        width: 100%;
+        justify-content: center;
       }
       
-      .star {
-        font-size: 36px;
-        padding: 10px;
+      .movie-img, .series-img, .game-img {
+        height: 250px;
+      }
+      
+      .details-poster {
+        height: 350px;
       }
     }
   </style>
@@ -582,12 +615,14 @@
 <body data-theme="dark">
 
 <header onclick="showSection('welcome')">
-  <h1>Jan Nowacki - Strona osobista</h1>
+  <h1>🎬 Jan Nowacki - Strona osobista 🎮</h1>
   <button class="theme-toggle" onclick="toggleTheme(event)">🌙</button>
 </header>
 
 <nav>
+  <a href="#" onclick="showSection('welcome')">🏠 Strona główna</a>
   <a href="#" onclick="showSection('filmy')">🎬 Filmy</a>
+  <a href="#" onclick="showSection('seriale')">📺 Seriale</a>
   <a href="#" onclick="showSection('gry')">🎮 Gry</a>
   <a href="#" onclick="showSection('studia')">📚 Studia</a>
 </nav>
@@ -595,33 +630,35 @@
 <div id="welcome" class="section active">
   <div class="welcome-message">
     <h2>👋 Witaj na mojej stronie!</h2>
-    <p>Nazywam się Jan Nowacki i to jest moja osobista strona internetowa.</p>
-    <p>Kliknij w jedną z zakładek powyżej, aby zobaczyć moje ulubione filmy, gry i więcej!</p>
-    <p><small>✨ System ocen społecznościowych - wszyscy widzą te same oceny!</small></p>
+    <p>Nazywam się Jan Nowacki i jestem pasjonatem kina, seriali oraz gier komputerowych.</p>
+    <p>Na tej stronie znajdziesz moje ulubione produkcje wraz z rzeczywistymi ocenami z serwisów takich jak Filmweb, IMDb, Rotten Tomatoes i innych.</p>
+    <p>Zapraszam do odkrywania moich rekomendacji!</p>
   </div>
 </div>
 
+<!-- Sekcja filmów -->
 <div id="filmy" class="section">
-  <h2>Filmy i seriale</h2>
+  <h2>🎬 Moje ulubione filmy</h2>
   
   <div class="search-container">
-    <input type="text" class="search-input" id="movieSearch" placeholder="🔍 Wyszukaj film lub serial..." onkeyup="searchMovies()">
+    <input type="text" class="search-input" id="movieSearch" placeholder="🔍 Wyszukaj film..." onkeyup="searchMovies()">
   </div>
 
-  <div class="columns">
-    <div class="column">
-      <h3>🎬 Moje ulubione filmy</h3>
-      <div class="movie-grid" id="movies-grid">
-        <!-- Karty filmów będą generowane przez JavaScript -->
-      </div>
-    </div>
+  <div class="movie-grid" id="movies-grid">
+    <!-- Karty filmów będą generowane przez JavaScript -->
+  </div>
+</div>
 
-    <div class="column">
-      <h3>📺 Moje ulubione seriale</h3>
-      <div class="series-grid" id="series-grid">
-        <!-- Karty seriali będą generowane przez JavaScript -->
-      </div>
-    </div>
+<!-- Sekcja seriali (oddzielna) -->
+<div id="seriale" class="section">
+  <h2>📺 Moje ulubione seriale</h2>
+  
+  <div class="search-container">
+    <input type="text" class="search-input" id="seriesSearch" placeholder="🔍 Wyszukaj serial..." onkeyup="searchSeries()">
+  </div>
+
+  <div class="series-grid" id="series-grid">
+    <!-- Karty seriali będą generowane przez JavaScript -->
   </div>
 </div>
 
@@ -633,12 +670,13 @@
 
 <!-- Sekcja szczegółów serialu -->
 <div id="series-details" class="section" style="display: none;">
-  <a href="#" class="back-link" onclick="showSection('filmy')">← Wróć do listy seriali</a>
+  <a href="#" class="back-link" onclick="showSection('seriale')">← Wróć do listy seriali</a>
   <div id="series-content"></div>
 </div>
 
+<!-- Sekcja gier -->
 <div id="gry" class="section">
-  <h2>Moje ulubione gry</h2>
+  <h2>🎮 Moje ulubione gry</h2>
   
   <div class="search-container">
     <input type="text" class="search-input" id="gameSearch" placeholder="🔍 Wyszukaj grę..." onkeyup="searchGames()">
@@ -656,334 +694,301 @@
 </div>
 
 <div id="studia" class="section">
-  <h2>Studia</h2>
-  <p>Tu wkrótce pojawią się informacje o mojej edukacji i studiach.</p>
-  <p>... sekcja w budowie :)</p>
-</div>
-
-<!-- Modal do zmiany oceny -->
-<div id="rating-modal" class="modal-overlay">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3 id="modal-title">Zmień ocenę</h3>
-    <p id="modal-message">Czy na pewno chcesz zmienić swoją ocenę?</p>
-    <div class="modal-buttons">
-      <button class="modal-cancel" onclick="closeModal()">Anuluj</button>
-      <button class="modal-confirm" onclick="confirmRatingChange()">Zmień</button>
+  <h2>📚 Studia i edukacja</h2>
+  <div class="welcome-message" style="text-align: left; padding: 0;">
+    <p><strong>🎓 Uniwersytet Warszawski</strong></p>
+    <p>Kierunek: Informatyka</p>
+    <p>Specjalizacja: Frontend Development</p>
+    <p>Rok: III rok studiów licencjackich</p>
+    
+    <div style="margin-top: 40px;">
+      <h3>🛠️ Moje umiejętności techniczne:</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+        <div style="background: var(--card-color); padding: 15px; border-radius: 10px; text-align: center;">
+          <div style="font-size: 24px;">💻</div>
+          <div>HTML/CSS/JS</div>
+        </div>
+        <div style="background: var(--card-color); padding: 15px; border-radius: 10px; text-align: center;">
+          <div style="font-size: 24px;">⚛️</div>
+          <div>React.js</div>
+        </div>
+        <div style="background: var(--card-color); padding: 15px; border-radius: 10px; text-align: center;">
+          <div style="font-size: 24px;">📱</div>
+          <div>Responsive Design</div>
+        </div>
+        <div style="background: var(--card-color); padding: 15px; border-radius: 10px; text-align: center;">
+          <div style="font-size: 24px;">🎨</div>
+          <div>UI/UX Design</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <footer>
-  © 2026 Jan Nowacki - Moja osobista strona internetowa
+  © 2026 Jan Nowacki - Strona stworzona z pasji do kina i gier
 </footer>
 
 <script>
-  // ========== GLOBALNA BAZA OCEN ==========
-  // Używamy localStorage jako symulacji globalnej bazy
-  // Klucz dla globalnych ocen
-  const GLOBAL_RATINGS_KEY = 'jan_nowacki_global_ratings_v2';
-  
-  // ========== DANE FILMÓW ==========
+  // ========== DANE FILMÓW Z RZECZYWISTYMI OCENAMI ==========
   const moviesData = [
     {
       id: 'dobry-zly-brzydki',
       title: '🤠 Dobry, zły i brzydki',
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0hThvye8txVEob0uSLdvO2UOWcvNW-iKOSg&s',
-      desc: 'Klasyczny spaghetti western',
+      desc: 'Klasyczny spaghetti western o trzech rewolwerowcach poszukujących skarbu podczas wojny secesyjnej. Reżyseria Sergio Leone, muzyka Ennio Morricone.',
       type: 'film',
       year: '1966',
       director: 'Sergio Leone',
-      trailer: 'https://www.youtube.com/watch?v=WCN5JJY_wiA'
+      duration: '2h 58m',
+      trailer: 'https://www.youtube.com/watch?v=WCN5JJY_wiA',
+      ratings: {
+        filmweb: { rating: '8.3/10', link: 'https://www.filmweb.pl/film/Dobry%2C+z%C5%82y+i+brzydki-1966-1045' },
+        imdb: { rating: '8.8/10', link: 'https://www.imdb.com/title/tt0060196/' },
+        rotten: { rating: '97%', link: 'https://www.rottentomatoes.com/m/the_good_the_bad_and_the_ugly' },
+        letterboxd: { rating: '4.3/5', link: 'https://letterboxd.com/film/the-good-the-bad-and-the-ugly/' }
+      }
     },
     {
       id: '12-gniewnych',
       title: '⚖️ Dwunastu gniewnych ludzi',
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTToJ5elfoyvyhPJN-9aVj_Y7EssFG3Mp2O3A&s',
-      desc: 'Dramat sądowy',
+      desc: 'Klasyczny dramat sądowy o 12 przysięgłych, którzy muszą zdecydować o winie lub niewinności oskarżonego o morderstwo.',
       type: 'film',
       year: '1957',
       director: 'Sidney Lumet',
-      trailer: 'https://www.youtube.com/watch?v=_13J_9B5jEk'
+      duration: '1h 36m',
+      trailer: 'https://www.youtube.com/watch?v=_13J_9B5jEk',
+      ratings: {
+        filmweb: { rating: '8.7/10', link: 'https://www.filmweb.pl/film/Dwunastu+gniewnych+ludzi-1957-2253' },
+        imdb: { rating: '9.0/10', link: 'https://www.imdb.com/title/tt0050083/' },
+        rotten: { rating: '100%', link: 'https://www.rottentomatoes.com/m/12_angry_men' },
+        metacritic: { rating: '96/100', link: 'https://www.metacritic.com/movie/12-angry-men/' }
+      }
     },
     {
       id: 'taxi-driver',
       title: '🚕 Taxi Driver',
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHE1r1K79e6WHRmpKe3ViUl0Vwlb4ac_uyMg&s',
-      desc: 'Dramat psychologiczny',
+      desc: 'Kultowy film Martina Scorsese o weteranie wojny w Wietnamie, który pracuje jako taksówkarz nocą w Nowym Jorku.',
       type: 'film',
       year: '1976',
       director: 'Martin Scorsese',
-      trailer: 'https://www.youtube.com/watch?v=UUxD4-dEzn0'
+      duration: '1h 54m',
+      trailer: 'https://www.youtube.com/watch?v=UUxD4-dEzn0',
+      ratings: {
+        filmweb: { rating: '7.9/10', link: 'https://www.filmweb.pl/film/Taxi+Driver-1976-1061' },
+        imdb: { rating: '8.2/10', link: 'https://www.imdb.com/title/tt0075314/' },
+        rotten: { rating: '96%', link: 'https://www.rottentomatoes.com/m/taxi_driver' },
+        letterboxd: { rating: '4.2/5', link: 'https://letterboxd.com/film/taxi-driver/' }
+      }
     },
     {
       id: 'lsnienie',
       title: '🔪 Lśnienie',
       image: 'https://img.goodfon.com/original/1920x1080/0/24/dzhek-nikolson-jack-nicholson.jpg',
-      desc: 'Horror psychologiczny',
+      desc: 'Horror psychologiczny Stanleya Kubricka oparty na powieści Stephena Kinga. Jack Nicholson w roli pisarza opiekującego się odizolowanym hotelem.',
       type: 'film',
       year: '1980',
       director: 'Stanley Kubrick',
-      trailer: 'https://www.youtube.com/watch?v=S014oGZiSdI'
+      duration: '2h 26m',
+      trailer: 'https://www.youtube.com/watch?v=S014oGZiSdI',
+      ratings: {
+        filmweb: { rating: '8.0/10', link: 'https://www.filmweb.pl/film/L%C5%9Bnienie-1980-1058' },
+        imdb: { rating: '8.4/10', link: 'https://www.imdb.com/title/tt0081505/' },
+        rotten: { rating: '85%', link: 'https://www.rottentomatoes.com/m/the_shining' },
+        metacritic: { rating: '66/100', link: 'https://www.metacritic.com/movie/the-shining/' }
+      }
     },
     {
       id: 'lot-nad-kukulczym-gniazdem',
       title: '🏥 Lot nad kukułczym gniazdem',
       image: 'https://upload.wikimedia.org/wikipedia/id/f/f6/One_flew_over_the_cuckoo%27s_nest_poster.jpeg',
-      desc: 'Dramat psychiatryczny',
+      desc: 'Nagrodzony 5 Oscarami dramat o buncie pacjenta przeciwko systemowi w szpitalu psychiatrycznym. W rolach głównych Jack Nicholson i Louise Fletcher.',
       type: 'film',
       year: '1975',
       director: 'Miloš Forman',
-      trailer: 'https://www.youtube.com/watch?v=OXrcDonY-B8'
+      duration: '2h 13m',
+      trailer: 'https://www.youtube.com/watch?v=OXrcDonY-B8',
+      ratings: {
+        filmweb: { rating: '8.4/10', link: 'https://www.filmweb.pl/film/Lot+nad+kuku%C5%82czym+gniazdem-1975-1063' },
+        imdb: { rating: '8.7/10', link: 'https://www.imdb.com/title/tt0073486/' },
+        rotten: { rating: '94%', link: 'https://www.rottentomatoes.com/m/one_flew_over_the_cuckoos_nest' },
+        letterboxd: { rating: '4.3/5', link: 'https://letterboxd.com/film/one-flew-over-the-cuckoos-nest/' }
+      }
     },
     {
       id: 'piraci-karaiby',
-      title: '🏴‍☠️ Piraci z Karaibów',
+      title: '🏴‍☠️ Piraci z Karaibów: Klątwa Czarnej Perły',
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs8SMTnEZ2TQdoSIrW14559B2HIRvucIKacw&s',
-      desc: 'Przygodowy film akcji',
+      desc: 'Przygodowy film akcji Disneya z Johnnym Deppem jako kapitanem Jackiem Sparrowem. Pełna humoru i akcji opowieść o piratach i przeklętym skarbie.',
       type: 'film',
       year: '2003',
       director: 'Gore Verbinski',
-      trailer: 'https://www.youtube.com/watch?v=naQr0uTrH_s'
+      duration: '2h 23m',
+      trailer: 'https://www.youtube.com/watch?v=naQr0uTrH_s',
+      ratings: {
+        filmweb: { rating: '7.7/10', link: 'https://www.filmweb.pl/film/Piraci+z+Karaib%C3%B3w%3A+Kl%C4%85twa+Czarnej+Per%C5%82y-2003-27087' },
+        imdb: { rating: '8.1/10', link: 'https://www.imdb.com/title/tt0325980/' },
+        rotten: { rating: '80%', link: 'https://www.rottentomatoes.com/m/pirates_of_the_caribbean_the_curse_of_the_black_pearl' },
+        metacritic: { rating: '63/100', link: 'https://www.metacritic.com/movie/pirates-of-the-caribbean-the-curse-of-the-black-pearl/' }
+      }
     }
   ];
 
+  // ========== DANE SERIALI Z RZECZYWISTYMI OCENAMI ==========
   const seriesData = [
     {
       id: 'breaking-bad',
       title: '🧪 Breaking Bad',
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd8UKB61gmfCnm2dxSshVYPbpePGGdMfXBYQ&s',
-      desc: 'Dramat kryminalny',
+      desc: 'Dramat kryminalny o nauczycielu chemii, który po usłyszeniu diagnozy nowotworu zaczyna produkować metamfetaminę, by zabezpieczyć finansowo rodzinę.',
       type: 'serial',
       seasons: '5 sezonów',
       years: '2008-2013',
-      trailer: 'https://www.youtube.com/watch?v=HhesaQXLuRY'
+      episodes: '62 odcinki',
+      trailer: 'https://www.youtube.com/watch?v=HhesaQXLuRY',
+      ratings: {
+        filmweb: { rating: '9.2/10', link: 'https://www.filmweb.pl/serial/Breaking+Bad-2008-430668' },
+        imdb: { rating: '9.5/10', link: 'https://www.imdb.com/title/tt0903747/' },
+        rotten: { rating: '96%', link: 'https://www.rottentomatoes.com/tv/breaking_bad' },
+        metacritic: { rating: '96/100', link: 'https://www.metacritic.com/tv/breaking-bad/' }
+      }
     },
     {
       id: 'stranger-things',
       title: '👾 Stranger Things',
       image: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/d96bb958-4e6c-4ce0-9447-fbe226fbbecf/df9nfag-55688aea-a979-4ba3-9473-38810d2f17e5.jpg',
-      desc: 'Horror science fiction',
+      desc: 'Horror science fiction osadzony w latach 80. Grupa dzieciaków odkrywa tajemnicę zniknięcia swojego przyjaciela i istnienie równoległego wymiaru zwanego "Upside Down".',
       type: 'serial',
       seasons: '4 sezony',
       years: '2016-obecnie',
-      trailer: 'https://www.youtube.com/watch?v=b9EkMc79ZSU'
+      episodes: '34 odcinki',
+      trailer: 'https://www.youtube.com/watch?v=b9EkMc79ZSU',
+      ratings: {
+        filmweb: { rating: '8.5/10', link: 'https://www.filmweb.pl/serial/Stranger+Things-2016-728495' },
+        imdb: { rating: '8.7/10', link: 'https://www.imdb.com/title/tt4574334/' },
+        rotten: { rating: '92%', link: 'https://www.rottentomatoes.com/tv/stranger_things' },
+        metacritic: { rating: '76/100', link: 'https://www.metacritic.com/tv/stranger-things/' }
+      }
+    },
+    {
+      id: 'czarnobyl',
+      title: '☢️ Czarnobyl',
+      image: 'https://m.media-amazon.com/images/M/MV5BZGQ2YmMxZmEtYjI5OS00NzlkLTlkNTEtYWMyMzkyMzc2MDU5XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_FMjpg_UX1000_.jpg',
+      desc: 'Miniserial dramatyczny opowiadający o katastrofie w elektrowni jądrowej w Czarnobylu w 1986 roku i bezprecedensowych wysiłkach mających na celu powstrzymanie jej skutków.',
+      type: 'serial',
+      seasons: '1 sezon',
+      years: '2019',
+      episodes: '5 odcinków',
+      trailer: 'https://www.youtube.com/watch?v=s9APLXM9Ei8',
+      ratings: {
+        filmweb: { rating: '9.4/10', link: 'https://www.filmweb.pl/serial/Czarnobyl-2019-819760' },
+        imdb: { rating: '9.4/10', link: 'https://www.imdb.com/title/tt7366338/' },
+        rotten: { rating: '95%', link: 'https://www.rottentomatoes.com/tv/chernobyl' },
+        metacritic: { rating: '83/100', link: 'https://www.metacritic.com/tv/chernobyl/' }
+      }
+    },
+    {
+      id: 'gra-o-tron',
+      title: '👑 Gra o Tron',
+      image: 'https://m.media-amazon.com/images/M/MV5BN2IzYzBiOTQtNGZmMi00NDI5LTgxMzMtN2EzZjA1NjhlOGMxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg',
+      desc: 'Epicka fantasy oparta na serii książek "Pieśń Lodu i Ognia". Walka o Żelazny Tron Siedmiu Królestw w świecie pełnym zdrady, honoru i niebezpieczeństw.',
+      type: 'serial',
+      seasons: '8 sezonów',
+      years: '2011-2019',
+      episodes: '73 odcinki',
+      trailer: 'https://www.youtube.com/watch?v=rlR4PJn8b8I',
+      ratings: {
+        filmweb: { rating: '8.9/10', link: 'https://www.filmweb.pl/serial/Gra+o+tron-2011-476852' },
+        imdb: { rating: '9.2/10', link: 'https://www.imdb.com/title/tt0944947/' },
+        rotten: { rating: '89%', link: 'https://www.rottentomatoes.com/tv/game_of_thrones' },
+        metacritic: { rating: '88/100', link: 'https://www.metacritic.com/tv/game-of-thrones/' }
+      }
     }
   ];
 
+  // ========== DANE GIER Z RZECZYWISTYMI OCENAMI ==========
   const gamesData = [
     {
       id: 'lol',
       title: '⚔️ League of Legends',
       image: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/League_of_Legends_2019_vector.svg',
-      desc: 'MOBA (Multiplayer Online Battle Arena)',
+      desc: 'Najpopularniejsza na świecie gra MOBA (Multiplayer Online Battle Arena). Dwie drużyny po 5 graczy walczą na arenie, aby zniszczyć bazę przeciwnika.',
       type: 'gra',
       genre: 'MOBA, Strategia',
       year: '2009',
-      trailer: 'https://www.youtube.com/watch?v=BGtROJeMPeE'
+      developer: 'Riot Games',
+      trailer: 'https://www.youtube.com/watch?v=BGtROJeMPeE',
+      ratings: {
+        metacritic: { rating: '78/100', link: 'https://www.metacritic.com/game/pc/league-of-legends' },
+        steam: { rating: '4/5', link: 'https://store.steampowered.com/app/123456/League_of_Legends/' }
+      }
     },
     {
       id: 'gta',
-      title: '🚗 GTA V',
+      title: '🚗 Grand Theft Auto V',
       image: 'https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png',
-      desc: 'Gra akcji z otwartym światem',
+      desc: 'Epicka gra akcji z otwartym światem osadzona w fikcyjnym Los Santos. Gracz wciela się w trzech bohaterów, których historie przeplatają się w wielkim kryminalnym przedsięwzięciu.',
       type: 'gra',
       genre: 'Akcja, Przygodowa',
       year: '2013',
-      trailer: 'https://www.youtube.com/watch?v=QkkoHAzjnUs'
+      developer: 'Rockstar Games',
+      trailer: 'https://www.youtube.com/watch?v=QkkoHAzjnUs',
+      ratings: {
+        metacritic: { rating: '97/100', link: 'https://www.metacritic.com/game/playstation-4/grand-theft-auto-v' },
+        steam: { rating: '9/10', link: 'https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/' },
+        ign: { rating: '10/10', link: 'https://www.ign.com/games/grand-theft-auto-5' }
+      }
     },
     {
       id: 'fortnite',
       title: '🏰 Fortnite',
       image: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png',
-      desc: 'Battle royale i gra survivalowa',
+      desc: 'Darmowa gra battle royale, która zyskała ogromną popularność dzięki systemowi budowania i regularnym aktualizacjom z crossoverami z popkulturą.',
       type: 'gra',
       genre: 'Battle Royale, Survival',
       year: '2017',
-      trailer: 'https://www.youtube.com/watch?v=2gUtfBmw86Y'
+      developer: 'Epic Games',
+      trailer: 'https://www.youtube.com/watch?v=2gUtfBmw86Y',
+      ratings: {
+        metacritic: { rating: '81/100', link: 'https://www.metacritic.com/game/pc/fortnite' },
+        ign: { rating: '9.6/10', link: 'https://www.ign.com/games/fortnite' }
+      }
     },
     {
       id: 'rdr2',
       title: '🤠 Red Dead Redemption 2',
       image: 'https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg',
-      desc: 'Gra akcji z otwartym światem',
+      desc: 'Epicka gra akcji z otwartym światem osadzona w Ameryce przełomu XIX i XX wieku. Gracz wciela się w Arthura Morgana, członka gangu przemierzającego Dziki Zachód.',
       type: 'gra',
       genre: 'Akcja, Przygodowa',
       year: '2018',
-      trailer: 'https://www.youtube.com/watch?v=eaW0tYpxyp0'
+      developer: 'Rockstar Games',
+      trailer: 'https://www.youtube.com/watch?v=eaW0tYpxyp0',
+      ratings: {
+        metacritic: { rating: '97/100', link: 'https://www.metacritic.com/game/playstation-4/red-dead-redemption-2' },
+        steam: { rating: '9/10', link: 'https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/' },
+        ign: { rating: '10/10', link: 'https://www.ign.com/games/red-dead-redemption-2' }
+      }
+    },
+    {
+      id: 'witcher3',
+      title: '⚔️ Wiedźmin 3: Dziki Gon',
+      image: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Witcher_3_cover_art.jpg',
+      desc: 'Nagradzana gra RPG osadzona w świecie fantasy. Geralt z Rivii poszukuje Ciri, podczas gdy świat staje w obliczu inwazji dzikiego gonu.',
+      type: 'gra',
+      genre: 'RPG, Przygodowa',
+      year: '2015',
+      developer: 'CD Projekt Red',
+      trailer: 'https://www.youtube.com/watch?v=c0i88t0Kacs',
+      ratings: {
+        metacritic: { rating: '93/100', link: 'https://www.metacritic.com/game/playstation-4/the-witcher-3-wild-hunt' },
+        steam: { rating: '10/10', link: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/' },
+        ign: { rating: '9.3/10', link: 'https://www.ign.com/games/the-witcher-3-wild-hunt' }
+      }
     }
   ];
-
-  // ========== SYSTEM OCEN (GLOBALNY) ==========
-  let allRatings = {};
-  let currentUserNickname = localStorage.getItem('current_nickname') || '';
-  let currentSelectedRating = 0;
-  let currentRatingItemId = '';
-  let currentRatingType = '';
-  let modalCallback = null;
-
-  // Ładuje wszystkie oceny z globalnej bazy
-  function loadAllRatings() {
-    try {
-      const saved = localStorage.getItem(GLOBAL_RATINGS_KEY);
-      allRatings = saved ? JSON.parse(saved) : {};
-      
-      // Jeśli baza jest pusta, dodaj przykładowe oceny
-      if (Object.keys(allRatings).length === 0) {
-        addSampleRatings();
-        saveAllRatings();
-      }
-    } catch (error) {
-      console.error('Błąd ładowania ocen:', error);
-      allRatings = {};
-      addSampleRatings();
-      saveAllRatings();
-    }
-  }
-
-  // Dodaje przykładowe oceny do bazy
-  function addSampleRatings() {
-    const sampleRatings = {
-      'dobry-zly-brzydki': [
-        { nickname: 'KinoMan', rating: 5, timestamp: '2024-01-15T14:30:00Z' },
-        { nickname: 'FilmFan', rating: 4, timestamp: '2024-01-20T10:15:00Z' },
-        { nickname: 'WesternLover', rating: 5, timestamp: '2024-02-05T18:45:00Z' }
-      ],
-      '12-gniewnych': [
-        { nickname: 'Justyna', rating: 5, timestamp: '2024-01-10T12:20:00Z' },
-        { nickname: 'Sędzia', rating: 5, timestamp: '2024-02-01T09:30:00Z' }
-      ],
-      'breaking-bad': [
-        { nickname: 'Chemik', rating: 5, timestamp: '2024-01-25T20:10:00Z' },
-        { nickname: 'SeriesWatcher', rating: 5, timestamp: '2024-02-10T22:05:00Z' },
-        { nickname: 'WalterFan', rating: 4, timestamp: '2024-02-12T15:40:00Z' }
-      ],
-      'stranger-things': [
-        { nickname: 'SciFiFan', rating: 4, timestamp: '2024-01-30T19:25:00Z' },
-        { nickname: 'Eleven', rating: 5, timestamp: '2024-02-08T14:50:00Z' }
-      ],
-      'lol': [
-        { nickname: 'GamerPL', rating: 4, timestamp: '2024-01-18T16:20:00Z' },
-        { nickname: 'MidLane', rating: 5, timestamp: '2024-02-03T21:15:00Z' }
-      ]
-    };
-    
-    allRatings = { ...allRatings, ...sampleRatings };
-  }
-
-  // Zapisuje wszystkie oceny do globalnej bazy
-  function saveAllRatings() {
-    try {
-      localStorage.setItem(GLOBAL_RATINGS_KEY, JSON.stringify(allRatings));
-    } catch (error) {
-      console.error('Błąd zapisywania ocen:', error);
-    }
-  }
-
-  // Pobiera oceny dla konkretnego elementu
-  function getRatingsForItem(itemId) {
-    return allRatings[itemId] || [];
-  }
-
-  // Sprawdza czy użytkownik już ocenił dany element
-  function hasUserRated(itemId) {
-    if (!currentUserNickname) return false;
-    const ratings = getRatingsForItem(itemId);
-    return ratings.some(r => r.nickname === currentUserNickname);
-  }
-
-  // Pobiera ocenę użytkownika dla danego elementu
-  function getUserRating(itemId) {
-    if (!currentUserNickname) return null;
-    const ratings = getRatingsForItem(itemId);
-    return ratings.find(r => r.nickname === currentUserNickname);
-  }
-
-  // Dodaje lub aktualizuje ocenę
-  function saveRating(itemId, ratingData) {
-    if (!allRatings[itemId]) {
-      allRatings[itemId] = [];
-    }
-    
-    // Sprawdź czy ten nick już oceniał
-    const existingIndex = allRatings[itemId].findIndex(r => r.nickname === ratingData.nickname);
-    
-    if (existingIndex !== -1) {
-      // Aktualizuj istniejącą ocenę
-      allRatings[itemId][existingIndex] = {
-        nickname: ratingData.nickname,
-        rating: ratingData.rating,
-        timestamp: new Date().toISOString()
-      };
-    } else {
-      // Dodaj nową ocenę
-      allRatings[itemId].push({
-        nickname: ratingData.nickname,
-        rating: ratingData.rating,
-        timestamp: new Date().toISOString()
-      });
-    }
-    
-    // Zapisz nick użytkownika
-    if (!currentUserNickname || currentUserNickname !== ratingData.nickname) {
-      currentUserNickname = ratingData.nickname;
-      localStorage.setItem('current_nickname', currentUserNickname);
-    }
-    
-    // Zapisz do globalnej bazy
-    saveAllRatings();
-    
-    return true;
-  }
-
-  // Oblicza średnią ocen
-  function calculateAverageRating(ratings) {
-    if (ratings.length === 0) return 0;
-    const sum = ratings.reduce((total, r) => total + r.rating, 0);
-    return sum / ratings.length;
-  }
-
-  // Formatuje gwiazdki
-  function getStarsHTML(rating) {
-    let stars = '';
-    const roundedRating = Math.round(rating);
-    for (let i = 1; i <= 5; i++) {
-      stars += i <= roundedRating ? '★' : '☆';
-    }
-    return stars;
-  }
-
-  // Formatuje datę
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleString('pl-PL', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  }
-
-  // ========== MODAL ==========
-  function showModal(title, message, callback) {
-    document.getElementById('modal-title').textContent = title;
-    document.getElementById('modal-message').textContent = message;
-    modalCallback = callback;
-    document.getElementById('rating-modal').style.display = 'flex';
-  }
-
-  function closeModal() {
-    document.getElementById('rating-modal').style.display = 'none';
-    modalCallback = null;
-  }
-
-  function confirmRatingChange() {
-    if (modalCallback) {
-      modalCallback();
-    }
-    closeModal();
-  }
 
   // ========== FUNKCJE GŁÓWNE ==========
   let currentSection = 'welcome';
@@ -1000,6 +1005,7 @@
     
     if (id === 'filmy') {
       loadMovies();
+    } else if (id === 'seriale') {
       loadSeries();
     } else if (id === 'gry') {
       loadGames();
@@ -1019,31 +1025,35 @@
     
     localStorage.setItem('theme', newTheme);
     
+    // Odśwież widok jeśli jesteśmy w sekcji z danymi
     if (currentSection === 'filmy') {
       loadMovies();
+    } else if (currentSection === 'seriale') {
       loadSeries();
     } else if (currentSection === 'gry') {
       loadGames();
-    } else if (currentSection.startsWith('movie-details-')) {
-      const id = currentSection.replace('movie-details-', '');
-      showMovieDetails(id);
-    } else if (currentSection.startsWith('series-details-')) {
-      const id = currentSection.replace('series-details-', '');
-      showSeriesDetails(id);
-    } else if (currentSection.startsWith('game-details-')) {
-      const id = currentSection.replace('game-details-', '');
-      showGameDetails(id);
     }
   }
 
   // ========== WYSZUKIWARKA ==========
   function searchMovies() {
     const searchTerm = document.getElementById('movieSearch').value.toLowerCase();
-    const movieCards = document.querySelectorAll('.movie-card, .series-card');
+    const movieCards = document.querySelectorAll('.movie-card');
     
     movieCards.forEach(card => {
-      const title = card.querySelector('.movie-title, .series-title').textContent.toLowerCase();
-      const desc = card.querySelector('.movie-desc, .series-desc').textContent.toLowerCase();
+      const title = card.querySelector('.movie-title').textContent.toLowerCase();
+      const desc = card.querySelector('.movie-desc').textContent.toLowerCase();
+      card.style.display = (title.includes(searchTerm) || desc.includes(searchTerm)) ? 'block' : 'none';
+    });
+  }
+
+  function searchSeries() {
+    const searchTerm = document.getElementById('seriesSearch').value.toLowerCase();
+    const seriesCards = document.querySelectorAll('.series-card');
+    
+    seriesCards.forEach(card => {
+      const title = card.querySelector('.series-title').textContent.toLowerCase();
+      const desc = card.querySelector('.series-desc').textContent.toLowerCase();
       card.style.display = (title.includes(searchTerm) || desc.includes(searchTerm)) ? 'block' : 'none';
     });
   }
@@ -1067,20 +1077,32 @@
     grid.innerHTML = '';
     
     moviesData.forEach(movie => {
-      const ratings = getRatingsForItem(movie.id);
-      const avgRating = calculateAverageRating(ratings);
-      const ratingCount = ratings.length;
-      
       grid.innerHTML += `
         <div class="movie-card" onclick="showMovieDetails('${movie.id}')" data-id="${movie.id}">
-          ${ratingCount > 0 ? `<div class="card-rating-badge">⭐ ${avgRating.toFixed(1)}</div>` : ''}
           <img src="${movie.image}" alt="${movie.title}" class="movie-img">
           <div class="movie-info">
             <div class="movie-title">${movie.title}</div>
-            <div class="movie-desc">${movie.desc} (${movie.year})</div>
-            <div class="card-rating">
-              <div class="rating-stars">${getStarsHTML(avgRating)}</div>
-              <div class="rating-count">(${ratingCount} głosów)</div>
+            <div class="movie-desc">${movie.desc.substring(0, 120)}...</div>
+            
+            <div class="external-ratings">
+              ${movie.ratings.filmweb ? `<div class="rating-item filmweb">
+                <span class="rating-icon">FW</span>
+                <span class="rating-value">${movie.ratings.filmweb.rating}</span>
+              </div>` : ''}
+              
+              ${movie.ratings.imdb ? `<div class="rating-item imdb">
+                <span class="rating-icon">IMDb</span>
+                <span class="rating-value">${movie.ratings.imdb.rating}</span>
+              </div>` : ''}
+              
+              ${movie.ratings.rotten ? `<div class="rating-item rotten">
+                <span class="rating-icon">🍅</span>
+                <span class="rating-value">${movie.ratings.rotten.rating}</span>
+              </div>` : ''}
+            </div>
+            
+            <div style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
+              📅 ${movie.year} | ⏱️ ${movie.duration} | 🎬 ${movie.director}
             </div>
           </div>
         </div>
@@ -1095,20 +1117,32 @@
     grid.innerHTML = '';
     
     seriesData.forEach(series => {
-      const ratings = getRatingsForItem(series.id);
-      const avgRating = calculateAverageRating(ratings);
-      const ratingCount = ratings.length;
-      
       grid.innerHTML += `
         <div class="series-card" onclick="showSeriesDetails('${series.id}')" data-id="${series.id}">
-          ${ratingCount > 0 ? `<div class="card-rating-badge">⭐ ${avgRating.toFixed(1)}</div>` : ''}
           <img src="${series.image}" alt="${series.title}" class="series-img">
           <div class="series-info">
             <div class="series-title">${series.title}</div>
-            <div class="series-desc">${series.desc}</div>
-            <div class="card-rating">
-              <div class="rating-stars">${getStarsHTML(avgRating)}</div>
-              <div class="rating-count">(${ratingCount} głosów)</div>
+            <div class="series-desc">${series.desc.substring(0, 120)}...</div>
+            
+            <div class="external-ratings">
+              ${series.ratings.filmweb ? `<div class="rating-item filmweb">
+                <span class="rating-icon">FW</span>
+                <span class="rating-value">${series.ratings.filmweb.rating}</span>
+              </div>` : ''}
+              
+              ${series.ratings.imdb ? `<div class="rating-item imdb">
+                <span class="rating-icon">IMDb</span>
+                <span class="rating-value">${series.ratings.imdb.rating}</span>
+              </div>` : ''}
+              
+              ${series.ratings.rotten ? `<div class="rating-item rotten">
+                <span class="rating-icon">🍅</span>
+                <span class="rating-value">${series.ratings.rotten.rating}</span>
+              </div>` : ''}
+            </div>
+            
+            <div style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
+              📅 ${series.years} | 📺 ${series.seasons} | 🎬 ${series.episodes}
             </div>
           </div>
         </div>
@@ -1123,20 +1157,32 @@
     grid.innerHTML = '';
     
     gamesData.forEach(game => {
-      const ratings = getRatingsForItem(game.id);
-      const avgRating = calculateAverageRating(ratings);
-      const ratingCount = ratings.length;
-      
       grid.innerHTML += `
         <div class="game-card" onclick="showGameDetails('${game.id}')" data-id="${game.id}">
-          ${ratingCount > 0 ? `<div class="card-rating-badge">⭐ ${avgRating.toFixed(1)}</div>` : ''}
-          <img src="${game.image}" alt="${game.title}" class="game-img" style="${game.id === 'lol' || game.id === 'fortnite' ? 'background: white; padding: 20px;' : ''}">
+          <img src="${game.image}" alt="${game.title}" class="game-img" style="${game.id === 'lol' || game.id === 'fortnite' ? 'background: white; padding: 20px; object-fit: contain;' : 'object-fit: cover;'}">
           <div class="game-info">
             <div class="game-title">${game.title}</div>
-            <div class="game-desc">${game.desc} (${game.year})</div>
-            <div class="card-rating">
-              <div class="rating-stars">${getStarsHTML(avgRating)}</div>
-              <div class="rating-count">(${ratingCount} głosów)</div>
+            <div class="game-desc">${game.desc.substring(0, 120)}...</div>
+            
+            <div class="external-ratings">
+              ${game.ratings.metacritic ? `<div class="rating-item metacritic">
+                <span class="rating-icon">MC</span>
+                <span class="rating-value">${game.ratings.metacritic.rating}</span>
+              </div>` : ''}
+              
+              ${game.ratings.steam ? `<div class="rating-item" style="background-color: rgba(27, 40, 56, 0.2); color: #66c0f4;">
+                <span class="rating-icon">🎮</span>
+                <span class="rating-value">${game.ratings.steam.rating}</span>
+              </div>` : ''}
+              
+              ${game.ratings.ign ? `<div class="rating-item" style="background-color: rgba(0, 0, 0, 0.2); color: #ff6500;">
+                <span class="rating-icon">IGN</span>
+                <span class="rating-value">${game.ratings.ign.rating}</span>
+              </div>` : ''}
+            </div>
+            
+            <div style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
+              📅 ${game.year} | 🎮 ${game.genre} | 🏢 ${game.developer}
             </div>
           </div>
         </div>
@@ -1144,181 +1190,213 @@
     });
   }
 
-  // ========== SZCZEGÓŁY Z SYSTEMEM OCEN ==========
+  // ========== SZCZEGÓŁY ==========
   function showMovieDetails(id) {
     const movie = moviesData.find(m => m.id === id);
     if (!movie) return;
     
-    currentRatingItemId = id;
-    currentRatingType = 'film';
     currentSection = `movie-details-${id}`;
     
-    const ratings = getRatingsForItem(id);
-    const avgRating = calculateAverageRating(ratings);
-    const userRating = getUserRating(id);
+    let ratingsHTML = '';
+    if (movie.ratings) {
+      ratingsHTML = `
+        <div class="external-ratings-details">
+          ${movie.ratings.filmweb ? `
+            <div class="rating-card filmweb">
+              <div class="rating-source">Filmweb</div>
+              <div class="rating-main">${movie.ratings.filmweb.rating}</div>
+              <a href="${movie.ratings.filmweb.link}" target="_blank" class="rating-link">Zobacz na Filmweb →</a>
+            </div>
+          ` : ''}
+          
+          ${movie.ratings.imdb ? `
+            <div class="rating-card imdb">
+              <div class="rating-source">IMDb</div>
+              <div class="rating-main">${movie.ratings.imdb.rating}</div>
+              <a href="${movie.ratings.imdb.link}" target="_blank" class="rating-link">Zobacz na IMDb →</a>
+            </div>
+          ` : ''}
+          
+          ${movie.ratings.rotten ? `
+            <div class="rating-card rotten">
+              <div class="rating-source">Rotten Tomatoes</div>
+              <div class="rating-main">${movie.ratings.rotten.rating}</div>
+              <a href="${movie.ratings.rotten.link}" target="_blank" class="rating-link">Zobacz na RT →</a>
+            </div>
+          ` : ''}
+          
+          ${movie.ratings.letterboxd ? `
+            <div class="rating-card letterboxd">
+              <div class="rating-source">Letterboxd</div>
+              <div class="rating-main">${movie.ratings.letterboxd.rating}</div>
+              <a href="${movie.ratings.letterboxd.link}" target="_blank" class="rating-link">Zobacz na Letterboxd →</a>
+            </div>
+          ` : ''}
+          
+          ${movie.ratings.metacritic ? `
+            <div class="rating-card metacritic">
+              <div class="rating-source">Metacritic</div>
+              <div class="rating-main">${movie.ratings.metacritic.rating}</div>
+              <a href="${movie.ratings.metacritic.link}" target="_blank" class="rating-link">Zobacz na Metacritic →</a>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
     
     document.getElementById('details-content').innerHTML = `
-      <div style="display: flex; flex-wrap: wrap; gap: 30px;">
-        <img src="${movie.image}" alt="${movie.title}" style="width: 100%; max-width: 300px; height: 450px; object-fit: cover; border-radius: 10px;">
-        <div style="flex: 1; min-width: 300px;">
-          <h2 style="margin-top: 0;">${movie.title}</h2>
-          <p style="font-size: 18px;">${movie.desc}</p>
-          <p><strong>Rok produkcji:</strong> ${movie.year}</p>
-          <p><strong>Reżyser:</strong> ${movie.director}</p>
+      <div class="details-content">
+        <img src="${movie.image}" alt="${movie.title}" class="details-poster">
+        <div class="details-info">
+          <h2 style="margin-top: 0; border: none;">${movie.title}</h2>
+          <p style="font-size: 18px; line-height: 1.6;">${movie.desc}</p>
           
-          <div class="details-rating">
-            <h3>Oceń ten film:</h3>
-            <div class="rating-container">
-              <div class="user-rating" id="rating-stars-${movie.id}">
-                ${[1,2,3,4,5].map(star => `
-                  <span class="star" data-value="${star}" 
-                        onclick="selectRating(${star}, '${movie.id}')"
-                        onmouseover="highlightStars(${star}, '${movie.id}')"
-                        onmouseout="resetStars('${movie.id}')">★</span>
-                `).join('')}
-              </div>
-              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
+          <div class="details-meta">
+            <div class="meta-item">
+              <div class="meta-label">Rok produkcji</div>
+              <div class="meta-value">${movie.year}</div>
             </div>
-            
-            ${userRating ? `
-              <div style="margin-top: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 5px;">
-                <p>Twoja ocena jako <strong>${userRating.nickname}</strong>: <strong>${getStarsHTML(userRating.rating)} (${userRating.rating}/5)</strong></p>
-                <p><small>Wystawiona: ${formatDate(userRating.timestamp)}</small></p>
-                <button class="change-rating-button" onclick="prepareRatingChange('${movie.id}', 'film')">
-                  ✏️ Zmień ocenę
-                </button>
-              </div>
-            ` : `
-              <div class="rating-form">
-                <input type="text" id="nickname-${movie.id}" class="nickname-input" 
-                       placeholder="Twój nick" maxlength="20" value="${currentUserNickname}">
-                <button class="submit-rating" onclick="submitRating('${movie.id}', 'film')">Dodaj ocenę</button>
-                <p><small>Podaj nick i wybierz ocenę. Możesz później zmienić swoją ocenę.</small></p>
-              </div>
-            `}
-            
-            ${ratings.length > 0 ? `
-            <div class="ratings-list">
-              <h4>Oceny społeczności (${ratings.length}):</h4>
-              ${ratings.map(rating => `
-                <div class="rating-item">
-                  <span class="rating-item-user">${rating.nickname}</span>
-                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
-                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
-                </div>
-              `).reverse().join('')}
+            <div class="meta-item">
+              <div class="meta-label">Reżyser</div>
+              <div class="meta-value">${movie.director}</div>
             </div>
-            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
+            <div class="meta-item">
+              <div class="meta-label">Czas trwania</div>
+              <div class="meta-value">${movie.duration}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Gatunek</div>
+              <div class="meta-value">${movie.type === 'film' ? 'Film' : 'Serial'}</div>
+            </div>
           </div>
           
-          <div>
+          <h3>📊 Oceny w serwisach</h3>
+          ${ratingsHTML}
+          
+          <div class="button-group">
             <a href="${movie.trailer}" target="_blank" class="trailer-button">
               🎬 Obejrzyj zwiastun
             </a>
-            <a href="https://www.filmweb.pl/user/JasieKnow" target="_blank" class="filmweb-button">
-              📖 Mój profil Filmweb
-            </a>
+            ${movie.ratings.filmweb ? `
+              <a href="${movie.ratings.filmweb.link}" target="_blank" class="filmweb-button">
+                📖 Filmweb
+              </a>
+            ` : ''}
+            ${movie.ratings.imdb ? `
+              <a href="${movie.ratings.imdb.link}" target="_blank" class="imdb-button">
+                ⭐ IMDb
+              </a>
+            ` : ''}
+            ${movie.ratings.rotten ? `
+              <a href="${movie.ratings.rotten.link}" target="_blank" class="rotten-button">
+                🍅 Rotten Tomatoes
+              </a>
+            ` : ''}
           </div>
         </div>
       </div>
     `;
-    
-    // Ustaw aktualną ocenę użytkownika jeśli ją ma
-    if (userRating) {
-      currentSelectedRating = userRating.rating;
-      resetStars(id);
-    } else {
-      currentSelectedRating = 0;
-    }
     
     showSection('movie-details');
   }
 
   function showSeriesDetails(id) {
-    const serie = seriesData.find(s => s.id === id);
-    if (!serie) return;
+    const series = seriesData.find(s => s.id === id);
+    if (!series) return;
     
-    currentRatingItemId = id;
-    currentRatingType = 'serial';
     currentSection = `series-details-${id}`;
     
-    const ratings = getRatingsForItem(id);
-    const avgRating = calculateAverageRating(ratings);
-    const userRating = getUserRating(id);
+    let ratingsHTML = '';
+    if (series.ratings) {
+      ratingsHTML = `
+        <div class="external-ratings-details">
+          ${series.ratings.filmweb ? `
+            <div class="rating-card filmweb">
+              <div class="rating-source">Filmweb</div>
+              <div class="rating-main">${series.ratings.filmweb.rating}</div>
+              <a href="${series.ratings.filmweb.link}" target="_blank" class="rating-link">Zobacz na Filmweb →</a>
+            </div>
+          ` : ''}
+          
+          ${series.ratings.imdb ? `
+            <div class="rating-card imdb">
+              <div class="rating-source">IMDb</div>
+              <div class="rating-main">${series.ratings.imdb.rating}</div>
+              <a href="${series.ratings.imdb.link}" target="_blank" class="rating-link">Zobacz na IMDb →</a>
+            </div>
+          ` : ''}
+          
+          ${series.ratings.rotten ? `
+            <div class="rating-card rotten">
+              <div class="rating-source">Rotten Tomatoes</div>
+              <div class="rating-main">${series.ratings.rotten.rating}</div>
+              <a href="${series.ratings.rotten.link}" target="_blank" class="rating-link">Zobacz na RT →</a>
+            </div>
+          ` : ''}
+          
+          ${series.ratings.metacritic ? `
+            <div class="rating-card metacritic">
+              <div class="rating-source">Metacritic</div>
+              <div class="rating-main">${series.ratings.metacritic.rating}</div>
+              <a href="${series.ratings.metacritic.link}" target="_blank" class="rating-link">Zobacz na Metacritic →</a>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
     
     document.getElementById('series-content').innerHTML = `
-      <div style="display: flex; flex-wrap: wrap; gap: 30px;">
-        <img src="${serie.image}" alt="${serie.title}" style="width: 100%; max-width: 300px; height: 450px; object-fit: cover; border-radius: 10px;">
-        <div style="flex: 1; min-width: 300px;">
-          <h2 style="margin-top: 0;">${serie.title}</h2>
-          <p style="font-size: 18px;">${serie.desc}</p>
-          <p><strong>Liczba sezonów:</strong> ${serie.seasons}</p>
-          <p><strong>Lata emisji:</strong> ${serie.years}</p>
+      <div class="details-content">
+        <img src="${series.image}" alt="${series.title}" class="details-poster">
+        <div class="details-info">
+          <h2 style="margin-top: 0; border: none;">${series.title}</h2>
+          <p style="font-size: 18px; line-height: 1.6;">${series.desc}</p>
           
-          <div class="details-rating">
-            <h3>Oceń ten serial:</h3>
-            <div class="rating-container">
-              <div class="user-rating" id="rating-stars-${serie.id}">
-                ${[1,2,3,4,5].map(star => `
-                  <span class="star" data-value="${star}" 
-                        onclick="selectRating(${star}, '${serie.id}')"
-                        onmouseover="highlightStars(${star}, '${serie.id}')"
-                        onmouseout="resetStars('${serie.id}')">★</span>
-                `).join('')}
-              </div>
-              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
+          <div class="details-meta">
+            <div class="meta-item">
+              <div class="meta-label">Lata emisji</div>
+              <div class="meta-value">${series.years}</div>
             </div>
-            
-            ${userRating ? `
-              <div style="margin-top: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 5px;">
-                <p>Twoja ocena jako <strong>${userRating.nickname}</strong>: <strong>${getStarsHTML(userRating.rating)} (${userRating.rating}/5)</strong></p>
-                <p><small>Wystawiona: ${formatDate(userRating.timestamp)}</small></p>
-                <button class="change-rating-button" onclick="prepareRatingChange('${serie.id}', 'serial')">
-                  ✏️ Zmień ocenę
-                </button>
-              </div>
-            ` : `
-              <div class="rating-form">
-                <input type="text" id="nickname-${serie.id}" class="nickname-input" 
-                       placeholder="Twój nick" maxlength="20" value="${currentUserNickname}">
-                <button class="submit-rating" onclick="submitRating('${serie.id}', 'serial')">Dodaj ocenę</button>
-                <p><small>Podaj nick i wybierz ocenę. Możesz później zmienić swoją ocenę.</small></p>
-              </div>
-            `}
-            
-            ${ratings.length > 0 ? `
-            <div class="ratings-list">
-              <h4>Oceny społeczności (${ratings.length}):</h4>
-              ${ratings.map(rating => `
-                <div class="rating-item">
-                  <span class="rating-item-user">${rating.nickname}</span>
-                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
-                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
-                </div>
-              `).reverse().join('')}
+            <div class="meta-item">
+              <div class="meta-label">Sezony</div>
+              <div class="meta-value">${series.seasons}</div>
             </div>
-            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
+            <div class="meta-item">
+              <div class="meta-label">Odcinki</div>
+              <div class="meta-value">${series.episodes}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Gatunek</div>
+              <div class="meta-value">Serial</div>
+            </div>
           </div>
           
-          <div>
-            <a href="${serie.trailer}" target="_blank" class="trailer-button">
+          <h3>📊 Oceny w serwisach</h3>
+          ${ratingsHTML}
+          
+          <div class="button-group">
+            <a href="${series.trailer}" target="_blank" class="trailer-button">
               📺 Obejrzyj zwiastun
             </a>
-            <a href="https://www.filmweb.pl/user/JasieKnow" target="_blank" class="filmweb-button">
-              📖 Mój profil Filmweb
-            </a>
+            ${series.ratings.filmweb ? `
+              <a href="${series.ratings.filmweb.link}" target="_blank" class="filmweb-button">
+                📖 Filmweb
+              </a>
+            ` : ''}
+            ${series.ratings.imdb ? `
+              <a href="${series.ratings.imdb.link}" target="_blank" class="imdb-button">
+                ⭐ IMDb
+              </a>
+            ` : ''}
+            ${series.ratings.rotten ? `
+              <a href="${series.ratings.rotten.link}" target="_blank" class="rotten-button">
+                🍅 Rotten Tomatoes
+              </a>
+            ` : ''}
           </div>
         </div>
       </div>
     `;
-    
-    // Ustaw aktualną ocenę użytkownika jeśli ją ma
-    if (userRating) {
-      currentSelectedRating = userRating.rating;
-      resetStars(id);
-    } else {
-      currentSelectedRating = 0;
-    }
     
     showSection('series-details');
   }
@@ -1327,176 +1405,88 @@
     const game = gamesData.find(g => g.id === id);
     if (!game) return;
     
-    currentRatingItemId = id;
-    currentRatingType = 'gra';
     currentSection = `game-details-${id}`;
     
-    const ratings = getRatingsForItem(id);
-    const avgRating = calculateAverageRating(ratings);
-    const userRating = getUserRating(id);
+    let ratingsHTML = '';
+    if (game.ratings) {
+      ratingsHTML = `
+        <div class="external-ratings-details">
+          ${game.ratings.metacritic ? `
+            <div class="rating-card metacritic">
+              <div class="rating-source">Metacritic</div>
+              <div class="rating-main">${game.ratings.metacritic.rating}</div>
+              <a href="${game.ratings.metacritic.link}" target="_blank" class="rating-link">Zobacz na Metacritic →</a>
+            </div>
+          ` : ''}
+          
+          ${game.ratings.steam ? `
+            <div class="rating-card" style="border-top: 4px solid #66c0f4;">
+              <div class="rating-source">Steam</div>
+              <div class="rating-main">${game.ratings.steam.rating}</div>
+              <a href="${game.ratings.steam.link}" target="_blank" class="rating-link">Zobacz na Steam →</a>
+            </div>
+          ` : ''}
+          
+          ${game.ratings.ign ? `
+            <div class="rating-card" style="border-top: 4px solid #ff6500;">
+              <div class="rating-source">IGN</div>
+              <div class="rating-main">${game.ratings.ign.rating}</div>
+              <a href="${game.ratings.ign.link}" target="_blank" class="rating-link">Zobacz na IGN →</a>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
     
     document.getElementById('game-content').innerHTML = `
-      <div style="display: flex; flex-wrap: wrap; gap: 30px;">
-        <img src="${game.image}" alt="${game.title}" style="width: 100%; max-width: 300px; height: 300px; object-fit: contain; background: white; padding: 20px; border-radius: 10px;">
-        <div style="flex: 1; min-width: 300px;">
-          <h2 style="margin-top: 0;">${game.title}</h2>
-          <p style="font-size: 18px;">${game.desc}</p>
-          <p><strong>Gatunek:</strong> ${game.genre}</p>
-          <p><strong>Rok wydania:</strong> ${game.year}</p>
+      <div class="details-content">
+        <img src="${game.image}" alt="${game.title}" class="details-poster" style="${game.id === 'lol' || game.id === 'fortnite' ? 'background: white; padding: 30px; height: 400px;' : ''}">
+        <div class="details-info">
+          <h2 style="margin-top: 0; border: none;">${game.title}</h2>
+          <p style="font-size: 18px; line-height: 1.6;">${game.desc}</p>
           
-          <div class="details-rating">
-            <h3>Oceń tę grę:</h3>
-            <div class="rating-container">
-              <div class="user-rating" id="rating-stars-${game.id}">
-                ${[1,2,3,4,5].map(star => `
-                  <span class="star" data-value="${star}" 
-                        onclick="selectRating(${star}, '${game.id}')"
-                        onmouseover="highlightStars(${star}, '${game.id}')"
-                        onmouseout="resetStars('${game.id}')">★</span>
-                `).join('')}
-              </div>
-              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
+          <div class="details-meta">
+            <div class="meta-item">
+              <div class="meta-label">Rok wydania</div>
+              <div class="meta-value">${game.year}</div>
             </div>
-            
-            ${userRating ? `
-              <div style="margin-top: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 5px;">
-                <p>Twoja ocena jako <strong>${userRating.nickname}</strong>: <strong>${getStarsHTML(userRating.rating)} (${userRating.rating}/5)</strong></p>
-                <p><small>Wystawiona: ${formatDate(userRating.timestamp)}</small></p>
-                <button class="change-rating-button" onclick="prepareRatingChange('${game.id}', 'gra')">
-                  ✏️ Zmień ocenę
-                </button>
-              </div>
-            ` : `
-              <div class="rating-form">
-                <input type="text" id="nickname-${game.id}" class="nickname-input" 
-                       placeholder="Twój nick" maxlength="20" value="${currentUserNickname}">
-                <button class="submit-rating" onclick="submitRating('${game.id}', 'gra')">Dodaj ocenę</button>
-                <p><small>Podaj nick i wybierz ocenę. Możesz później zmienić swoją ocenę.</small></p>
-              </div>
-            `}
-            
-            ${ratings.length > 0 ? `
-            <div class="ratings-list">
-              <h4>Oceny społeczności (${ratings.length}):</h4>
-              ${ratings.map(rating => `
-                <div class="rating-item">
-                  <span class="rating-item-user">${rating.nickname}</span>
-                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
-                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
-                </div>
-              `).reverse().join('')}
+            <div class="meta-item">
+              <div class="meta-label">Gatunek</div>
+              <div class="meta-value">${game.genre}</div>
             </div>
-            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
+            <div class="meta-item">
+              <div class="meta-label">Developer</div>
+              <div class="meta-value">${game.developer}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Platforma</div>
+              <div class="meta-value">PC, Konsole</div>
+            </div>
           </div>
           
-          <div>
+          <h3>📊 Oceny w serwisach</h3>
+          ${ratingsHTML}
+          
+          <div class="button-group">
             <a href="${game.trailer}" target="_blank" class="trailer-button">
               🎮 Obejrzyj zwiastun
             </a>
-            <a href="https://www.filmweb.pl/user/JasieKnow" target="_blank" class="filmweb-button">
-              📖 Mój profil Filmweb
-            </a>
+            ${game.ratings.metacritic ? `
+              <a href="${game.ratings.metacritic.link}" target="_blank" class="filmweb-button">
+                📊 Metacritic
+              </a>
+            ` : ''}
+            ${game.ratings.steam ? `
+              <a href="${game.ratings.steam.link}" target="_blank" class="imdb-button">
+                🎮 Steam
+              </a>
+            ` : ''}
           </div>
         </div>
       </div>
     `;
     
-    // Ustaw aktualną ocenę użytkownika jeśli ją ma
-    if (userRating) {
-      currentSelectedRating = userRating.rating;
-      resetStars(id);
-    } else {
-      currentSelectedRating = 0;
-    }
-    
     showSection('game-details');
-  }
-
-  // ========== FUNKCJE SYSTEMU OCEN ==========
-  function selectRating(rating, id) {
-    currentSelectedRating = rating;
-    currentRatingItemId = id;
-    
-    const stars = document.querySelectorAll(`#rating-stars-${id} .star`);
-    stars.forEach((star, index) => {
-      if (index < rating) {
-        star.classList.add('active');
-      } else {
-        star.classList.remove('active');
-      }
-    });
-  }
-
-  function highlightStars(count, id) {
-    const stars = document.querySelectorAll(`#rating-stars-${id} .star`);
-    stars.forEach((star, index) => {
-      if (index < count) {
-        star.classList.add('active');
-      }
-    });
-  }
-
-  function resetStars(id) {
-    const stars = document.querySelectorAll(`#rating-stars-${id} .star`);
-    stars.forEach((star, index) => {
-      if (index < currentSelectedRating) {
-        star.classList.add('active');
-      } else {
-        star.classList.remove('active');
-      }
-    });
-  }
-
-  function prepareRatingChange(itemId, type) {
-    if (currentSelectedRating === 0) {
-      alert('Proszę wybrać nową ocenę (kliknij w gwiazdki)!');
-      return;
-    }
-    
-    showModal(
-      'Zmień ocenę',
-      `Czy na pewno chcesz zmienić swoją ocenę na ${currentSelectedRating} gwiazdek?`,
-      () => submitRating(itemId, type, true)
-    );
-  }
-
-  function submitRating(id, type, isChange = false) {
-    const nicknameInput = document.getElementById(`nickname-${id}`);
-    const nickname = nicknameInput ? nicknameInput.value.trim() : currentUserNickname;
-    
-    if (!nickname) {
-      alert('Proszę podać nick!');
-      if (nicknameInput) nicknameInput.focus();
-      return;
-    }
-    
-    if (currentSelectedRating === 0) {
-      alert('Proszę wybrać ocenę (kliknij w gwiazdki)!');
-      return;
-    }
-    
-    const success = saveRating(id, {
-      nickname: nickname,
-      rating: currentSelectedRating
-    });
-    
-    if (success) {
-      alert(isChange ? 'Ocena została zmieniona!' : 'Dziękuję za ocenę!');
-      
-      // Odśwież wyświetlanie
-      if (type === 'film') {
-        showMovieDetails(id);
-        loadMovies();
-      } else if (type === 'serial') {
-        showSeriesDetails(id);
-        loadSeries();
-      } else {
-        showGameDetails(id);
-        loadGames();
-      }
-    } else {
-      alert('Wystąpił błąd przy zapisywaniu oceny.');
-    }
   }
 
   // ========== INICJALIZACJA ==========
@@ -1508,23 +1498,19 @@
     themeButton.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
     themeButton.style.color = '#000';
     
-    // Załaduj oceny
-    loadAllRatings();
-    
     // Pokazuj stronę startową
     showSection('welcome');
     
-    // Zamknij modal przy kliknięciu na overlay
-    document.getElementById('rating-modal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeModal();
-      }
-    });
-    
-    // Zamknij modal przy Escape
+    // Dodaj obsługę klawisza Escape
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeModal();
+      if (e.key === 'Escape' && currentSection.includes('details')) {
+        if (currentSection.includes('movie-details')) {
+          showSection('filmy');
+        } else if (currentSection.includes('series-details')) {
+          showSection('seriale');
+        } else if (currentSection.includes('game-details')) {
+          showSection('gry');
+        }
       }
     });
   });
