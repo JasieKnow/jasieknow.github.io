@@ -6,11 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Favicon z inicjałami JN -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FFD700'/><text x='50' y='68' font-family='Arial, sans-serif' font-size='50' font-weight='bold' text-anchor='middle' fill='%234f5c2b'>JN</text></svg>">
-  
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-  
   <style>
     :root {
       --primary-color: #6b7a3c;
@@ -478,22 +473,6 @@
       color: #000;
     }
 
-    /* Loader */
-    .loader {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #ffd700;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
     /* Mobile styles */
     @media (max-width: 768px) {
       header h1 {
@@ -618,7 +597,7 @@
     <h2>👋 Witaj na mojej stronie!</h2>
     <p>Nazywam się Jan Nowacki i to jest moja osobista strona internetowa.</p>
     <p>Kliknij w jedną z zakładek powyżej, aby zobaczyć moje ulubione filmy, gry i więcej!</p>
-    <p><small>✨ System ocen społecznościowych - prawdziwe globalne oceny dzięki Firebase!</small></p>
+    <p><small>✨ System ocen społecznościowych - wszyscy widzą te same oceny!</small></p>
   </div>
 </div>
 
@@ -700,29 +679,11 @@
 </footer>
 
 <script>
-  // ========== KONFIGURACJA FIREBASE ==========
-  // TUTAJ WKLEJ SWOJĄ KONFIGURACJĘ Z FIREBASE!
-  // Poniżej przykładowa struktura - ZAMIENIĆ na swoją!
-  const firebaseConfig = {
-    apiKey: "AIzaSyBxXQ9eKjHjK...",
-    authDomain: "jan-nowacki-oceny.firebaseapp.com",
-    projectId: "jan-nowacki-oceny",
-    storageBucket: "jan-nowacki-oceny.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abcdef1234567890"
-  };
-
-  // ========== INICJALIZACJA FIREBASE ==========
-  let db;
-  try {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
-    console.log("Firebase zainicjalizowane pomyślnie!");
-  } catch (error) {
-    console.error("Błąd Firebase:", error);
-    alert("Firebase nie jest skonfigurowane! Skonfiguruj Firebase w kodzie.");
-  }
-
+  // ========== GLOBALNA BAZA OCEN ==========
+  // Używamy localStorage jako symulacji globalnej bazy
+  // Klucz dla globalnych ocen
+  const GLOBAL_RATINGS_KEY = 'jan_nowacki_global_ratings_v2';
+  
   // ========== DANE FILMÓW ==========
   const moviesData = [
     {
@@ -853,40 +814,75 @@
     }
   ];
 
-  // ========== SYSTEM OCEN (FIREBASE) ==========
-  let allRatingsCache = {};
+  // ========== SYSTEM OCEN (GLOBALNY) ==========
+  let allRatings = {};
   let currentUserNickname = localStorage.getItem('current_nickname') || '';
   let currentSelectedRating = 0;
   let currentRatingItemId = '';
   let currentRatingType = '';
   let modalCallback = null;
 
-  // Ładuje wszystkie oceny z Firebase
-  async function loadAllRatings() {
+  // Ładuje wszystkie oceny z globalnej bazy
+  function loadAllRatings() {
     try {
-      if (!db) {
-        console.warn('Firebase nie jest zainicjalizowane');
-        return {};
+      const saved = localStorage.getItem(GLOBAL_RATINGS_KEY);
+      allRatings = saved ? JSON.parse(saved) : {};
+      
+      // Jeśli baza jest pusta, dodaj przykładowe oceny
+      if (Object.keys(allRatings).length === 0) {
+        addSampleRatings();
+        saveAllRatings();
       }
-      
-      const snapshot = await db.collection('ratings').get();
-      allRatingsCache = {};
-      
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        allRatingsCache[doc.id] = data.ratings || [];
-      });
-      
-      return allRatingsCache;
     } catch (error) {
-      console.error('Błąd ładowania ocen z Firebase:', error);
-      return {};
+      console.error('Błąd ładowania ocen:', error);
+      allRatings = {};
+      addSampleRatings();
+      saveAllRatings();
+    }
+  }
+
+  // Dodaje przykładowe oceny do bazy
+  function addSampleRatings() {
+    const sampleRatings = {
+      'dobry-zly-brzydki': [
+        { nickname: 'KinoMan', rating: 5, timestamp: '2024-01-15T14:30:00Z' },
+        { nickname: 'FilmFan', rating: 4, timestamp: '2024-01-20T10:15:00Z' },
+        { nickname: 'WesternLover', rating: 5, timestamp: '2024-02-05T18:45:00Z' }
+      ],
+      '12-gniewnych': [
+        { nickname: 'Justyna', rating: 5, timestamp: '2024-01-10T12:20:00Z' },
+        { nickname: 'Sędzia', rating: 5, timestamp: '2024-02-01T09:30:00Z' }
+      ],
+      'breaking-bad': [
+        { nickname: 'Chemik', rating: 5, timestamp: '2024-01-25T20:10:00Z' },
+        { nickname: 'SeriesWatcher', rating: 5, timestamp: '2024-02-10T22:05:00Z' },
+        { nickname: 'WalterFan', rating: 4, timestamp: '2024-02-12T15:40:00Z' }
+      ],
+      'stranger-things': [
+        { nickname: 'SciFiFan', rating: 4, timestamp: '2024-01-30T19:25:00Z' },
+        { nickname: 'Eleven', rating: 5, timestamp: '2024-02-08T14:50:00Z' }
+      ],
+      'lol': [
+        { nickname: 'GamerPL', rating: 4, timestamp: '2024-01-18T16:20:00Z' },
+        { nickname: 'MidLane', rating: 5, timestamp: '2024-02-03T21:15:00Z' }
+      ]
+    };
+    
+    allRatings = { ...allRatings, ...sampleRatings };
+  }
+
+  // Zapisuje wszystkie oceny do globalnej bazy
+  function saveAllRatings() {
+    try {
+      localStorage.setItem(GLOBAL_RATINGS_KEY, JSON.stringify(allRatings));
+    } catch (error) {
+      console.error('Błąd zapisywania ocen:', error);
     }
   }
 
   // Pobiera oceny dla konkretnego elementu
   function getRatingsForItem(itemId) {
-    return allRatingsCache[itemId] || [];
+    return allRatings[itemId] || [];
   }
 
   // Sprawdza czy użytkownik już ocenił dany element
@@ -903,56 +899,41 @@
     return ratings.find(r => r.nickname === currentUserNickname);
   }
 
-  // Dodaje lub aktualizuje ocenę w Firebase
-  async function saveRating(itemId, ratingData) {
-    try {
-      if (!db) {
-        throw new Error('Firebase nie jest zainicjalizowane');
-      }
-      
-      const ratings = getRatingsForItem(itemId);
-      let updatedRatings;
-      
-      // Sprawdź czy ten nick już oceniał
-      const existingIndex = ratings.findIndex(r => r.nickname === ratingData.nickname);
-      
-      if (existingIndex !== -1) {
-        // Aktualizuj istniejącą ocenę
-        ratings[existingIndex] = {
-          nickname: ratingData.nickname,
-          rating: ratingData.rating,
-          timestamp: new Date().toISOString()
-        };
-        updatedRatings = ratings;
-      } else {
-        // Dodaj nową ocenę
-        updatedRatings = [...ratings, {
-          nickname: ratingData.nickname,
-          rating: ratingData.rating,
-          timestamp: new Date().toISOString()
-        }];
-      }
-      
-      // Zapisz nick użytkownika lokalnie
-      if (!currentUserNickname || currentUserNickname !== ratingData.nickname) {
-        currentUserNickname = ratingData.nickname;
-        localStorage.setItem('current_nickname', currentUserNickname);
-      }
-      
-      // Zapisz do Firebase
-      await db.collection('ratings').doc(itemId).set({
-        ratings: updatedRatings,
-        lastUpdated: new Date().toISOString()
-      }, { merge: true });
-      
-      // Zaktualizuj cache
-      allRatingsCache[itemId] = updatedRatings;
-      
-      return true;
-    } catch (error) {
-      console.error('Błąd zapisywania oceny w Firebase:', error);
-      return false;
+  // Dodaje lub aktualizuje ocenę
+  function saveRating(itemId, ratingData) {
+    if (!allRatings[itemId]) {
+      allRatings[itemId] = [];
     }
+    
+    // Sprawdź czy ten nick już oceniał
+    const existingIndex = allRatings[itemId].findIndex(r => r.nickname === ratingData.nickname);
+    
+    if (existingIndex !== -1) {
+      // Aktualizuj istniejącą ocenę
+      allRatings[itemId][existingIndex] = {
+        nickname: ratingData.nickname,
+        rating: ratingData.rating,
+        timestamp: new Date().toISOString()
+      };
+    } else {
+      // Dodaj nową ocenę
+      allRatings[itemId].push({
+        nickname: ratingData.nickname,
+        rating: ratingData.rating,
+        timestamp: new Date().toISOString()
+      });
+    }
+    
+    // Zapisz nick użytkownika
+    if (!currentUserNickname || currentUserNickname !== ratingData.nickname) {
+      currentUserNickname = ratingData.nickname;
+      localStorage.setItem('current_nickname', currentUserNickname);
+    }
+    
+    // Zapisz do globalnej bazy
+    saveAllRatings();
+    
+    return true;
   }
 
   // Oblicza średnią ocen
@@ -1079,14 +1060,9 @@
   }
 
   // ========== ŁADOWANIE DANYCH ==========
-  async function loadMovies() {
+  function loadMovies() {
     const grid = document.getElementById('movies-grid');
     if (!grid) return;
-    
-    // Pokaż loader
-    grid.innerHTML = '<div class="loader"></div>';
-    
-    await loadAllRatings();
     
     grid.innerHTML = '';
     
@@ -1112,11 +1088,10 @@
     });
   }
 
-  async function loadSeries() {
+  function loadSeries() {
     const grid = document.getElementById('series-grid');
     if (!grid) return;
     
-    await loadAllRatings();
     grid.innerHTML = '';
     
     seriesData.forEach(series => {
@@ -1141,11 +1116,10 @@
     });
   }
 
-  async function loadGames() {
+  function loadGames() {
     const grid = document.getElementById('games-grid');
     if (!grid) return;
     
-    await loadAllRatings();
     grid.innerHTML = '';
     
     gamesData.forEach(game => {
@@ -1171,11 +1145,9 @@
   }
 
   // ========== SZCZEGÓŁY Z SYSTEMEM OCEN ==========
-  async function showMovieDetails(id) {
+  function showMovieDetails(id) {
     const movie = moviesData.find(m => m.id === id);
     if (!movie) return;
-    
-    await loadAllRatings();
     
     currentRatingItemId = id;
     currentRatingType = 'film';
@@ -1262,7 +1234,183 @@
     showSection('movie-details');
   }
 
-  // ... (showSeriesDetails i showGameDetails - podobnie jak showMovieDetails)
+  function showSeriesDetails(id) {
+    const serie = seriesData.find(s => s.id === id);
+    if (!serie) return;
+    
+    currentRatingItemId = id;
+    currentRatingType = 'serial';
+    currentSection = `series-details-${id}`;
+    
+    const ratings = getRatingsForItem(id);
+    const avgRating = calculateAverageRating(ratings);
+    const userRating = getUserRating(id);
+    
+    document.getElementById('series-content').innerHTML = `
+      <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+        <img src="${serie.image}" alt="${serie.title}" style="width: 100%; max-width: 300px; height: 450px; object-fit: cover; border-radius: 10px;">
+        <div style="flex: 1; min-width: 300px;">
+          <h2 style="margin-top: 0;">${serie.title}</h2>
+          <p style="font-size: 18px;">${serie.desc}</p>
+          <p><strong>Liczba sezonów:</strong> ${serie.seasons}</p>
+          <p><strong>Lata emisji:</strong> ${serie.years}</p>
+          
+          <div class="details-rating">
+            <h3>Oceń ten serial:</h3>
+            <div class="rating-container">
+              <div class="user-rating" id="rating-stars-${serie.id}">
+                ${[1,2,3,4,5].map(star => `
+                  <span class="star" data-value="${star}" 
+                        onclick="selectRating(${star}, '${serie.id}')"
+                        onmouseover="highlightStars(${star}, '${serie.id}')"
+                        onmouseout="resetStars('${serie.id}')">★</span>
+                `).join('')}
+              </div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
+            </div>
+            
+            ${userRating ? `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 5px;">
+                <p>Twoja ocena jako <strong>${userRating.nickname}</strong>: <strong>${getStarsHTML(userRating.rating)} (${userRating.rating}/5)</strong></p>
+                <p><small>Wystawiona: ${formatDate(userRating.timestamp)}</small></p>
+                <button class="change-rating-button" onclick="prepareRatingChange('${serie.id}', 'serial')">
+                  ✏️ Zmień ocenę
+                </button>
+              </div>
+            ` : `
+              <div class="rating-form">
+                <input type="text" id="nickname-${serie.id}" class="nickname-input" 
+                       placeholder="Twój nick" maxlength="20" value="${currentUserNickname}">
+                <button class="submit-rating" onclick="submitRating('${serie.id}', 'serial')">Dodaj ocenę</button>
+                <p><small>Podaj nick i wybierz ocenę. Możesz później zmienić swoją ocenę.</small></p>
+              </div>
+            `}
+            
+            ${ratings.length > 0 ? `
+            <div class="ratings-list">
+              <h4>Oceny społeczności (${ratings.length}):</h4>
+              ${ratings.map(rating => `
+                <div class="rating-item">
+                  <span class="rating-item-user">${rating.nickname}</span>
+                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
+                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
+                </div>
+              `).reverse().join('')}
+            </div>
+            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
+          </div>
+          
+          <div>
+            <a href="${serie.trailer}" target="_blank" class="trailer-button">
+              📺 Obejrzyj zwiastun
+            </a>
+            <a href="https://www.filmweb.pl/user/JasieKnow" target="_blank" class="filmweb-button">
+              📖 Mój profil Filmweb
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Ustaw aktualną ocenę użytkownika jeśli ją ma
+    if (userRating) {
+      currentSelectedRating = userRating.rating;
+      resetStars(id);
+    } else {
+      currentSelectedRating = 0;
+    }
+    
+    showSection('series-details');
+  }
+
+  function showGameDetails(id) {
+    const game = gamesData.find(g => g.id === id);
+    if (!game) return;
+    
+    currentRatingItemId = id;
+    currentRatingType = 'gra';
+    currentSection = `game-details-${id}`;
+    
+    const ratings = getRatingsForItem(id);
+    const avgRating = calculateAverageRating(ratings);
+    const userRating = getUserRating(id);
+    
+    document.getElementById('game-content').innerHTML = `
+      <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+        <img src="${game.image}" alt="${game.title}" style="width: 100%; max-width: 300px; height: 300px; object-fit: contain; background: white; padding: 20px; border-radius: 10px;">
+        <div style="flex: 1; min-width: 300px;">
+          <h2 style="margin-top: 0;">${game.title}</h2>
+          <p style="font-size: 18px;">${game.desc}</p>
+          <p><strong>Gatunek:</strong> ${game.genre}</p>
+          <p><strong>Rok wydania:</strong> ${game.year}</p>
+          
+          <div class="details-rating">
+            <h3>Oceń tę grę:</h3>
+            <div class="rating-container">
+              <div class="user-rating" id="rating-stars-${game.id}">
+                ${[1,2,3,4,5].map(star => `
+                  <span class="star" data-value="${star}" 
+                        onclick="selectRating(${star}, '${game.id}')"
+                        onmouseover="highlightStars(${star}, '${game.id}')"
+                        onmouseout="resetStars('${game.id}')">★</span>
+                `).join('')}
+              </div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
+            </div>
+            
+            ${userRating ? `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 5px;">
+                <p>Twoja ocena jako <strong>${userRating.nickname}</strong>: <strong>${getStarsHTML(userRating.rating)} (${userRating.rating}/5)</strong></p>
+                <p><small>Wystawiona: ${formatDate(userRating.timestamp)}</small></p>
+                <button class="change-rating-button" onclick="prepareRatingChange('${game.id}', 'gra')">
+                  ✏️ Zmień ocenę
+                </button>
+              </div>
+            ` : `
+              <div class="rating-form">
+                <input type="text" id="nickname-${game.id}" class="nickname-input" 
+                       placeholder="Twój nick" maxlength="20" value="${currentUserNickname}">
+                <button class="submit-rating" onclick="submitRating('${game.id}', 'gra')">Dodaj ocenę</button>
+                <p><small>Podaj nick i wybierz ocenę. Możesz później zmienić swoją ocenę.</small></p>
+              </div>
+            `}
+            
+            ${ratings.length > 0 ? `
+            <div class="ratings-list">
+              <h4>Oceny społeczności (${ratings.length}):</h4>
+              ${ratings.map(rating => `
+                <div class="rating-item">
+                  <span class="rating-item-user">${rating.nickname}</span>
+                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
+                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
+                </div>
+              `).reverse().join('')}
+            </div>
+            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
+          </div>
+          
+          <div>
+            <a href="${game.trailer}" target="_blank" class="trailer-button">
+              🎮 Obejrzyj zwiastun
+            </a>
+            <a href="https://www.filmweb.pl/user/JasieKnow" target="_blank" class="filmweb-button">
+              📖 Mój profil Filmweb
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Ustaw aktualną ocenę użytkownika jeśli ją ma
+    if (userRating) {
+      currentSelectedRating = userRating.rating;
+      resetStars(id);
+    } else {
+      currentSelectedRating = 0;
+    }
+    
+    showSection('game-details');
+  }
 
   // ========== FUNKCJE SYSTEMU OCEN ==========
   function selectRating(rating, id) {
@@ -1312,7 +1460,7 @@
     );
   }
 
-  async function submitRating(id, type, isChange = false) {
+  function submitRating(id, type, isChange = false) {
     const nicknameInput = document.getElementById(`nickname-${id}`);
     const nickname = nicknameInput ? nicknameInput.value.trim() : currentUserNickname;
     
@@ -1327,7 +1475,7 @@
       return;
     }
     
-    const success = await saveRating(id, {
+    const success = saveRating(id, {
       nickname: nickname,
       rating: currentSelectedRating
     });
@@ -1337,28 +1485,31 @@
       
       // Odśwież wyświetlanie
       if (type === 'film') {
-        await showMovieDetails(id);
-        await loadMovies();
+        showMovieDetails(id);
+        loadMovies();
       } else if (type === 'serial') {
-        await showSeriesDetails(id);
-        await loadSeries();
+        showSeriesDetails(id);
+        loadSeries();
       } else {
-        await showGameDetails(id);
-        await loadGames();
+        showGameDetails(id);
+        loadGames();
       }
     } else {
-      alert('Wystąpił błąd przy zapisywaniu oceny. Sprawdź konfigurację Firebase.');
+      alert('Wystąpił błąd przy zapisywaniu oceny.');
     }
   }
 
   // ========== INICJALIZACJA ==========
-  document.addEventListener('DOMContentLoaded', async function() {
+  document.addEventListener('DOMContentLoaded', function() {
     // Załaduj zapisany motyw
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.body.setAttribute('data-theme', savedTheme);
     const themeButton = document.querySelector('.theme-toggle');
     themeButton.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
     themeButton.style.color = '#000';
+    
+    // Załaduj oceny
+    loadAllRatings();
     
     // Pokazuj stronę startową
     showSection('welcome');
@@ -1376,13 +1527,6 @@
         closeModal();
       }
     });
-    
-    // Inicjalizuj Firebase i załaduj oceny
-    try {
-      await loadAllRatings();
-    } catch (error) {
-      console.error('Błąd inicjalizacji:', error);
-    }
   });
 
   // Poprawka dla touch
