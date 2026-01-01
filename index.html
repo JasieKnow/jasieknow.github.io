@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Jan Nowacki - Strona osobista</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Favicon z inicjałami JN -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FFD700'/><text x='50' y='68' font-family='Arial, sans-serif' font-size='50' font-weight='bold' text-anchor='middle' fill='%234f5c2b'>JN</text></svg>">
   <style>
     :root {
       --primary-color: #6b7a3c;
@@ -67,6 +69,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1000;
     }
 
     /* Wyszukiwarka */
@@ -90,13 +93,6 @@
     .search-input::placeholder {
       color: var(--text-color);
       opacity: 0.7;
-    }
-
-    .search-icon {
-      position: absolute;
-      right: 15px;
-      top: 12px;
-      font-size: 20px;
     }
 
     nav {
@@ -171,6 +167,23 @@
     .movie-card:hover, .series-card:hover, .game-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 20px var(--shadow);
+    }
+
+    /* NOWE: Średnia ocena w lewym górnym rogu zdjęcia */
+    .card-rating-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #ffd700;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      z-index: 10;
     }
 
     .movie-img, .series-img, .game-img {
@@ -321,6 +334,65 @@
       color: var(--accent-color);
     }
 
+    /* Formularz oceny z nickiem */
+    .rating-form {
+      margin-top: 15px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .nickname-input {
+      width: 200px;
+      padding: 8px 12px;
+      border: 1px solid var(--accent-color);
+      border-radius: 4px;
+      background: var(--primary-color);
+      color: var(--text-color);
+      margin-right: 10px;
+    }
+
+    .submit-rating {
+      background: var(--accent-color);
+      color: var(--text-color);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Lista ocen użytkowników */
+    .ratings-list {
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .rating-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      margin: 5px 0;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    .rating-item-user {
+      font-weight: bold;
+      color: var(--accent-color);
+    }
+
+    .rating-item-stars {
+      color: var(--accent-color);
+    }
+
+    .rating-item-time {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
     /* Mobile styles */
     @media (max-width: 768px) {
       header h1 {
@@ -365,6 +437,12 @@
       .column {
         min-width: 100%;
       }
+      
+      .nickname-input {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-right: 0;
+      }
     }
 
     @media (max-width: 480px) {
@@ -382,6 +460,10 @@
         margin: 10px 0;
         text-align: center;
       }
+      
+      .rating-container {
+        flex-wrap: wrap;
+      }
     }
   </style>
 </head>
@@ -390,7 +472,7 @@
 
 <header onclick="showSection('welcome')">
   <h1>Jan Nowacki - Strona osobista</h1>
-  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  <button class="theme-toggle" onclick="toggleTheme(event)">🌙</button>
 </header>
 
 <nav>
@@ -404,7 +486,7 @@
     <h2>👋 Witaj na mojej stronie!</h2>
     <p>Nazywam się Jan Nowacki i to jest moja osobista strona internetowa.</p>
     <p>Kliknij w jedną z zakładek powyżej, aby zobaczyć moje ulubione filmy, gry i więcej!</p>
-    <p><small>✨ Nowość: Możesz zmienić motyw strony (przycisk w prawym górnym rogu)!</small></p>
+    <p><small>✨ Nowość: Możesz oceniać filmy i gry! Wystarczy podać nick i dać gwiazdki.</small></p>
   </div>
 </div>
 
@@ -483,8 +565,7 @@
       type: 'film',
       year: '1966',
       director: 'Sergio Leone',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=WCN5JJY_wiA'
     },
     {
@@ -495,8 +576,7 @@
       type: 'film',
       year: '1957',
       director: 'Sidney Lumet',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=_13J_9B5jEk'
     },
     {
@@ -507,8 +587,7 @@
       type: 'film',
       year: '1976',
       director: 'Martin Scorsese',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=UUxD4-dEzn0'
     },
     {
@@ -519,8 +598,7 @@
       type: 'film',
       year: '1980',
       director: 'Stanley Kubrick',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=S014oGZiSdI'
     },
     {
@@ -531,8 +609,7 @@
       type: 'film',
       year: '1975',
       director: 'Miloš Forman',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=OXrcDonY-B8'
     },
     {
@@ -543,8 +620,7 @@
       type: 'film',
       year: '2003',
       director: 'Gore Verbinski',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=naQr0uTrH_s'
     }
   ];
@@ -558,8 +634,7 @@
       type: 'serial',
       seasons: '5 sezonów',
       years: '2008-2013',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=HhesaQXLuRY'
     },
     {
@@ -570,8 +645,7 @@
       type: 'serial',
       seasons: '4 sezony',
       years: '2016-obecnie',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=b9EkMc79ZSU'
     }
   ];
@@ -585,8 +659,7 @@
       type: 'gra',
       genre: 'MOBA, Strategia',
       year: '2009',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=BGtROJeMPeE'
     },
     {
@@ -597,8 +670,7 @@
       type: 'gra',
       genre: 'Akcja, Przygodowa',
       year: '2013',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=QkkoHAzjnUs'
     },
     {
@@ -609,8 +681,7 @@
       type: 'gra',
       genre: 'Battle Royale, Survival',
       year: '2017',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=2gUtfBmw86Y'
     },
     {
@@ -621,13 +692,14 @@
       type: 'gra',
       genre: 'Akcja, Przygodowa',
       year: '2018',
-      rating: 0,
-      ratingCount: 0,
+      ratings: [],
       trailer: 'https://www.youtube.com/watch?v=eaW0tYpxyp0'
     }
   ];
 
   // ========== FUNKCJE GŁÓWNE ==========
+  let currentSection = 'welcome';
+  
   function showSection(id) {
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => {
@@ -636,6 +708,7 @@
     });
     document.getElementById(id).style.display = 'block';
     document.getElementById(id).classList.add('active');
+    currentSection = id;
     
     // Załaduj dane gdy sekcja jest aktywna
     if (id === 'filmy') {
@@ -647,7 +720,8 @@
   }
 
   // ========== MOTYW ==========
-  function toggleTheme() {
+  function toggleTheme(event) {
+    event.stopPropagation(); // Zatrzymuje propagację do header
     const currentTheme = document.body.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.body.setAttribute('data-theme', newTheme);
@@ -657,6 +731,24 @@
     
     // Zapisz w LocalStorage
     localStorage.setItem('theme', newTheme);
+    
+    // NIE zmieniamy sekcji - zostajemy gdzie jesteśmy
+    // Ale musimy przeładować dane, bo zmienił się CSS
+    if (currentSection === 'filmy') {
+      loadMovies();
+      loadSeries();
+    } else if (currentSection === 'gry') {
+      loadGames();
+    } else if (currentSection.startsWith('movie-details')) {
+      const id = currentSection.replace('movie-details-', '');
+      showMovieDetails(id);
+    } else if (currentSection.startsWith('series-details')) {
+      const id = currentSection.replace('series-details-', '');
+      showSeriesDetails(id);
+    } else if (currentSection.startsWith('game-details')) {
+      const id = currentSection.replace('game-details-', '');
+      showGameDetails(id);
+    }
   }
 
   // ========== WYSZUKIWARKA ==========
@@ -695,71 +787,26 @@
 
   // ========== SYSTEM OCEN ==========
   function loadRatings() {
-    // Ładuj oceny z LocalStorage
+    // Ładuj oceny z LocalStorage dla każdego elementu
     [...moviesData, ...seriesData, ...gamesData].forEach(item => {
-      const saved = localStorage.getItem(`rating_${item.id}`);
+      const saved = localStorage.getItem(`ratings_${item.id}`);
       if (saved) {
-        const data = JSON.parse(saved);
-        item.rating = data.rating;
-        item.ratingCount = data.count;
+        item.ratings = JSON.parse(saved);
       }
     });
   }
 
-  function rateItem(type, id, rating) {
-    let item;
-    if (type === 'film') item = moviesData.find(m => m.id === id);
-    else if (type === 'serial') item = seriesData.find(s => s.id === id);
-    else item = gamesData.find(g => g.id === id);
-    
-    if (!item) return;
-    
-    // Oblicz nową średnią
-    const total = (item.rating * item.ratingCount) + rating;
-    item.ratingCount++;
-    item.rating = total / item.ratingCount;
-    
-    // Zapisz w LocalStorage
-    localStorage.setItem(`rating_${id}`, JSON.stringify({
-      rating: item.rating,
-      count: item.ratingCount
-    }));
-    
-    // Odśwież wyświetlaną ocenę
-    updateRatingDisplay(id, item.rating, item.ratingCount);
-    
-    // Pokaż podziękowanie
-    alert(`Dziękuję za ocenę! ${getRatingText(rating)}`);
-  }
-
-  function getRatingText(rating) {
-    const texts = [
-      "To słaby wybór... 😞",
-      "Może następnym razem będzie lepiej 🤔",
-      "Średniak 👍",
-      "Dobry wybór! 😊",
-      "Perfekcyjnie! ❤️"
-    ];
-    return texts[rating - 1];
-  }
-
-  function updateRatingDisplay(id, rating, count) {
-    // Zaktualizuj na kartach
-    const cards = document.querySelectorAll(`[data-id="${id}"] .card-rating`);
-    cards.forEach(card => {
-      if (card) {
-        card.innerHTML = `
-          <div class="rating-stars">${getStarsHTML(rating)}</div>
-          <div class="rating-count">(${count} głosów)</div>
-        `;
-      }
-    });
+  function calculateAverageRating(ratings) {
+    if (ratings.length === 0) return 0;
+    const sum = ratings.reduce((total, r) => total + r.rating, 0);
+    return sum / ratings.length;
   }
 
   function getStarsHTML(rating) {
     let stars = '';
+    const roundedRating = Math.round(rating);
     for (let i = 1; i <= 5; i++) {
-      if (i <= Math.round(rating)) {
+      if (i <= roundedRating) {
         stars += '★';
       } else {
         stars += '☆';
@@ -774,15 +821,19 @@
     grid.innerHTML = '';
     
     moviesData.forEach(movie => {
+      const avgRating = calculateAverageRating(movie.ratings);
+      const ratingCount = movie.ratings.length;
+      
       grid.innerHTML += `
         <div class="movie-card" onclick="showMovieDetails('${movie.id}')" data-id="${movie.id}">
+          ${ratingCount > 0 ? `<div class="card-rating-badge">⭐ ${avgRating.toFixed(1)}</div>` : ''}
           <img src="${movie.image}" alt="${movie.title}" class="movie-img">
           <div class="movie-info">
             <div class="movie-title">${movie.title}</div>
             <div class="movie-desc">${movie.desc} (${movie.year})</div>
             <div class="card-rating">
-              <div class="rating-stars">${getStarsHTML(movie.rating)}</div>
-              <div class="rating-count">(${movie.ratingCount} głosów)</div>
+              <div class="rating-stars">${getStarsHTML(avgRating)}</div>
+              <div class="rating-count">(${ratingCount} głosów)</div>
             </div>
           </div>
         </div>
@@ -795,15 +846,19 @@
     grid.innerHTML = '';
     
     seriesData.forEach(series => {
+      const avgRating = calculateAverageRating(series.ratings);
+      const ratingCount = series.ratings.length;
+      
       grid.innerHTML += `
         <div class="series-card" onclick="showSeriesDetails('${series.id}')" data-id="${series.id}">
+          ${ratingCount > 0 ? `<div class="card-rating-badge">⭐ ${avgRating.toFixed(1)}</div>` : ''}
           <img src="${series.image}" alt="${series.title}" class="series-img">
           <div class="series-info">
             <div class="series-title">${series.title}</div>
             <div class="series-desc">${series.desc}</div>
             <div class="card-rating">
-              <div class="rating-stars">${getStarsHTML(series.rating)}</div>
-              <div class="rating-count">(${series.ratingCount} głosów)</div>
+              <div class="rating-stars">${getStarsHTML(avgRating)}</div>
+              <div class="rating-count">(${ratingCount} głosów)</div>
             </div>
           </div>
         </div>
@@ -816,15 +871,19 @@
     grid.innerHTML = '';
     
     gamesData.forEach(game => {
+      const avgRating = calculateAverageRating(game.ratings);
+      const ratingCount = game.ratings.length;
+      
       grid.innerHTML += `
         <div class="game-card" onclick="showGameDetails('${game.id}')" data-id="${game.id}">
+          ${ratingCount > 0 ? `<div class="card-rating-badge">⭐ ${avgRating.toFixed(1)}</div>` : ''}
           <img src="${game.image}" alt="${game.title}" class="game-img" style="${game.id === 'lol' || game.id === 'fortnite' ? 'background: white; padding: 20px;' : ''}">
           <div class="game-info">
             <div class="game-title">${game.title}</div>
             <div class="game-desc">${game.desc} (${game.year})</div>
             <div class="card-rating">
-              <div class="rating-stars">${getStarsHTML(game.rating)}</div>
-              <div class="rating-count">(${game.ratingCount} głosów)</div>
+              <div class="rating-stars">${getStarsHTML(avgRating)}</div>
+              <div class="rating-count">(${ratingCount} głosów)</div>
             </div>
           </div>
         </div>
@@ -832,10 +891,20 @@
     });
   }
 
-  // ========== SZCZEGÓŁY ==========
+  // ========== SZCZEGÓŁY Z NOWYM SYSTEMEM OCEN ==========
+  let currentSelectedRating = 0;
+  let currentRatingItemId = '';
+  let currentRatingType = '';
+
   function showMovieDetails(id) {
     const movie = moviesData.find(m => m.id === id);
     if (!movie) return;
+    
+    currentRatingItemId = id;
+    currentRatingType = 'film';
+    currentSection = `movie-details-${id}`;
+    
+    const avgRating = calculateAverageRating(movie.ratings);
     
     document.getElementById('details-content').innerHTML = `
       <div style="display: flex; flex-wrap: wrap; gap: 30px;">
@@ -849,16 +918,35 @@
           <div class="details-rating">
             <h3>Oceń ten film:</h3>
             <div class="rating-container">
-              <div class="user-rating">
+              <div class="user-rating" id="rating-stars-${movie.id}">
                 ${[1,2,3,4,5].map(star => `
-                  <span class="star" onclick="rateItem('film', '${movie.id}', ${star})" 
+                  <span class="star" data-value="${star}" 
+                        onclick="selectRating(${star}, '${movie.id}', 'film')"
                         onmouseover="highlightStars(${star}, '${movie.id}')"
-                        onmouseout="resetStars('${movie.id}', ${movie.rating})">★</span>
+                        onmouseout="resetStars('${movie.id}')">★</span>
                 `).join('')}
               </div>
-              <div>Średnia: <strong>${movie.rating.toFixed(1)}/5</strong> (${movie.ratingCount} głosów)</div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${movie.ratings.length} głosów)</div>
             </div>
-            <p><small>Twoja ocena zostanie zapisana w przeglądarce.</small></p>
+            
+            <div class="rating-form">
+              <input type="text" id="nickname-${movie.id}" class="nickname-input" placeholder="Twój nick" maxlength="20">
+              <button class="submit-rating" onclick="submitRating('${movie.id}', 'film')">Dodaj ocenę</button>
+              <p><small>Musisz podać nick i wybrać ocenę (1-5 gwiazdek).</small></p>
+            </div>
+            
+            ${movie.ratings.length > 0 ? `
+            <div class="ratings-list">
+              <h4>Oceny użytkowników:</h4>
+              ${movie.ratings.map(rating => `
+                <div class="rating-item">
+                  <span class="rating-item-user">${rating.nickname}</span>
+                  <span class="rating-item-stars">${getStarsHTML(rating.rating)}</span>
+                  <span class="rating-item-time">${new Date(rating.timestamp).toLocaleString('pl-PL')}</span>
+                </div>
+              `).reverse().join('')}
+            </div>
+            ` : ''}
           </div>
           
           <div>
@@ -873,14 +961,18 @@
       </div>
     `;
     
-    // Ustaw aktualne gwiazdki
-    resetStars(id, movie.rating);
     showSection('movie-details');
   }
 
   function showSeriesDetails(id) {
     const serie = seriesData.find(s => s.id === id);
     if (!serie) return;
+    
+    currentRatingItemId = id;
+    currentRatingType = 'serial';
+    currentSection = `series-details-${id}`;
+    
+    const avgRating = calculateAverageRating(serie.ratings);
     
     document.getElementById('series-content').innerHTML = `
       <div style="display: flex; flex-wrap: wrap; gap: 30px;">
@@ -894,16 +986,35 @@
           <div class="details-rating">
             <h3>Oceń ten serial:</h3>
             <div class="rating-container">
-              <div class="user-rating">
+              <div class="user-rating" id="rating-stars-${serie.id}">
                 ${[1,2,3,4,5].map(star => `
-                  <span class="star" onclick="rateItem('serial', '${serie.id}', ${star})" 
+                  <span class="star" data-value="${star}" 
+                        onclick="selectRating(${star}, '${serie.id}', 'serial')"
                         onmouseover="highlightStars(${star}, '${serie.id}')"
-                        onmouseout="resetStars('${serie.id}', ${serie.rating})">★</span>
+                        onmouseout="resetStars('${serie.id}')">★</span>
                 `).join('')}
               </div>
-              <div>Średnia: <strong>${serie.rating.toFixed(1)}/5</strong> (${serie.ratingCount} głosów)</div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${serie.ratings.length} głosów)</div>
             </div>
-            <p><small>Twoja ocena zostanie zapisana w przeglądarce.</small></p>
+            
+            <div class="rating-form">
+              <input type="text" id="nickname-${serie.id}" class="nickname-input" placeholder="Twój nick" maxlength="20">
+              <button class="submit-rating" onclick="submitRating('${serie.id}', 'serial')">Dodaj ocenę</button>
+              <p><small>Musisz podać nick i wybrać ocenę (1-5 gwiazdek).</small></p>
+            </div>
+            
+            ${serie.ratings.length > 0 ? `
+            <div class="ratings-list">
+              <h4>Oceny użytkowników:</h4>
+              ${serie.ratings.map(rating => `
+                <div class="rating-item">
+                  <span class="rating-item-user">${rating.nickname}</span>
+                  <span class="rating-item-stars">${getStarsHTML(rating.rating)}</span>
+                  <span class="rating-item-time">${new Date(rating.timestamp).toLocaleString('pl-PL')}</span>
+                </div>
+              `).reverse().join('')}
+            </div>
+            ` : ''}
           </div>
           
           <div>
@@ -918,13 +1029,18 @@
       </div>
     `;
     
-    resetStars(id, serie.rating);
     showSection('series-details');
   }
 
   function showGameDetails(id) {
     const game = gamesData.find(g => g.id === id);
     if (!game) return;
+    
+    currentRatingItemId = id;
+    currentRatingType = 'gra';
+    currentSection = `game-details-${id}`;
+    
+    const avgRating = calculateAverageRating(game.ratings);
     
     document.getElementById('game-content').innerHTML = `
       <div style="display: flex; flex-wrap: wrap; gap: 30px;">
@@ -938,16 +1054,35 @@
           <div class="details-rating">
             <h3>Oceń tę grę:</h3>
             <div class="rating-container">
-              <div class="user-rating">
+              <div class="user-rating" id="rating-stars-${game.id}">
                 ${[1,2,3,4,5].map(star => `
-                  <span class="star" onclick="rateItem('gra', '${game.id}', ${star})" 
+                  <span class="star" data-value="${star}" 
+                        onclick="selectRating(${star}, '${game.id}', 'gra')"
                         onmouseover="highlightStars(${star}, '${game.id}')"
-                        onmouseout="resetStars('${game.id}', ${game.rating})">★</span>
+                        onmouseout="resetStars('${game.id}')">★</span>
                 `).join('')}
               </div>
-              <div>Średnia: <strong>${game.rating.toFixed(1)}/5</strong> (${game.ratingCount} głosów)</div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${game.ratings.length} głosów)</div>
             </div>
-            <p><small>Twoja ocena zostanie zapisana w przeglądarce.</small></p>
+            
+            <div class="rating-form">
+              <input type="text" id="nickname-${game.id}" class="nickname-input" placeholder="Twój nick" maxlength="20">
+              <button class="submit-rating" onclick="submitRating('${game.id}', 'gra')">Dodaj ocenę</button>
+              <p><small>Musisz podać nick i wybrać ocenę (1-5 gwiazdek).</small></p>
+            </div>
+            
+            ${game.ratings.length > 0 ? `
+            <div class="ratings-list">
+              <h4>Oceny użytkowników:</h4>
+              ${game.ratings.map(rating => `
+                <div class="rating-item">
+                  <span class="rating-item-user">${rating.nickname}</span>
+                  <span class="rating-item-stars">${getStarsHTML(rating.rating)}</span>
+                  <span class="rating-item-time">${new Date(rating.timestamp).toLocaleString('pl-PL')}</span>
+                </div>
+              `).reverse().join('')}
+            </div>
+            ` : ''}
           </div>
           
           <div>
@@ -962,15 +1097,19 @@
       </div>
     `;
     
-    resetStars(id, game.rating);
     showSection('game-details');
   }
 
-  // ========== FUNKCJE POMOCNICZE OCEN ==========
-  function highlightStars(count, id) {
-    const stars = document.querySelectorAll(`[onclick*="rateItem('${id}']`);
+  // ========== FUNKCJE NOWEGO SYSTEMU OCEN ==========
+  function selectRating(rating, id, type) {
+    currentSelectedRating = rating;
+    currentRatingItemId = id;
+    currentRatingType = type;
+    
+    // Podświetl gwiazdki
+    const stars = document.querySelectorAll(`#rating-stars-${id} .star`);
     stars.forEach((star, index) => {
-      if (index < count) {
+      if (index < rating) {
         star.classList.add('active');
       } else {
         star.classList.remove('active');
@@ -978,15 +1117,82 @@
     });
   }
 
-  function resetStars(id, currentRating) {
-    const stars = document.querySelectorAll(`[onclick*="rateItem('${id}']`);
+  function highlightStars(count, id) {
+    const stars = document.querySelectorAll(`#rating-stars-${id} .star`);
     stars.forEach((star, index) => {
-      star.classList.remove('active');
-      // Przywróć aktualną średnią
-      if (index < Math.round(currentRating)) {
+      if (index < count) {
         star.classList.add('active');
       }
     });
+  }
+
+  function resetStars(id) {
+    const stars = document.querySelectorAll(`#rating-stars-${id} .star`);
+    stars.forEach((star, index) => {
+      if (index < currentSelectedRating) {
+        star.classList.add('active');
+      } else {
+        star.classList.remove('active');
+      }
+    });
+  }
+
+  function submitRating(id, type) {
+    const nicknameInput = document.getElementById(`nickname-${id}`);
+    const nickname = nicknameInput.value.trim();
+    
+    if (!nickname) {
+      alert('Proszę podać nick!');
+      nicknameInput.focus();
+      return;
+    }
+    
+    if (currentSelectedRating === 0) {
+      alert('Proszę wybrać ocenę (kliknij w gwiazdki)!');
+      return;
+    }
+    
+    let item;
+    if (type === 'film') item = moviesData.find(m => m.id === id);
+    else if (type === 'serial') item = seriesData.find(s => s.id === id);
+    else item = gamesData.find(g => g.id === id);
+    
+    if (!item) return;
+    
+    // Sprawdź czy użytkownik już oceniał (po nicku)
+    const existingIndex = item.ratings.findIndex(r => r.nickname === nickname);
+    
+    if (existingIndex !== -1) {
+      // Aktualizuj istniejącą ocenę
+      item.ratings[existingIndex].rating = currentSelectedRating;
+      item.ratings[existingIndex].timestamp = new Date().toISOString();
+    } else {
+      // Dodaj nową ocenę
+      item.ratings.push({
+        nickname: nickname,
+        rating: currentSelectedRating,
+        timestamp: new Date().toISOString()
+      });
+    }
+    
+    // Zapisz w LocalStorage
+    localStorage.setItem(`ratings_${id}`, JSON.stringify(item.ratings));
+    
+    // Odśwież wyświetlanie
+    if (type === 'film') {
+      showMovieDetails(id);
+      loadMovies(); // Odśwież karty filmów
+    } else if (type === 'serial') {
+      showSeriesDetails(id);
+      loadSeries(); // Odśwież karty seriali
+    } else {
+      showGameDetails(id);
+      loadGames(); // Odśwież karty gier
+    }
+    
+    // Resetuj formularz
+    currentSelectedRating = 0;
+    nicknameInput.value = '';
   }
 
   // ========== INICJALIZACJA ==========
