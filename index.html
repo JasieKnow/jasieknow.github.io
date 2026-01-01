@@ -679,23 +679,12 @@
 </footer>
 
 <script>
-  // ========== KONFIGURACJA BACKEND ==========
-  // Używamy JSON Server (mock backend) - działa jak prawdziwy backend
-  const API_BASE_URL = 'https://my-json-server.typicode.com'; // Darmowy hosting JSON
-  // Albo lokalny JSON Server: 'http://localhost:3000'
+  // ========== GLOBALNA BAZA OCEN ==========
+  // Używamy localStorage jako symulacji globalnej bazy
+  // Klucz dla globalnych ocen
+  const GLOBAL_RATINGS_KEY = 'jan_nowacki_global_ratings_v2';
   
-  // W praktyce potrzebujesz założyć repo na GitHub i wrzucić tam db.json
-  // Na potrzeby demo używamy publicznego endpointu
-  
-  // Jeśli chcesz prawdziwy backend, musisz:
-  // 1. Stworzyć repo na GitHub (np. jan-nowacki-ratings)
-  // 2. Dodać plik db.json z strukturą: { "ratings": [] }
-  // 3. Użyć URL: `https://my-json-server.typicode.com/twoj-user/jan-nowacki-ratings`
-  
-  // Na razie używamy localStorage jako fallback
-  const USE_BACKEND = false; // Zmień na true gdy setup backend
-  
-  // ========== DANE ==========
+  // ========== DANE FILMÓW ==========
   const moviesData = [
     {
       id: 'dobry-zly-brzydki',
@@ -707,116 +696,244 @@
       director: 'Sergio Leone',
       trailer: 'https://www.youtube.com/watch?v=WCN5JJY_wiA'
     },
-    // ... (pozostałe filmy jak wcześniej)
+    {
+      id: '12-gniewnych',
+      title: '⚖️ Dwunastu gniewnych ludzi',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTToJ5elfoyvyhPJN-9aVj_Y7EssFG3Mp2O3A&s',
+      desc: 'Dramat sądowy',
+      type: 'film',
+      year: '1957',
+      director: 'Sidney Lumet',
+      trailer: 'https://www.youtube.com/watch?v=_13J_9B5jEk'
+    },
+    {
+      id: 'taxi-driver',
+      title: '🚕 Taxi Driver',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHE1r1K79e6WHRmpKe3ViUl0Vwlb4ac_uyMg&s',
+      desc: 'Dramat psychologiczny',
+      type: 'film',
+      year: '1976',
+      director: 'Martin Scorsese',
+      trailer: 'https://www.youtube.com/watch?v=UUxD4-dEzn0'
+    },
+    {
+      id: 'lsnienie',
+      title: '🔪 Lśnienie',
+      image: 'https://img.goodfon.com/original/1920x1080/0/24/dzhek-nikolson-jack-nicholson.jpg',
+      desc: 'Horror psychologiczny',
+      type: 'film',
+      year: '1980',
+      director: 'Stanley Kubrick',
+      trailer: 'https://www.youtube.com/watch?v=S014oGZiSdI'
+    },
+    {
+      id: 'lot-nad-kukulczym-gniazdem',
+      title: '🏥 Lot nad kukułczym gniazdem',
+      image: 'https://upload.wikimedia.org/wikipedia/id/f/f6/One_flew_over_the_cuckoo%27s_nest_poster.jpeg',
+      desc: 'Dramat psychiatryczny',
+      type: 'film',
+      year: '1975',
+      director: 'Miloš Forman',
+      trailer: 'https://www.youtube.com/watch?v=OXrcDonY-B8'
+    },
+    {
+      id: 'piraci-karaiby',
+      title: '🏴‍☠️ Piraci z Karaibów',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs8SMTnEZ2TQdoSIrW14559B2HIRvucIKacw&s',
+      desc: 'Przygodowy film akcji',
+      type: 'film',
+      year: '2003',
+      director: 'Gore Verbinski',
+      trailer: 'https://www.youtube.com/watch?v=naQr0uTrH_s'
+    }
   ];
 
   const seriesData = [
-    // ... (dane seriali)
+    {
+      id: 'breaking-bad',
+      title: '🧪 Breaking Bad',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd8UKB61gmfCnm2dxSshVYPbpePGGdMfXBYQ&s',
+      desc: 'Dramat kryminalny',
+      type: 'serial',
+      seasons: '5 sezonów',
+      years: '2008-2013',
+      trailer: 'https://www.youtube.com/watch?v=HhesaQXLuRY'
+    },
+    {
+      id: 'stranger-things',
+      title: '👾 Stranger Things',
+      image: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/d96bb958-4e6c-4ce0-9447-fbe226fbbecf/df9nfag-55688aea-a979-4ba3-9473-38810d2f17e5.jpg',
+      desc: 'Horror science fiction',
+      type: 'serial',
+      seasons: '4 sezony',
+      years: '2016-obecnie',
+      trailer: 'https://www.youtube.com/watch?v=b9EkMc79ZSU'
+    }
   ];
 
   const gamesData = [
-    // ... (dane gier)
+    {
+      id: 'lol',
+      title: '⚔️ League of Legends',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/League_of_Legends_2019_vector.svg',
+      desc: 'MOBA (Multiplayer Online Battle Arena)',
+      type: 'gra',
+      genre: 'MOBA, Strategia',
+      year: '2009',
+      trailer: 'https://www.youtube.com/watch?v=BGtROJeMPeE'
+    },
+    {
+      id: 'gta',
+      title: '🚗 GTA V',
+      image: 'https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png',
+      desc: 'Gra akcji z otwartym światem',
+      type: 'gra',
+      genre: 'Akcja, Przygodowa',
+      year: '2013',
+      trailer: 'https://www.youtube.com/watch?v=QkkoHAzjnUs'
+    },
+    {
+      id: 'fortnite',
+      title: '🏰 Fortnite',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png',
+      desc: 'Battle royale i gra survivalowa',
+      type: 'gra',
+      genre: 'Battle Royale, Survival',
+      year: '2017',
+      trailer: 'https://www.youtube.com/watch?v=2gUtfBmw86Y'
+    },
+    {
+      id: 'rdr2',
+      title: '🤠 Red Dead Redemption 2',
+      image: 'https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg',
+      desc: 'Gra akcji z otwartym światem',
+      type: 'gra',
+      genre: 'Akcja, Przygodowa',
+      year: '2018',
+      trailer: 'https://www.youtube.com/watch?v=eaW0tYpxyp0'
+    }
   ];
 
   // ========== SYSTEM OCEN (GLOBALNY) ==========
-  let allRatingsCache = {};
-  let currentUserRatings = JSON.parse(localStorage.getItem('user_ratings') || '{}');
+  let allRatings = {};
+  let currentUserNickname = localStorage.getItem('current_nickname') || '';
   let currentSelectedRating = 0;
   let currentRatingItemId = '';
   let currentRatingType = '';
-  let currentUserNickname = localStorage.getItem('current_nickname') || '';
   let modalCallback = null;
 
-  // Ładuje wszystkie oceny z backendu lub localStorage
-  async function loadAllRatings() {
+  // Ładuje wszystkie oceny z globalnej bazy
+  function loadAllRatings() {
     try {
-      if (USE_BACKEND) {
-        const response = await fetch(`${API_BASE_URL}/ratings`);
-        allRatingsCache = await response.json();
-      } else {
-        const saved = localStorage.getItem('global_ratings');
-        allRatingsCache = saved ? JSON.parse(saved) : {};
+      const saved = localStorage.getItem(GLOBAL_RATINGS_KEY);
+      allRatings = saved ? JSON.parse(saved) : {};
+      
+      // Jeśli baza jest pusta, dodaj przykładowe oceny
+      if (Object.keys(allRatings).length === 0) {
+        addSampleRatings();
+        saveAllRatings();
       }
     } catch (error) {
       console.error('Błąd ładowania ocen:', error);
-      const saved = localStorage.getItem('global_ratings');
-      allRatingsCache = saved ? JSON.parse(saved) : {};
+      allRatings = {};
+      addSampleRatings();
+      saveAllRatings();
     }
-    return allRatingsCache;
   }
 
-  // Zapisuje ocenę globalnie
-  async function saveRatingGlobal(itemId, ratingData) {
+  // Dodaje przykładowe oceny do bazy
+  function addSampleRatings() {
+    const sampleRatings = {
+      'dobry-zly-brzydki': [
+        { nickname: 'KinoMan', rating: 5, timestamp: '2024-01-15T14:30:00Z' },
+        { nickname: 'FilmFan', rating: 4, timestamp: '2024-01-20T10:15:00Z' },
+        { nickname: 'WesternLover', rating: 5, timestamp: '2024-02-05T18:45:00Z' }
+      ],
+      '12-gniewnych': [
+        { nickname: 'Justyna', rating: 5, timestamp: '2024-01-10T12:20:00Z' },
+        { nickname: 'Sędzia', rating: 5, timestamp: '2024-02-01T09:30:00Z' }
+      ],
+      'breaking-bad': [
+        { nickname: 'Chemik', rating: 5, timestamp: '2024-01-25T20:10:00Z' },
+        { nickname: 'SeriesWatcher', rating: 5, timestamp: '2024-02-10T22:05:00Z' },
+        { nickname: 'WalterFan', rating: 4, timestamp: '2024-02-12T15:40:00Z' }
+      ],
+      'stranger-things': [
+        { nickname: 'SciFiFan', rating: 4, timestamp: '2024-01-30T19:25:00Z' },
+        { nickname: 'Eleven', rating: 5, timestamp: '2024-02-08T14:50:00Z' }
+      ],
+      'lol': [
+        { nickname: 'GamerPL', rating: 4, timestamp: '2024-01-18T16:20:00Z' },
+        { nickname: 'MidLane', rating: 5, timestamp: '2024-02-03T21:15:00Z' }
+      ]
+    };
+    
+    allRatings = { ...allRatings, ...sampleRatings };
+  }
+
+  // Zapisuje wszystkie oceny do globalnej bazy
+  function saveAllRatings() {
     try {
-      // Generuj unikalny ID dla oceny (nick + timestamp)
-      const ratingId = `${ratingData.nickname}_${Date.now()}`;
-      
-      if (!allRatingsCache[itemId]) {
-        allRatingsCache[itemId] = [];
-      }
-      
-      // Sprawdź czy ten nick już oceniał ten film
-      const existingIndex = allRatingsCache[itemId].findIndex(r => r.nickname === ratingData.nickname);
-      
-      if (existingIndex !== -1) {
-        // Aktualizuj istniejącą ocenę
-        allRatingsCache[itemId][existingIndex] = {
-          ...ratingData,
-          timestamp: new Date().toISOString()
-        };
-      } else {
-        // Dodaj nową ocenę
-        allRatingsCache[itemId].push({
-          ...ratingData,
-          timestamp: new Date().toISOString()
-        });
-      }
-      
-      // Zapisz w localStorage (jako globalne)
-      localStorage.setItem('global_ratings', JSON.stringify(allRatingsCache));
-      
-      // Zapisz też w backend jeśli używasz
-      if (USE_BACKEND) {
-        await fetch(`${API_BASE_URL}/ratings`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(allRatingsCache)
-        });
-      }
-      
-      // Zapamiętaj ocenę użytkownika lokalnie
-      if (!currentUserRatings[itemId]) {
-        currentUserRatings[itemId] = {};
-      }
-      currentUserRatings[itemId] = {
-        nickname: ratingData.nickname,
-        rating: ratingData.rating,
-        timestamp: new Date().toISOString()
-      };
-      localStorage.setItem('user_ratings', JSON.stringify(currentUserRatings));
-      
-      return { success: true, message: 'Ocena zapisana!' };
+      localStorage.setItem(GLOBAL_RATINGS_KEY, JSON.stringify(allRatings));
     } catch (error) {
-      console.error('Błąd zapisywania oceny:', error);
-      return { success: false, message: 'Błąd zapisywania oceny' };
+      console.error('Błąd zapisywania ocen:', error);
     }
   }
 
   // Pobiera oceny dla konkretnego elementu
   function getRatingsForItem(itemId) {
-    return allRatingsCache[itemId] || [];
+    return allRatings[itemId] || [];
   }
 
   // Sprawdza czy użytkownik już ocenił dany element
-  function hasUserRated(itemId, nickname) {
+  function hasUserRated(itemId) {
+    if (!currentUserNickname) return false;
     const ratings = getRatingsForItem(itemId);
-    return ratings.some(r => r.nickname === nickname);
+    return ratings.some(r => r.nickname === currentUserNickname);
   }
 
   // Pobiera ocenę użytkownika dla danego elementu
-  function getUserRating(itemId, nickname) {
+  function getUserRating(itemId) {
+    if (!currentUserNickname) return null;
     const ratings = getRatingsForItem(itemId);
-    return ratings.find(r => r.nickname === nickname);
+    return ratings.find(r => r.nickname === currentUserNickname);
+  }
+
+  // Dodaje lub aktualizuje ocenę
+  function saveRating(itemId, ratingData) {
+    if (!allRatings[itemId]) {
+      allRatings[itemId] = [];
+    }
+    
+    // Sprawdź czy ten nick już oceniał
+    const existingIndex = allRatings[itemId].findIndex(r => r.nickname === ratingData.nickname);
+    
+    if (existingIndex !== -1) {
+      // Aktualizuj istniejącą ocenę
+      allRatings[itemId][existingIndex] = {
+        nickname: ratingData.nickname,
+        rating: ratingData.rating,
+        timestamp: new Date().toISOString()
+      };
+    } else {
+      // Dodaj nową ocenę
+      allRatings[itemId].push({
+        nickname: ratingData.nickname,
+        rating: ratingData.rating,
+        timestamp: new Date().toISOString()
+      });
+    }
+    
+    // Zapisz nick użytkownika
+    if (!currentUserNickname || currentUserNickname !== ratingData.nickname) {
+      currentUserNickname = ratingData.nickname;
+      localStorage.setItem('current_nickname', currentUserNickname);
+    }
+    
+    // Zapisz do globalnej bazy
+    saveAllRatings();
+    
+    return true;
   }
 
   // Oblicza średnią ocen
@@ -910,6 +1027,12 @@
     } else if (currentSection.startsWith('movie-details-')) {
       const id = currentSection.replace('movie-details-', '');
       showMovieDetails(id);
+    } else if (currentSection.startsWith('series-details-')) {
+      const id = currentSection.replace('series-details-', '');
+      showSeriesDetails(id);
+    } else if (currentSection.startsWith('game-details-')) {
+      const id = currentSection.replace('game-details-', '');
+      showGameDetails(id);
     }
   }
 
@@ -937,11 +1060,10 @@
   }
 
   // ========== ŁADOWANIE DANYCH ==========
-  async function loadMovies() {
+  function loadMovies() {
     const grid = document.getElementById('movies-grid');
     if (!grid) return;
     
-    await loadAllRatings();
     grid.innerHTML = '';
     
     moviesData.forEach(movie => {
@@ -966,14 +1088,66 @@
     });
   }
 
-  // ... (loadSeries i loadGames podobnie)
+  function loadSeries() {
+    const grid = document.getElementById('series-grid');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    
+    seriesData.forEach(series => {
+      const ratings = getRatingsForItem(series.id);
+      const avgRating = calculateAverageRating(ratings);
+      const ratingCount = ratings.length;
+      
+      grid.innerHTML += `
+        <div class="series-card" onclick="showSeriesDetails('${series.id}')" data-id="${series.id}">
+          ${ratingCount > 0 ? `<div class="card-rating-badge">⭐ ${avgRating.toFixed(1)}</div>` : ''}
+          <img src="${series.image}" alt="${series.title}" class="series-img">
+          <div class="series-info">
+            <div class="series-title">${series.title}</div>
+            <div class="series-desc">${series.desc}</div>
+            <div class="card-rating">
+              <div class="rating-stars">${getStarsHTML(avgRating)}</div>
+              <div class="rating-count">(${ratingCount} głosów)</div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function loadGames() {
+    const grid = document.getElementById('games-grid');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    
+    gamesData.forEach(game => {
+      const ratings = getRatingsForItem(game.id);
+      const avgRating = calculateAverageRating(ratings);
+      const ratingCount = ratings.length;
+      
+      grid.innerHTML += `
+        <div class="game-card" onclick="showGameDetails('${game.id}')" data-id="${game.id}">
+          ${ratingCount > 0 ? `<div class="card-rating-badge">⭐ ${avgRating.toFixed(1)}</div>` : ''}
+          <img src="${game.image}" alt="${game.title}" class="game-img" style="${game.id === 'lol' || game.id === 'fortnite' ? 'background: white; padding: 20px;' : ''}">
+          <div class="game-info">
+            <div class="game-title">${game.title}</div>
+            <div class="game-desc">${game.desc} (${game.year})</div>
+            <div class="card-rating">
+              <div class="rating-stars">${getStarsHTML(avgRating)}</div>
+              <div class="rating-count">(${ratingCount} głosów)</div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
 
   // ========== SZCZEGÓŁY Z SYSTEMEM OCEN ==========
-  async function showMovieDetails(id) {
+  function showMovieDetails(id) {
     const movie = moviesData.find(m => m.id === id);
     if (!movie) return;
-    
-    await loadAllRatings();
     
     currentRatingItemId = id;
     currentRatingType = 'film';
@@ -981,7 +1155,7 @@
     
     const ratings = getRatingsForItem(id);
     const avgRating = calculateAverageRating(ratings);
-    const userRating = currentUserNickname ? getUserRating(id, currentUserNickname) : null;
+    const userRating = getUserRating(id);
     
     document.getElementById('details-content').innerHTML = `
       <div style="display: flex; flex-wrap: wrap; gap: 30px;">
@@ -1008,7 +1182,7 @@
             
             ${userRating ? `
               <div style="margin-top: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 5px;">
-                <p>Twoja ocena: <strong>${getStarsHTML(userRating.rating)} (${userRating.rating}/5)</strong></p>
+                <p>Twoja ocena jako <strong>${userRating.nickname}</strong>: <strong>${getStarsHTML(userRating.rating)} (${userRating.rating}/5)</strong></p>
                 <p><small>Wystawiona: ${formatDate(userRating.timestamp)}</small></p>
                 <button class="change-rating-button" onclick="prepareRatingChange('${movie.id}', 'film')">
                   ✏️ Zmień ocenę
@@ -1060,7 +1234,183 @@
     showSection('movie-details');
   }
 
-  // ... (showSeriesDetails i showGameDetails podobnie)
+  function showSeriesDetails(id) {
+    const serie = seriesData.find(s => s.id === id);
+    if (!serie) return;
+    
+    currentRatingItemId = id;
+    currentRatingType = 'serial';
+    currentSection = `series-details-${id}`;
+    
+    const ratings = getRatingsForItem(id);
+    const avgRating = calculateAverageRating(ratings);
+    const userRating = getUserRating(id);
+    
+    document.getElementById('series-content').innerHTML = `
+      <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+        <img src="${serie.image}" alt="${serie.title}" style="width: 100%; max-width: 300px; height: 450px; object-fit: cover; border-radius: 10px;">
+        <div style="flex: 1; min-width: 300px;">
+          <h2 style="margin-top: 0;">${serie.title}</h2>
+          <p style="font-size: 18px;">${serie.desc}</p>
+          <p><strong>Liczba sezonów:</strong> ${serie.seasons}</p>
+          <p><strong>Lata emisji:</strong> ${serie.years}</p>
+          
+          <div class="details-rating">
+            <h3>Oceń ten serial:</h3>
+            <div class="rating-container">
+              <div class="user-rating" id="rating-stars-${serie.id}">
+                ${[1,2,3,4,5].map(star => `
+                  <span class="star" data-value="${star}" 
+                        onclick="selectRating(${star}, '${serie.id}')"
+                        onmouseover="highlightStars(${star}, '${serie.id}')"
+                        onmouseout="resetStars('${serie.id}')">★</span>
+                `).join('')}
+              </div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
+            </div>
+            
+            ${userRating ? `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 5px;">
+                <p>Twoja ocena jako <strong>${userRating.nickname}</strong>: <strong>${getStarsHTML(userRating.rating)} (${userRating.rating}/5)</strong></p>
+                <p><small>Wystawiona: ${formatDate(userRating.timestamp)}</small></p>
+                <button class="change-rating-button" onclick="prepareRatingChange('${serie.id}', 'serial')">
+                  ✏️ Zmień ocenę
+                </button>
+              </div>
+            ` : `
+              <div class="rating-form">
+                <input type="text" id="nickname-${serie.id}" class="nickname-input" 
+                       placeholder="Twój nick" maxlength="20" value="${currentUserNickname}">
+                <button class="submit-rating" onclick="submitRating('${serie.id}', 'serial')">Dodaj ocenę</button>
+                <p><small>Podaj nick i wybierz ocenę. Możesz później zmienić swoją ocenę.</small></p>
+              </div>
+            `}
+            
+            ${ratings.length > 0 ? `
+            <div class="ratings-list">
+              <h4>Oceny społeczności (${ratings.length}):</h4>
+              ${ratings.map(rating => `
+                <div class="rating-item">
+                  <span class="rating-item-user">${rating.nickname}</span>
+                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
+                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
+                </div>
+              `).reverse().join('')}
+            </div>
+            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
+          </div>
+          
+          <div>
+            <a href="${serie.trailer}" target="_blank" class="trailer-button">
+              📺 Obejrzyj zwiastun
+            </a>
+            <a href="https://www.filmweb.pl/user/JasieKnow" target="_blank" class="filmweb-button">
+              📖 Mój profil Filmweb
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Ustaw aktualną ocenę użytkownika jeśli ją ma
+    if (userRating) {
+      currentSelectedRating = userRating.rating;
+      resetStars(id);
+    } else {
+      currentSelectedRating = 0;
+    }
+    
+    showSection('series-details');
+  }
+
+  function showGameDetails(id) {
+    const game = gamesData.find(g => g.id === id);
+    if (!game) return;
+    
+    currentRatingItemId = id;
+    currentRatingType = 'gra';
+    currentSection = `game-details-${id}`;
+    
+    const ratings = getRatingsForItem(id);
+    const avgRating = calculateAverageRating(ratings);
+    const userRating = getUserRating(id);
+    
+    document.getElementById('game-content').innerHTML = `
+      <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+        <img src="${game.image}" alt="${game.title}" style="width: 100%; max-width: 300px; height: 300px; object-fit: contain; background: white; padding: 20px; border-radius: 10px;">
+        <div style="flex: 1; min-width: 300px;">
+          <h2 style="margin-top: 0;">${game.title}</h2>
+          <p style="font-size: 18px;">${game.desc}</p>
+          <p><strong>Gatunek:</strong> ${game.genre}</p>
+          <p><strong>Rok wydania:</strong> ${game.year}</p>
+          
+          <div class="details-rating">
+            <h3>Oceń tę grę:</h3>
+            <div class="rating-container">
+              <div class="user-rating" id="rating-stars-${game.id}">
+                ${[1,2,3,4,5].map(star => `
+                  <span class="star" data-value="${star}" 
+                        onclick="selectRating(${star}, '${game.id}')"
+                        onmouseover="highlightStars(${star}, '${game.id}')"
+                        onmouseout="resetStars('${game.id}')">★</span>
+                `).join('')}
+              </div>
+              <div>Średnia: <strong>${avgRating.toFixed(1)}/5</strong> (${ratings.length} głosów)</div>
+            </div>
+            
+            ${userRating ? `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 5px;">
+                <p>Twoja ocena jako <strong>${userRating.nickname}</strong>: <strong>${getStarsHTML(userRating.rating)} (${userRating.rating}/5)</strong></p>
+                <p><small>Wystawiona: ${formatDate(userRating.timestamp)}</small></p>
+                <button class="change-rating-button" onclick="prepareRatingChange('${game.id}', 'gra')">
+                  ✏️ Zmień ocenę
+                </button>
+              </div>
+            ` : `
+              <div class="rating-form">
+                <input type="text" id="nickname-${game.id}" class="nickname-input" 
+                       placeholder="Twój nick" maxlength="20" value="${currentUserNickname}">
+                <button class="submit-rating" onclick="submitRating('${game.id}', 'gra')">Dodaj ocenę</button>
+                <p><small>Podaj nick i wybierz ocenę. Możesz później zmienić swoją ocenę.</small></p>
+              </div>
+            `}
+            
+            ${ratings.length > 0 ? `
+            <div class="ratings-list">
+              <h4>Oceny społeczności (${ratings.length}):</h4>
+              ${ratings.map(rating => `
+                <div class="rating-item">
+                  <span class="rating-item-user">${rating.nickname}</span>
+                  <span class="rating-item-stars" title="${rating.rating}/5">${getStarsHTML(rating.rating)} (${rating.rating}/5)</span>
+                  <span class="rating-item-time">${formatDate(rating.timestamp)}</span>
+                </div>
+              `).reverse().join('')}
+            </div>
+            ` : '<p>Brak ocen. Bądź pierwszy!</p>'}
+          </div>
+          
+          <div>
+            <a href="${game.trailer}" target="_blank" class="trailer-button">
+              🎮 Obejrzyj zwiastun
+            </a>
+            <a href="https://www.filmweb.pl/user/JasieKnow" target="_blank" class="filmweb-button">
+              📖 Mój profil Filmweb
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Ustaw aktualną ocenę użytkownika jeśli ją ma
+    if (userRating) {
+      currentSelectedRating = userRating.rating;
+      resetStars(id);
+    } else {
+      currentSelectedRating = 0;
+    }
+    
+    showSection('game-details');
+  }
 
   // ========== FUNKCJE SYSTEMU OCEN ==========
   function selectRating(rating, id) {
@@ -1110,7 +1460,7 @@
     );
   }
 
-  async function submitRating(id, type, isChange = false) {
+  function submitRating(id, type, isChange = false) {
     const nicknameInput = document.getElementById(`nickname-${id}`);
     const nickname = nicknameInput ? nicknameInput.value.trim() : currentUserNickname;
     
@@ -1125,33 +1475,32 @@
       return;
     }
     
-    // Zapamiętaj nick użytkownika
-    currentUserNickname = nickname;
-    localStorage.setItem('current_nickname', nickname);
-    
-    const result = await saveRatingGlobal(id, {
+    const success = saveRating(id, {
       nickname: nickname,
-      rating: currentSelectedRating,
-      type: type
+      rating: currentSelectedRating
     });
     
-    if (result.success) {
+    if (success) {
       alert(isChange ? 'Ocena została zmieniona!' : 'Dziękuję za ocenę!');
       
       // Odśwież wyświetlanie
       if (type === 'film') {
-        await showMovieDetails(id);
-        await loadMovies();
+        showMovieDetails(id);
+        loadMovies();
+      } else if (type === 'serial') {
+        showSeriesDetails(id);
+        loadSeries();
+      } else {
+        showGameDetails(id);
+        loadGames();
       }
-      // ... podobnie dla seriali i gier
-      
     } else {
-      alert(result.message);
+      alert('Wystąpił błąd przy zapisywaniu oceny.');
     }
   }
 
   // ========== INICJALIZACJA ==========
-  document.addEventListener('DOMContentLoaded', async function() {
+  document.addEventListener('DOMContentLoaded', function() {
     // Załaduj zapisany motyw
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.body.setAttribute('data-theme', savedTheme);
@@ -1160,7 +1509,7 @@
     themeButton.style.color = '#000';
     
     // Załaduj oceny
-    await loadAllRatings();
+    loadAllRatings();
     
     // Pokazuj stronę startową
     showSection('welcome');
