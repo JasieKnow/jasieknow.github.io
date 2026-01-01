@@ -1,1 +1,11 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <!-- ZMIEŃ TEN ADRES NA SWÓJ! -->
+    <loc>https://jasieknow.github.io/</loc>
+    <!-- Data ostatniej modyfikacji strony (opcjonalnie) -->
+    <lastmod>2026-01-02</lastmod>
+    <!-- Priorytet strony (opcjonalnie) -->
+    <priority>1.0</priority>
+  </url>
+</urlset>
