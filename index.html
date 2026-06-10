@@ -5,13 +5,12 @@
   <meta charset="UTF-8">
   <title>Jan Nowacki - Strona osobista</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Favicon z inicjałami JN -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FFD700'/><text x='50' y='68' font-family='Arial, sans-serif' font-size='50' font-weight='bold' text-anchor='middle' fill='%234f5c2b'>JN</text></svg>">
   <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABT0lEQVRYhe2WwW6DMAxFnyD+/1dGYiAuo5MKCSmguTN1UhqH2M+2U8JefXcY+JUkSfo2AmwvgC/kAXgP4O7+jOSfnLMJgP8mF82pZwBwzcFeZ4NrDgQ4A8Q1BwJcAeKag2EOjJZg9xwY4TkHAnAAT+fAaI6GOHD1P8COA8F8j5wC7AwQUv9OkPouoN+9zj9PgM7rtZuvpD5OqFoL94EA6tugl6+mPi6L1/q3J8Da/eXUl9q7ebz9DnQ3uKeeVT4M1qdePd/qwFLWU59Wrp4/OQdcWTPq2fMn8wCvbOlzF2hb5gAqG8hBAK28Nwq3PZ/Pd+B1yzmvpp7tA9a/j7D9r/HW+52pz/aB8neRnnp2g7va2eQjUeP1WP3uAPM7oF5H9Q4AlD6A9gFJ4gHs6Uc2iQfQywPe8+8FJwP8AFG4j7ZLJ2IeAAAAAElFTkSuQmCC">
-<link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA0UlEQVR4nJXSMU7DQBCF4d9BBpKblDAp6OgpuAqNBSJ0KRIjUXOGnIeOdBwgjoFdJLMja7G7m0QvWq+88/bN2PZzNKD+73eNbcMDMAfWwB1QAfNclgXc2J46UQPXwBYYhtwQuAbe2J+7bN0MvCV6bD3ZdnPGgEfjOar/0D6nS+4CYJ5A2qyz5wMh0HX3O8Y4w8uC6+Z8pA9Ak/XdmzJOkOfA6AxgAVTYZQcwPgsoA8C1vx8Hu0LrduRlQN0CUFQO8NgWk/UBe6+Be5xX0gnjAAAAAElFTkSuQmCC">
-<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFwElEQVR4nO3d3W3bSBSG4Y9i0kSdQNJmFQnqTtImSdtI7XWQClJFigkzgsYJ7awjyQTfRcqK1Iwo4u/gfUD4JgzH78OZUeW8dEf65//6U6SfgUeS/uF/+jPQl/QR+AG8AJ+Ad+Aj8BvSoyz76/9+DNT5Hx+AFfAJWANPgAf6jfYKaWg4X09l2w2wA/4AvwD3fH6Ynt0t8Bp4j3S+A6+Ap8AfHkYPqWPfAR+QzndgDaw9jR5Sxz7Jtk9I5zuw9jR6SBNbG92Kzndg7WH0kCa2Nrq1KtK8PEWO6iZFjqxb0SO5Q0Qa9TGz/JmIBNzIvF1G5BJ5ilzbDvjiC4rIYWzY57H0L2T2PCw9kG8RIw2B/nv3bM8jF3AH1sgk+BZYPnTYR8zMOk/s5Bm5K1kDM+AJ8BaYvTHt0I/1BOTFz8hdyBqYAo+BV8AMmAITZMK8BJaHXPQx8Ah4CMwPWfCkAV2NHJn7H7lrWAO1n5GbAdXMQ4/cNa2BaqKRR+6G1sDkwch9i7gGxt4i9z3iGhh7iNzXiGtg7DhyXyOugXHsKXI/Iq6BcaKR+xRxDYwzjdyHiGtgnHPkPkRcA+OcI/ch4hoY5xy5DxHXwDgHyX2IuAbGfkjufcQ1MPZDcu8jroHxC5B7HXENjF+B3OuIa2D8AuTeR1wDY2Bf3nnkdgS8B8aH9cJz6X8A8t4i3/8jPcN17PvI7Xgy/fsufdb3yF0As0jvcB67I3JXwCjSO5zH7pDcBTCO9A7nsTsmtwYmkd7hPPaA5C6BaYR3OI89ILlzYBnhHc5jD0huCcwivMN57IHJLYB5hHc4jz0wuTmw6Os7nMfuAblzYNHHdziP3SNyM2DRt3c4j91DclNg2ad3OI/dU3KngKpP73Aeu8fkToDqM0+Jj7eSOwWqP8l9HrnyO0mk5vNn4CtPmffxy5FPj9x58G1yL+8k8eZvkmh/F0n0uq/c27tIYpb7yr29k8STv0mi/V0k0eu+cm/vJPHkb5JofxdJ9Lqv3Nu7SDz5myTa30USve4r9/YuEk/+Jon2d5FEr/vKvb2TxJO/SaL9XSTR675yb+8k8eRvkmh/F0n0uq/c2ztJPPn/K5TjXSTR665y79xJ4rXvIvd54sndeWRp/WZ87L6v3MvbkfV+krgA0jPfzTJPkk+SPMl+AB/tDPLiS39+AAAAAElFTkSuQmCC">
-<meta name="msapplication-TileColor" content="#FFD700">
-<meta name="theme-color" content="#FFD700">
+  <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA0UlEQVR4nJXSMU7DQBCF4d9BBpKblDAp6OgpuAqNBSJ0KRIjUXOGnIeOdBwgjoFdJLMja7G7m0QvWq+88/bN2PZzNKD+73eNbcMDMAfWwB1QAfNclgXc2J46UQPXwBYYhtwQuAbe2J+7bN0MvCV6bD3ZdnPGgEfjOar/0D6nS+4CYJ5A2qyz5wMh0HX3O8Y4w8uC6+Z8pA9Ak/XdmzJOkOfA6AxgAVTYZQcwPgsoA8C1vx8Hu0LrduRlQN0CUFQO8NgWk/UBe6+Be5xX0gnjAAAAAElFTkSuQmCC">
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFwElEQVR4nO3d3W3bSBSG4Y9i0kSdQNJmFQnqTtImSdtI7XWQClJFigkzgsYJ7awjyQTfRcqK1Iwo4u/gfUD4JgzH78OZUeW8dEf65//6U6SfgUeS/uF/+jPQl/QR+AG8AJ+Ad+Aj8BvSoyz76/9+DNT5Hx+AFfAJWANPgAf6jfYKaWg4X09l2w2wA/4AvwD3fH6Ynt0t8Bp4j3S+A6+Ap8AfHkYPqWPfAR+QzndgDaw9jR5Sxz7Jtk9I5zuw9jR6SBNbG92Kzndg7WH0kCa2Nrq1KtK8PEWO6iZFjqxb0SO5Q0Qa9TGz/JmIBNzIvF1G5BJ5ilzbDvjiC4rIYWzY57H0L2T2PCw9kG8RIw2B/nv3bM8jF3AH1sgk+BZYPnTYR8zMOk/s5Bm5K1kDM+AJ8BaYvTHt0I/1BOTFz8hdyBqYAo+BV8AMmAITZMK8BJaHXPQx8Ah4CMwPWfCkAV2NHJn7H7lrWAO1n5GbAdXMQ4/cNa2BaqKRR+6G1sDkwch9i7gGxt4i9z3iGhh7iNzXiGtg7DhyXyOugXHsKXI/Iq6BcaKR+xRxDYwzjdyHiGtgnHPkPkRcA+OcI/ch4hoY5xy5DxHXwDgHyX2IuAbGfkjufcQ1MPZDcu8jroHxC5B7HXENjF+B3OuIa2D8AuTeR1wDY2Bf3nnkdgS8B8aH9cJz6X8A8t4i3/8jPcN17PvI7Xgy/fsufdb3yF0As0jvcB67I3JXwCjSO5zH7pDcBTCO9A7nsTsmtwYmkd7hPPaA5C6BaYR3OI89ILlzYBnhHc5jD0huCcwivMN57IHJLYB5hHc4jz0wuTmw6Os7nMfuAblzYNHHdziP3SNyM2DRt3c4j91DclNg2ad3OI/dU3KngKpP73Aeu8fkToDqM0+Jj7eSOwWqP8l9HrnyO0mk5vNn4CtPmffxy5FPj9x58G1yL+8k8eZvkmh/F0n0uq/c27tIYpb7yr29k8STv0mi/V0k0eu+cm/vJPHkb5JofxdJ9Lqv3Nu7SDz5myTa30USve4r9/YuEk/+Jon2d5FEr/vKvb2TxJO/SaL9XSTR675yb+8k8eRvkmh/F0n0uq/c2ztJPPmbJNrfRRK97iv39k4ST/7/CuV4F0n0uqvcu3eSeO37yH2eOLk7jyyt34yP3feVe3k7st5PEhdAeua7WeZJ8kmSJ9kPgI92BnnxpT8/AAAAAElFTkSuQmCC">
+  <meta name="msapplication-TileColor" content="#FFD700">
+  <meta name="theme-color" content="#FFD700">
   <style>
     :root {
       --primary-color: #6b7a3c;
@@ -72,7 +71,6 @@
       text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     }
 
-    /* Przycisk zmiany motywu */
     .theme-toggle {
       position: absolute;
       top: 20px;
@@ -97,7 +95,6 @@
       transform: scale(1.1);
     }
 
-    /* Wyszukiwarka */
     .search-container {
       max-width: 800px;
       margin: 0 auto 40px;
@@ -130,7 +127,7 @@
     nav {
       display: flex;
       justify-content: center;
-      gap: 40px;
+      gap: 30px;
       background-color: var(--nav-color);
       padding: 18px 0;
       flex-wrap: wrap;
@@ -203,7 +200,6 @@
       min-width: 300px;
     }
 
-    /* Sekcje filmów i seriali obok siebie */
     .media-columns {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -240,7 +236,6 @@
       box-shadow: 0 15px 30px var(--shadow);
     }
 
-    /* System ocen zewnętrznych */
     .external-ratings {
       display: flex;
       flex-wrap: wrap;
@@ -344,7 +339,7 @@
       margin-top: 50px;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
-    
+
     .welcome-message {
       text-align: center;
       padding: 80px 20px;
@@ -361,7 +356,6 @@
       margin-bottom: 30px;
     }
 
-    /* Przycisk Filmweb na stronie głównej */
     .filmweb-profile-button {
       background: var(--accent-color);
       color: #000000 !important;
@@ -379,7 +373,7 @@
       transition: all 0.3s;
       box-shadow: 0 6px 12px rgba(0,0,0,0.2);
     }
-    
+
     .filmweb-profile-button:hover {
       opacity: 0.9;
       transform: translateY(-3px);
@@ -407,7 +401,6 @@
       text-decoration: none;
     }
 
-    /* Styl dla przycisków */
     .trailer-button {
       background: var(--accent-color);
       color: #000000 !important;
@@ -425,7 +418,7 @@
       transition: all 0.3s;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
-    
+
     .trailer-button:hover {
       opacity: 0.9;
       transform: translateY(-2px);
@@ -439,7 +432,6 @@
       margin: 25px 0;
     }
 
-    /* Styl dla szczegółów */
     .details-content {
       display: flex;
       flex-wrap: wrap;
@@ -487,7 +479,6 @@
       color: var(--accent-color);
     }
 
-    /* System ocen zewnętrznych w szczegółach */
     .external-ratings-details {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -527,7 +518,6 @@
       margin: 10px 0;
     }
 
-    /* Sekcja projektów */
     .projects-section {
       margin-top: 40px;
     }
@@ -556,83 +546,185 @@
       font-style: italic;
     }
 
+    /* --- NOWE STYLE DLA PROJEKTÓW --- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .project-category-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid rgba(255,215,0,0.2);
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .project-category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    .project-category-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--accent-color);
+    }
+
+    .project-category-icon {
+      font-size: 32px;
+      background: var(--accent-color);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+    }
+
+    .project-category-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin: 0;
+    }
+
+    .project-items {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .project-item {
+      background: rgba(0,0,0,0.15);
+      padding: 16px 20px;
+      border-radius: 10px;
+      border-left: 4px solid var(--accent-color);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .project-item:hover {
+      background: rgba(0,0,0,0.25);
+      transform: translateX(5px);
+    }
+
+    .project-item-name {
+      font-weight: bold;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    [data-theme="light"] .project-item-name {
+      color: #222;
+    }
+
+    .project-item-desc {
+      font-size: 14px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .project-category-card {
+        padding: 18px;
+      }
+
+      .project-category-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 26px;
+      }
+
+      .project-category-title {
+        font-size: 18px;
+      }
+    }
+
     /* Mobile styles */
     @media (max-width: 768px) {
       header h1 {
         font-size: 28px;
         padding-right: 60px;
       }
-      
+
       .theme-toggle {
         top: 15px;
         right: 15px;
         width: 40px;
         height: 40px;
       }
-      
+
       nav {
         gap: 10px;
         padding: 15px;
       }
-      
+
       nav a {
         font-size: 16px;
         padding: 10px 15px;
       }
-      
+
       .section {
         padding: 30px 15px;
       }
-      
+
       h2 {
         font-size: 28px;
       }
-      
+
       h3 {
         font-size: 22px;
       }
-      
+
       .media-columns {
         gap: 30px;
       }
-      
+
       .movie-grid, .series-grid, .game-grid {
         grid-template-columns: 1fr;
         gap: 20px;
       }
-      
+
       .movie-img, .series-img, .game-img {
         height: 300px;
       }
-      
+
       .details-poster {
         max-width: 100%;
         height: 400px;
       }
-      
+
       .external-ratings-details {
         grid-template-columns: 1fr;
       }
-      
+
       .trailer-button {
         width: 100%;
         margin: 10px 0;
         justify-content: center;
       }
-      
+
       .button-group {
         flex-direction: column;
       }
-      
+
       .welcome-message {
         padding: 40px 20px;
         font-size: 18px;
       }
-      
+
       .welcome-message h2 {
         font-size: 32px;
       }
-      
+
       .filmweb-profile-button {
         width: 100%;
         justify-content: center;
@@ -644,16 +736,16 @@
       header h1 {
         font-size: 24px;
       }
-      
+
       nav a {
         width: 100%;
         justify-content: center;
       }
-      
+
       .movie-img, .series-img, .game-img {
         height: 250px;
       }
-      
+
       .details-poster {
         height: 350px;
       }
@@ -674,6 +766,7 @@
   <a href="#" onclick="showSection('seriale')">📺 Seriale</a>
   <a href="#" onclick="showSection('gry')">🎮 Gry</a>
   <a href="#" onclick="showSection('studia')">📚 Studia</a>
+  <a href="#" onclick="goToProjects()" style="background: var(--accent-color); color: #000;">📁 Moje projekty</a>
 </nav>
 
 <div id="welcome" class="section active">
@@ -682,9 +775,13 @@
     <p>Nazywam się Jan Nowacki i jestem pasjonatem kina, seriali oraz gier komputerowych.</p>
     <p>Na tej stronie znajdziesz moje ulubione produkcje wraz z rzeczywistymi ocenami z serwisów takich jak Filmweb, IMDb, Rotten Tomatoes i innych.</p>
     <p>Zapraszam do odkrywania moich rekomendacji!</p>
-    
+
     <a href="https://www.filmweb.pl/user/JasieKnow" target="_blank" class="filmweb-profile-button">
       📖 Mój profil Filmweb
+    </a>
+
+    <a href="#" onclick="goToProjects()" class="filmweb-profile-button" style="margin-left: 15px;">
+      📁 Zobacz moje projekty
     </a>
   </div>
 </div>
@@ -692,26 +789,24 @@
 <!-- Sekcja filmów -->
 <div id="filmy" class="section">
   <h2>🎬 Moje ulubione filmy</h2>
-  
+
   <div class="search-container">
     <input type="text" class="search-input" id="movieSearch" placeholder="🔍 Wyszukaj film..." onkeyup="searchMovies()">
   </div>
 
   <div class="movie-grid" id="movies-grid">
-    <!-- Karty filmów będą generowane przez JavaScript -->
   </div>
 </div>
 
-<!-- Sekcja seriali (oddzielna) -->
+<!-- Sekcja seriali -->
 <div id="seriale" class="section">
   <h2>📺 Moje ulubione seriale</h2>
-  
+
   <div class="search-container">
     <input type="text" class="search-input" id="seriesSearch" placeholder="🔍 Wyszukaj serial..." onkeyup="searchSeries()">
   </div>
 
   <div class="series-grid" id="series-grid">
-    <!-- Karty seriali będą generowane przez JavaScript -->
   </div>
 </div>
 
@@ -730,13 +825,12 @@
 <!-- Sekcja gier -->
 <div id="gry" class="section">
   <h2>🎮 Moje ulubione gry</h2>
-  
+
   <div class="search-container">
     <input type="text" class="search-input" id="gameSearch" placeholder="🔍 Wyszukaj grę..." onkeyup="searchGames()">
   </div>
 
   <div class="game-grid" id="games-grid">
-    <!-- Karty gier będą generowane przez JavaScript -->
   </div>
 </div>
 
@@ -753,7 +847,7 @@
     <p><strong>Wydział:</strong> Inżynierii Mechanicznej i Robotyki (WIMIR)</p>
     <p><strong>Kierunek:</strong> Automatyka Przemysłowa i Robotyka</p>
     <p><strong>Rozpoczęcie studiów:</strong> 2024 rok</p>
-    
+
     <div style="margin-top: 40px;">
       <h3>🛠️ Umiejętność rozwiązywania problemów</h3>
       <div style="background: var(--card-color); padding: 20px; border-radius: 12px; margin-top: 20px; box-shadow: 0 6px 16px var(--shadow);">
@@ -767,29 +861,66 @@
         </ul>
       </div>
     </div>
-    
-    <div class="projects-section">
+
+    <div class="projects-section" id="moje-projekty-section">
       <h3>📁 Projekty</h3>
       <div class="project-folder">
         <h4>📂 Moje projekty</h4>
-        <div class="empty-message">
-          🛠️ Projektowanie Mechaniczne & CAD (Inventor, SAM)
-Chwytak robotyczny: Projekt i analiza kinematyczna mechanizmu opartego na czworoboku przegubowym.
 
-Uchwyt mocujący o zmiennej geometrii: Model 3D regulowanego wspornika z przegubem jednoosiowym.
+        <div class="projects-grid">
 
-Wyciągarka bębnowa & Przyrząd wiertarski: Projekty urządzeń mechanicznych wykonane w programie Autodesk Inventor, obejmujące dobór elementów znormalizowanych.
+          <!-- Kategoria: Projektowanie Mechaniczne & CAD -->
+          <div class="project-category-card">
+            <div class="project-category-header">
+              <div class="project-category-icon">🛠️</div>
+              <p class="project-category-title">Projektowanie Mechaniczne & CAD (Inventor, SAM)</p>
+            </div>
+            <div class="project-items">
+              <div class="project-item">
+                <div class="project-item-name">🔧 Chwytak robotyczny</div>
+                <div class="project-item-desc">Projekt i analiza kinematyczna mechanizmu opartego na czworoboku przegubowym.</div>
+              </div>
+              <div class="project-item">
+                <div class="project-item-name">🔩 Uchwyt mocujący o zmiennej geometrii</div>
+                <div class="project-item-desc">Model 3D regulowanego wspornika z przegubem jednoosiowym.</div>
+              </div>
+              <div class="project-item">
+                <div class="project-item-name">⚙️ Wyciągarka bębnowa & Przyrząd wiertarski</div>
+                <div class="project-item-desc">Projekty urządzeń mechanicznych wykonane w programie Autodesk Inventor, obejmujące dobór elementów znormalizowanych.</div>
+              </div>
+            </div>
+          </div>
 
-🤖 Automatyka & Systemy Wbudowane (Arduino, C/C++)
-Systemy omijania przeszkód i pomiaru odległości: Liczne projekty z wykorzystaniem czujników ultradźwiękowych HC-SR04 zintegrowanych z mikrokontrolerem Arduino Uno.
+          <!-- Kategoria: Automatyka & Systemy Wbudowane -->
+          <div class="project-category-card">
+            <div class="project-category-header">
+              <div class="project-category-icon">🤖</div>
+              <p class="project-category-title">Automatyka & Systemy Wbudowane (Arduino, C/C++)</p>
+            </div>
+            <div class="project-items">
+              <div class="project-item">
+                <div class="project-item-name">📡 Systemy omijania przeszkód i pomiaru odległości</div>
+                <div class="project-item-desc">Liczne projekty z wykorzystaniem czujników ultradźwiękowych HC-SR04 zintegrowanych z mikrokontrolerem Arduino Uno.</div>
+              </div>
+              <div class="project-item">
+                <div class="project-item-name">🎯 Sterowanie serwomechanizmami</div>
+                <div class="project-item-desc">Implementacja sterowania z wykorzystaniem sygnałów PWM do precyzyjnego pozycjonowania elementów wykonawczych.</div>
+              </div>
+              <div class="project-item">
+                <div class="project-item-name">🏦 Mini system bankowy w C++</div>
+                <div class="project-item-desc">Konsolowa aplikacja symulująca podstawowe operacje bankowe.</div>
+              </div>
+              <div class="project-item">
+                <div class="project-item-name">🐍 Konsolowa gra „Snake” w C++</div>
+                <div class="project-item-desc">Klasyczna gra węża zaimplementowana w konsoli z obsługą klawiatury.</div>
+              </div>
+              <div class="project-item">
+                <div class="project-item-name">⚡ Układ regulacji prędkości silnika DC</div>
+                <div class="project-item-desc">Projekt i realizacja systemu płynnej regulacji obrotów silnika prądu stałego z wykorzystaniem mikrokontrolera Arduino, sterownika napędu oraz potencjometru pełniącego funkcję analogowego zadajnika prędkości.</div>
+              </div>
+            </div>
+          </div>
 
-Sterowanie serwomechanizmami: Implementacja sterowania z wykorzystaniem sygnałów PWM do precyzyjnego pozycjonowania elementów wykonawczych.
-
-Mini system bankowy w C++
-
-Konsolowa gra „Snake” w C++
-
-Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej regulacji obrotów silnika prądu stałego z wykorzystaniem mikrokontrolera Arduino, sterownika napędu oraz potencjometru pełniącego funkcję analogowego zadajnika prędkości
         </div>
       </div>
     </div>
@@ -801,7 +932,7 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
 </footer>
 
 <script>
-  // ========== DANE FILMÓW Z RZECZYWISTYMI OCENAMI ==========
+  // ========== DANE FILMÓW ==========
   const moviesData = [
     {
       id: 'dobry-zly-brzydki',
@@ -913,7 +1044,7 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
     }
   ];
 
-  // ========== DANE SERIALI Z RZECZYWISTYMI OCENAMI ==========
+  // ========== DANE SERIALI ==========
   const seriesData = [
     {
       id: 'breaking-bad',
@@ -989,7 +1120,7 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
     }
   ];
 
-  // ========== DANE GIER Z RZECZYWISTYMI OCENAMI ==========
+  // ========== DANE GIER ==========
   const gamesData = [
     {
       id: 'lol',
@@ -1069,7 +1200,17 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
 
   // ========== FUNKCJE GŁÓWNE ==========
   let currentSection = 'welcome';
-  
+
+  function goToProjects() {
+    showSection('studia');
+    setTimeout(() => {
+      const el = document.getElementById('moje-projekty-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 200);
+  }
+
   function showSection(id) {
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => {
@@ -1079,7 +1220,7 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
     document.getElementById(id).style.display = 'block';
     document.getElementById(id).classList.add('active');
     currentSection = id;
-    
+
     if (id === 'filmy') {
       loadMovies();
     } else if (id === 'seriale') {
@@ -1095,14 +1236,13 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
     const currentTheme = document.body.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.body.setAttribute('data-theme', newTheme);
-    
+
     const button = document.querySelector('.theme-toggle');
     button.textContent = newTheme === 'dark' ? '🌙' : '☀️';
     button.style.color = '#000';
-    
+
     localStorage.setItem('theme', newTheme);
-    
-    // Odśwież widok jeśli jesteśmy w sekcji z danymi
+
     if (currentSection === 'filmy') {
       loadMovies();
     } else if (currentSection === 'seriale') {
@@ -1116,7 +1256,7 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
   function searchMovies() {
     const searchTerm = document.getElementById('movieSearch').value.toLowerCase();
     const movieCards = document.querySelectorAll('.movie-card');
-    
+
     movieCards.forEach(card => {
       const title = card.querySelector('.movie-title').textContent.toLowerCase();
       const desc = card.querySelector('.movie-desc').textContent.toLowerCase();
@@ -1127,7 +1267,7 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
   function searchSeries() {
     const searchTerm = document.getElementById('seriesSearch').value.toLowerCase();
     const seriesCards = document.querySelectorAll('.series-card');
-    
+
     seriesCards.forEach(card => {
       const title = card.querySelector('.series-title').textContent.toLowerCase();
       const desc = card.querySelector('.series-desc').textContent.toLowerCase();
@@ -1138,7 +1278,7 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
   function searchGames() {
     const searchTerm = document.getElementById('gameSearch').value.toLowerCase();
     const gameCards = document.querySelectorAll('.game-card');
-    
+
     gameCards.forEach(card => {
       const title = card.querySelector('.game-title').textContent.toLowerCase();
       const desc = card.querySelector('.game-desc').textContent.toLowerCase();
@@ -1150,9 +1290,9 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
   function loadMovies() {
     const grid = document.getElementById('movies-grid');
     if (!grid) return;
-    
+
     grid.innerHTML = '';
-    
+
     moviesData.forEach(movie => {
       grid.innerHTML += `
         <div class="movie-card" onclick="showMovieDetails('${movie.id}')" data-id="${movie.id}">
@@ -1160,24 +1300,24 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
           <div class="movie-info">
             <div class="movie-title">${movie.title}</div>
             <div class="movie-desc">${movie.desc.substring(0, 120)}...</div>
-            
+
             <div class="external-ratings">
               ${movie.ratings.filmweb ? `<div class="rating-item filmweb">
                 <span class="rating-icon">FW</span>
                 <span class="rating-value">${movie.ratings.filmweb}</span>
               </div>` : ''}
-              
+
               ${movie.ratings.imdb ? `<div class="rating-item imdb">
                 <span class="rating-icon">IMDb</span>
                 <span class="rating-value">${movie.ratings.imdb}</span>
               </div>` : ''}
-              
+
               ${movie.ratings.rotten ? `<div class="rating-item rotten">
                 <span class="rating-icon">🍅</span>
                 <span class="rating-value">${movie.ratings.rotten}</span>
               </div>` : ''}
             </div>
-            
+
             <div style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
               📅 ${movie.year} | ⏱️ ${movie.duration} | 🎬 ${movie.director}
             </div>
@@ -1190,9 +1330,9 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
   function loadSeries() {
     const grid = document.getElementById('series-grid');
     if (!grid) return;
-    
+
     grid.innerHTML = '';
-    
+
     seriesData.forEach(series => {
       grid.innerHTML += `
         <div class="series-card" onclick="showSeriesDetails('${series.id}')" data-id="${series.id}">
@@ -1200,24 +1340,24 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
           <div class="series-info">
             <div class="series-title">${series.title}</div>
             <div class="series-desc">${series.desc.substring(0, 120)}...</div>
-            
+
             <div class="external-ratings">
               ${series.ratings.filmweb ? `<div class="rating-item filmweb">
                 <span class="rating-icon">FW</span>
                 <span class="rating-value">${series.ratings.filmweb}</span>
               </div>` : ''}
-              
+
               ${series.ratings.imdb ? `<div class="rating-item imdb">
                 <span class="rating-icon">IMDb</span>
                 <span class="rating-value">${series.ratings.imdb}</span>
               </div>` : ''}
-              
+
               ${series.ratings.rotten ? `<div class="rating-item rotten">
                 <span class="rating-icon">🍅</span>
                 <span class="rating-value">${series.ratings.rotten}</span>
               </div>` : ''}
             </div>
-            
+
             <div style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
               📅 ${series.years} | 📺 ${series.seasons} | 🎬 ${series.episodes}
             </div>
@@ -1230,9 +1370,9 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
   function loadGames() {
     const grid = document.getElementById('games-grid');
     if (!grid) return;
-    
+
     grid.innerHTML = '';
-    
+
     gamesData.forEach(game => {
       grid.innerHTML += `
         <div class="game-card" onclick="showGameDetails('${game.id}')" data-id="${game.id}">
@@ -1240,19 +1380,19 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
           <div class="game-info">
             <div class="game-title">${game.title}</div>
             <div class="game-desc">${game.desc.substring(0, 120)}...</div>
-            
+
             <div class="external-ratings">
               ${game.ratings.metacritic ? `<div class="rating-item metacritic">
                 <span class="rating-icon">MC</span>
                 <span class="rating-value">${game.ratings.metacritic}</span>
               </div>` : ''}
-              
+
               ${game.ratings.ign ? `<div class="rating-item" style="background-color: rgba(0, 0, 0, 0.2); color: #ff6500;">
                 <span class="rating-icon">IGN</span>
                 <span class="rating-value">${game.ratings.ign}</span>
               </div>` : ''}
             </div>
-            
+
             <div style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
               📅 ${game.year} | 🎮 ${game.genre} | 🏢 ${game.developer}
             </div>
@@ -1266,9 +1406,9 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
   function showMovieDetails(id) {
     const movie = moviesData.find(m => m.id === id);
     if (!movie) return;
-    
+
     currentSection = `movie-details-${id}`;
-    
+
     let ratingsHTML = '';
     if (movie.ratings) {
       ratingsHTML = `
@@ -1279,21 +1419,21 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
               <div class="rating-main">${movie.ratings.filmweb}</div>
             </div>
           ` : ''}
-          
+
           ${movie.ratings.imdb ? `
             <div class="rating-card imdb">
               <div class="rating-source">IMDb</div>
               <div class="rating-main">${movie.ratings.imdb}</div>
             </div>
           ` : ''}
-          
+
           ${movie.ratings.rotten ? `
             <div class="rating-card rotten">
               <div class="rating-source">Rotten Tomatoes</div>
               <div class="rating-main">${movie.ratings.rotten}</div>
             </div>
           ` : ''}
-          
+
           ${movie.ratings.letterboxd ? `
             <div class="rating-card letterboxd">
               <div class="rating-source">Letterboxd</div>
@@ -1303,14 +1443,14 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
         </div>
       `;
     }
-    
+
     document.getElementById('details-content').innerHTML = `
       <div class="details-content">
         <img src="${movie.image}" alt="${movie.title}" class="details-poster">
         <div class="details-info">
           <h2 style="margin-top: 0; border: none;">${movie.title}</h2>
           <p style="font-size: 18px; line-height: 1.6;">${movie.desc}</p>
-          
+
           <div class="details-meta">
             <div class="meta-item">
               <div class="meta-label">Rok produkcji</div>
@@ -1329,10 +1469,10 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
               <div class="meta-value">${movie.genre}</div>
             </div>
           </div>
-          
+
           <h3>📊 Oceny w serwisach</h3>
           ${ratingsHTML}
-          
+
           <div class="button-group">
             <a href="${movie.trailer}" target="_blank" class="trailer-button">
               🎬 Obejrzyj zwiastun
@@ -1341,16 +1481,16 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
         </div>
       </div>
     `;
-    
+
     showSection('movie-details');
   }
 
   function showSeriesDetails(id) {
     const series = seriesData.find(s => s.id === id);
     if (!series) return;
-    
+
     currentSection = `series-details-${id}`;
-    
+
     let ratingsHTML = '';
     if (series.ratings) {
       ratingsHTML = `
@@ -1361,21 +1501,21 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
               <div class="rating-main">${series.ratings.filmweb}</div>
             </div>
           ` : ''}
-          
+
           ${series.ratings.imdb ? `
             <div class="rating-card imdb">
               <div class="rating-source">IMDb</div>
               <div class="rating-main">${series.ratings.imdb}</div>
             </div>
           ` : ''}
-          
+
           ${series.ratings.rotten ? `
             <div class="rating-card rotten">
               <div class="rating-source">Rotten Tomatoes</div>
               <div class="rating-main">${series.ratings.rotten}</div>
             </div>
           ` : ''}
-          
+
           ${series.ratings.letterboxd ? `
             <div class="rating-card letterboxd">
               <div class="rating-source">Letterboxd</div>
@@ -1385,14 +1525,14 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
         </div>
       `;
     }
-    
+
     document.getElementById('series-content').innerHTML = `
       <div class="details-content">
         <img src="${series.image}" alt="${series.title}" class="details-poster">
         <div class="details-info">
           <h2 style="margin-top: 0; border: none;">${series.title}</h2>
           <p style="font-size: 18px; line-height: 1.6;">${series.desc}</p>
-          
+
           <div class="details-meta">
             <div class="meta-item">
               <div class="meta-label">Lata emisji</div>
@@ -1411,10 +1551,10 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
               <div class="meta-value">${series.genre}</div>
             </div>
           </div>
-          
+
           <h3>📊 Oceny w serwisach</h3>
           ${ratingsHTML}
-          
+
           <div class="button-group">
             <a href="${series.trailer}" target="_blank" class="trailer-button">
               📺 Obejrzyj zwiastun
@@ -1423,16 +1563,16 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
         </div>
       </div>
     `;
-    
+
     showSection('series-details');
   }
 
   function showGameDetails(id) {
     const game = gamesData.find(g => g.id === id);
     if (!game) return;
-    
+
     currentSection = `game-details-${id}`;
-    
+
     let ratingsHTML = '';
     if (game.ratings) {
       ratingsHTML = `
@@ -1443,7 +1583,7 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
               <div class="rating-main">${game.ratings.metacritic}</div>
             </div>
           ` : ''}
-          
+
           ${game.ratings.ign ? `
             <div class="rating-card" style="border-top: 4px solid #ff6500;">
               <div class="rating-source">IGN</div>
@@ -1453,14 +1593,14 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
         </div>
       `;
     }
-    
+
     document.getElementById('game-content').innerHTML = `
       <div class="details-content">
         <img src="${game.image}" alt="${game.title}" class="details-poster" style="${game.id === 'lol' || game.id === 'fortnite' ? 'background: white; padding: 30px; height: 400px;' : ''}">
         <div class="details-info">
           <h2 style="margin-top: 0; border: none;">${game.title}</h2>
           <p style="font-size: 18px; line-height: 1.6;">${game.desc}</p>
-          
+
           <div class="details-meta">
             <div class="meta-item">
               <div class="meta-label">Rok wydania</div>
@@ -1479,10 +1619,10 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
               <div class="meta-value">PC, Konsole</div>
             </div>
           </div>
-          
+
           <h3>📊 Oceny w serwisach</h3>
           ${ratingsHTML}
-          
+
           <div class="button-group">
             <a href="${game.trailer}" target="_blank" class="trailer-button">
               🎮 Obejrzyj zwiastun
@@ -1491,23 +1631,20 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
         </div>
       </div>
     `;
-    
+
     showSection('game-details');
   }
 
   // ========== INICJALIZACJA ==========
   document.addEventListener('DOMContentLoaded', function() {
-    // Załaduj zapisany motyw
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.body.setAttribute('data-theme', savedTheme);
     const themeButton = document.querySelector('.theme-toggle');
     themeButton.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
     themeButton.style.color = '#000';
-    
-    // Pokazuj stronę startową
+
     showSection('welcome');
-    
-    // Dodaj obsługę klawisza Escape
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && currentSection.includes('details')) {
         if (currentSection.includes('movie-details')) {
@@ -1521,7 +1658,6 @@ Układ regulacji prędkości silnika DC: Projekt i realizacja systemu płynnej r
     });
   });
 
-  // Poprawka dla touch
   document.addEventListener('touchstart', function() {}, {passive: true});
 </script>
 </body>
